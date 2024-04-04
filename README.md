@@ -1,9 +1,5 @@
-# WebApp boilerplate with React JS and Flask API
+# LinHub Final Project
 
-Build web applications using React.js for the front end and python/flask for your backend API.
-
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
 - Integrated with Pipenv for package managing.
 - Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
 - Use of .env file.
@@ -76,6 +72,7 @@ This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter
 
 ### Contributors
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+-  Lumi-tip
+-  DianaJRoo
+-  Diaz1010
+-  
