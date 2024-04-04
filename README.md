@@ -72,7 +72,7 @@ This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter
 
 ### Contributors
 
--  Lumi-tip
--  DianaJRoo
--  Diaz1010
--  
+-  Lumi-tip: ([GitHub](https://github.com/lumi-tip)).
+-  DianaJRoo: ([GitHub](https://github.com/DianaJRoo)).
+-  Diaz1010: ([GitHub](https://github.com/Diaz1010)).
+-  Josema-Git: ([GitHub](https://github.com/josema-git))
