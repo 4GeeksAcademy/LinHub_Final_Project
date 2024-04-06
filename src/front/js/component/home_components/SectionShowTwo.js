@@ -19,7 +19,7 @@ const SectionShowTwo = () => {
             ) : (
                 <div className='flex-initial w-50 align-middle'>
                     <h1 className='text-violet-500 text-6xl mb-8 font-bold'>Stay Motivated</h1>
-                    <p className='font-bold text-lg text-gray-500 text-xl'>hola</p>
+                    <p className='font-bold text-lg text-gray-500 text-xl'>Earn points by completing levels that you can then use to obtain prizes or gamble them in a duel to the death against your contacts!</p>
                 </div>
             )}
         </div>
