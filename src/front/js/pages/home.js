@@ -12,6 +12,11 @@ export const Home = () => {
 
 	return (
 		<>
+			<Navbar />
+			<Hero />
+			<SectionShowOne />
+			<SectionShowTwo />
+			<BottomSection />
 		</>
 	);
 };
