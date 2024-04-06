@@ -3,7 +3,7 @@ import { useState, useContext } from 'react'
 import { Context } from '../../store/appContext'
 
 const Navbar = () => {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const { store, actions } = useContext(Context)
 
     return (
@@ -14,16 +14,22 @@ const Navbar = () => {
                     <h1 className='text-gray-500 text-xl font-bold'>LinHub</h1>
                 </div>
                 <div>
-                    <button onClick={() => setOpen(!open)} className='relative font-bold text-gray-500'>Idioma de la pagina: {store.currentIdiom} <span className='text-gray-500'>&#9660;</span></button>
+                    <button
+                        onClick={() => setOpen(!open)}
+                        className='relative font-bold text-gray-500'
+                    >
+                        {(store.currentIdiom == "Español" ? "Idioma de la pagina: " : "Page Lenguage: ") + store.currentIdiom}
+                        <span className='text-gray-500'> &#9660;</span>
+                    </button>
                     {
                         open &&
                         <div className='absolute border-slate-500 top-16'>
-                            <div className='flex justify-evenly w-60'>
-                                <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage()}>
+                            <div className='flex justify-between w-52'>
+                                <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage("English")}>
                                     🇺🇸
                                     English
                                 </div>
-                                <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage()}>
+                                <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage("Español")}>
                                     🇪🇸
                                     Español
                                 </div>
