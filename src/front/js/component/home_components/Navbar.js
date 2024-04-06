@@ -24,7 +24,7 @@ const Navbar = () => {
                     {
                         open &&
                         <div className='absolute border-slate-500 top-16'>
-                            <div className='flex justify-evenly w-60'>
+                            <div className='flex justify-between w-52'>
                                 <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage("English")}>
                                     🇺🇸
                                     English
