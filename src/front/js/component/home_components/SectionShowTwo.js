@@ -1,4 +1,7 @@
-import React from 'react'
+
+import { Context } from '../../store/appContext';
+import React, { useContext, } from 'react';
+
 
 const SectionShowTwo = () => {
     const { store, actions } = useContext(Context);
