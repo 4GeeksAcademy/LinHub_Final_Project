@@ -1,10 +1,9 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 import { Context } from '../../store/appContext'
-import logo from '../../../img/logo.svg'
 
 const Navbar = () => {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const { store, actions } = useContext(Context)
 
     return (
@@ -15,16 +14,25 @@ const Navbar = () => {
                     <h1 className='text-gray-500 text-xl font-bold'>LinHub</h1>
                 </div>
                 <div>
-                    <button className='relative font-bold text-gray-500'>Idioma de la pagina: {store.currentIdiom} <span className='text-gray-500'>&#9660;</span></button>
+                    <button
+                        onClick={() => setOpen(!open)}
+                        className='relative font-bold text-gray-500'
+                    >
+                        {(store.currentIdiom == "Español" ? "Idioma de la pagina: " : "Page Lenguage: ") + store.currentIdiom}
+                        <span className='text-gray-500'> &#9660;</span>
+                    </button>
                     {
                         open &&
-                        <div className='absolute border-slate-500'>
-                            <div className='flex justify-around w-60'>
-                                <div className='text-gray-500 font-bold'>
-                                    <img src='../../../img/BanderaUsa' />
+                        <div className='absolute border-slate-500 top-16'>
+                            <div className='flex justify-evenly w-60'>
+                                <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage("English")}>
+                                    🇺🇸
                                     English
                                 </div>
-                                <div className='text-gray-500 font-bold'>Español</div>
+                                <div className='cursor-pointer text-gray-500 font-bold' onClick={() => actions.changeLanguage("Español")}>
+                                    🇪🇸
+                                    Español
+                                </div>
                             </div>
                         </div>
                     }
