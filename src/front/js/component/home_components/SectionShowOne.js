@@ -6,7 +6,7 @@ const SectionShowOne = () => {
     return (
         <>
             <div className='container flex flex-row justify-around items-center py-4'>
-                {store.language === 'Español' ? (
+                {store.currentIdiom === 'Español' ? (
                     <div className='flex-initial w-50 align-middle'>
                         <h1 className='text-violet-500 text-6xl mb-8 font-bold'>Divertido, Interactivo y gratis</h1>
                         <p className='font-bold text-lg text-gray-500 text-xl'>Sumérgete en nuestras lecciones cortas diseñadas para proporcionarte una experiencia interactiva única. ¡Aquí, no solo aprenderás, sino que también fortalecerás tus habilidades lingüísticas junto a personas reales!</p>
