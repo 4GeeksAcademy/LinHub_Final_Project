@@ -1,3 +1,23 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+#hero{
+    max-width: 700px;
+    
+}
+#hero-body{
+    margin-top: 100px;
+}
+#boton-hero{
+    width: 300px;
+    margin-top: 150px;
+    background-color: rgb(202, 31, 202);
+    border-color:  rgb(202, 31, 202);;
+}
+#boton-hero2{
+    width: 300px;
+    margin-top: 15px;
+    background-color: white;
+    border-color: grey;
+    color:rgb(202, 31, 202);
+}
