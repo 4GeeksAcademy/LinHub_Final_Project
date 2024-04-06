@@ -8,7 +8,7 @@ const SectionShowOne = () => {
                     <h1 className='text-violet-500 text-6xl mb-8 font-bold'>Divertido, Interactivo y gratis</h1>
                     <p className='font-bold text-lg text-gray-500 text-xl'>Sumérgete en nuestras lecciones cortas diseñadas para proporcionarte una experiencia interactiva única. ¡Aquí, no solo aprenderás, sino que también fortalecerás tus habilidades lingüísticas junto a personas reales!</p>
                 </div>
-                <img className='flex-initial w-30' src='https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/4a4d31b927d00effb9e2295c47a705a244ca8bc5/src/front/img/section_three.svg' />
+                <img className='flex-initial w-30' src='https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/c4f39704d2341117f5abca9cfa52e4ab57232c28/src/front/img/section_three.svg' />
             </div>
         </>
     )
