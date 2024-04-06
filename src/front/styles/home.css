@@ -1,3 +1,36 @@
 .logo{
     height: 50px;
 }
+
+#boton-hero{
+    position: relative;
+}
+#boton-hero2{
+    position: relative;
+}
+
+#boton-hero::after{
+    content: '';
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    bottom: 0;
+    display: block;
+    height: 8px;
+    background-color: #7E0FA5;
+}
+
+#boton-hero2::after{
+    content: '';
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    bottom: 0;
+    display: block;
+    height: 8px;
+    background-color: #c7cacf;
+}
