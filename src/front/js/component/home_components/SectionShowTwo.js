@@ -14,7 +14,7 @@ const SectionShowTwo = () => {
             {store.currentIdiom === 'Español' ? (
                 <div className='flex-initial w-50 align-middle'>
                     <h1 className='text-violet-500 text-6xl mb-8 font-bold'>Mantente Motivado</h1>
-                    <p className='font-bold text-lg text-gray-500 text-xl'>Obten puntos al completar niveles que luego podras utilizar para obtener premios o jugartelos en un duelo a muerte contra tus contactos!</p>
+                    <p className='font-bold text-lg text-gray-500 text-xl'>Obtén puntos al completar niveles que luego podrás utilizar para obtener premios o jugartelos en un duelo a muerte contra tus contactos!</p>
                 </div>
             ) : (
                 <div className='flex-initial w-50 align-middle'>
