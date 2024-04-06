@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: []
+			currentIdiom: "Español"
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
