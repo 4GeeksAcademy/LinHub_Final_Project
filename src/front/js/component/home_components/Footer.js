@@ -10,10 +10,10 @@ const Footer = () => {
     return (
         <div id='hero-body' className="flex justify-center items-center mt-12 py-12 border-t-2">
             Made With Love By
-            <Link className='mx-3' to="https://github.com/josema-git">Jose</Link>
-            <Link className='mx-3' to="https://github.com/DianaJRoo">Diana</Link>
-            <Link className='mx-3' to="https://github.com/Diaz1010">Santi</Link>
-            <Link className='mx-3' to="https://github.com/lumi-tip">LuMi</Link>
+            <a className='mx-3' href="https://github.com/josema-git">Jose</a>
+            <a className='mx-3' href="https://github.com/DianaJRoo">Diana</a>
+            <a className='mx-3' href="https://github.com/Diaz1010">Santi</a>
+            <a className='mx-3' href="https://github.com/lumi-tip">LuMi</a>
         </div>
     );
 };
