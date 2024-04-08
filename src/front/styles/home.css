@@ -2,8 +2,6 @@
     height: 50px;
 }
 
-flag
-
 #boton-hero{
     position: relative;
 }
@@ -35,4 +33,21 @@ flag
     display: block;
     height: 8px;
     background-color: #c7cacf;
+}
+
+.border-linear-gradient {
+    border-style: solid;
+    border-image: linear-gradient(to right, darkblue, darkorchid) 1;
+  }
+
+.bg-transparency-1{
+    opacity: .8 !important;
+}
+
+.bg-transparency-2{
+    opacity: .6 !important;
+}
+
+.bg-transparency-0{
+    opacity: 1 !important;
 }
