@@ -18,7 +18,7 @@ const Navbar = () => {
                         onClick={() => setOpen(!open)}
                         className='relative font-bold text-gray-500'
                     >
-                        {(store.currentIdiom == "Español" ? "Idioma de la pagina: " : "Page Lenguage: ") + store.currentIdiom}
+                        {(store.currentIdiom == "Español" ? "Idioma de la pagina: " : "Page Language: ") + store.currentIdiom}
                         <span className='text-gray-500'> &#9660;</span>
                     </button>
                     {

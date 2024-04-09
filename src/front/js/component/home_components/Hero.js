@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../../store/appContext';
+import { Link } from 'react-router-dom';
 
 
 
@@ -19,10 +20,14 @@ const Hero = () => {
                     </h1>
                     <div className='flex flex-column justify-center items-center mt-16'>
                         <button id='boton-hero' type="button" className="text-white text-center m-0 p-0 h-14 rounded-xl border-0">
-                            <strong className='py-2'>{currentIdiom === 'Español' ? '¡Empieza ahora!' : 'Start now!'}</strong>
+                            <Link to='/signup'>
+                                <strong className='py-2'>{currentIdiom === 'Español' ? '¡Empieza ahora!' : 'Start now!'}</strong>
+                            </Link>
                         </button>
                         <button id='boton-hero2' type="button" className="text-purple-500 text-center mt-2 p-0 h-14 rounded-xl border-b-0 border-2 border-slate-200">
-                            <strong className='py-2'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
+                            <Link to='/login'>
+                                <strong className='py-2'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
+                            </Link>
                         </button>
                     </div>
                 </div>
