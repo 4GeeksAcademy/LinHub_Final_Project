@@ -8,7 +8,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='flex justify-around items-center py-2'>
+            <nav className='flex justify-around items-center py-6 shadow-lg'>
                 <div className='flex items-center'>
                     <img className='logo me-2' src='https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/main/src/front/img/logo.svg' alt='logo de linhub' />
                     <h1 className='text-gray-500 text-xl font-bold'>LinHub</h1>

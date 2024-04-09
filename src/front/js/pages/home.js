@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import Navbar from "../component/home_components/Navbar";
 import Hero from "../component/home_components/Hero";
 import SectionShowOne from "../component/home_components/SectionShowOne";
 import SectionShowTwo from "../component/home_components/SectionShowTwo";
@@ -13,7 +12,6 @@ export const Home = () => {
 
 	return (
 		<>
-			<Navbar />
 			<Hero />
 			<SectionShowOne />
 			<SectionShowTwo />

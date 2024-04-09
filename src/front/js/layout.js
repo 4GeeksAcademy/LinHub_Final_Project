@@ -4,6 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
+import Navbar from "./component/home_components/Navbar";
 import injectContext from "./store/appContext";
 
 //create your first component
@@ -18,6 +19,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                     </Routes>

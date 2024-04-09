@@ -9,7 +9,7 @@ const Hero = () => {
 
     return (
         <>
-            <div id='hero-body' className="flex justify-center items-center mt-44 mb-44">
+            <div id='hero-body' className="flex justify-center items-center mt-36 mb-44">
                 <div>
                     <img className='mr-8' src="https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/main/src/front/img/section_two.svg" alt="LinHub Penguin (Logo)" margin-left="800px" width="600" height="600" />
                 </div>
