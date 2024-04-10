@@ -19,13 +19,6 @@ const Hero = () => {
                         {currentIdiom === 'Español' ? '!La forma más divertida y efectiva de aprender inglés!' : '! The most fun and effective way to learn English!'}
                     </h1>
                     <div className='flex flex-column justify-center items-center mt-16'>
-<<<<<<< HEAD
-                        <button id='boton-hero' type="button" className="text-white text-center m-0 p-0 h-14 w-3/5 rounded-xl border-0">
-                            <strong className='py-2'>{currentIdiom === 'Español' ? '¡Empieza ahora!' : 'Start now!'}</strong>
-                        </button>
-                        <button id='boton-hero2' type="button" className="text-purple-500 text-center mt-2 w-3/5 p-0 h-14 rounded-xl border-b-0 border-2 border-slate-200">
-                            <strong className='py-2'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
-=======
                         <button id='boton-hero' type="button" className="text-white text-center m-0 p-0 h-14 rounded-xl border-0">
                             <Link to='/signup'>
                                 <strong className='py-2'>{currentIdiom === 'Español' ? '¡Empieza ahora!' : 'Start now!'}</strong>
@@ -35,7 +28,6 @@ const Hero = () => {
                             <Link to='/login'>
                                 <strong className='py-2'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
                             </Link>
->>>>>>> 3631b7e794e7023a102f87cd4e1cb8f45dafd4b8
                         </button>
                     </div>
                 </div>
