@@ -2,11 +2,6 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 
-
 #hero{
     max-width: 700px;
-}
-
-#boton-hero{
-    background-color: #C93AFC;
 }

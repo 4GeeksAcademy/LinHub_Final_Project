@@ -19,14 +19,14 @@ const Hero = () => {
                         {currentIdiom === 'Español' ? '!La forma más divertida y efectiva de aprender inglés!' : '! The most fun and effective way to learn English!'}
                     </h1>
                     <div className='flex flex-column justify-center items-center mt-16'>
-                        <button id='boton-hero' type="button" className="text-white text-center m-0 p-0 h-14 rounded-xl border-0">
+                        <button id='boton-hero' type="button" className="realtive text-center m-0 p-0 h-14 rounded-xl border-0 w-96">
                             <Link to='/signup'>
                                 <strong className='py-2'>{currentIdiom === 'Español' ? '¡Empieza ahora!' : 'Start now!'}</strong>
                             </Link>
                         </button>
-                        <button id='boton-hero2' type="button" className="text-purple-500 text-center mt-2 p-0 h-14 rounded-xl border-b-0 border-2 border-slate-200">
+                        <button id='boton-hero2' type="button" className="realtive text-purple-500 text-center mt-2 p-0 h-14 rounded-xl border-b-0 border-2 border-slate-200 w-96">
                             <Link to='/login'>
-                                <strong className='py-2'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
+                                <strong className='py-2 text-purple-500'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
                             </Link>
                         </button>
                     </div>

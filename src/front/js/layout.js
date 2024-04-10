@@ -6,7 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { LogIn } from "./pages/logIn";
 import { SignUp } from "./pages/signUp";
-import Navbar from "./component/home_components/Navbar";
+import Navbar from "./component/Navbar";
 import injectContext from "./store/appContext";
 
 //create your first component

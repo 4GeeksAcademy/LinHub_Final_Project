@@ -17,13 +17,13 @@ const UserCard = ({ username, nativeIdiom, learnIdiom, countryFrom, profilePic }
     return (
         <div className='flex flex-col justify-between relative mt-6 min-h-96 min-w-72 border-0 rounded-lg' style={profileStyles}>
             <img src={countryFrom} className='flag absolute h-10 w-10 bg-orange-300 rounded-full top-1 start-1' />
-            <div className='absolute w-100 bottom-0'>
+            <div className='person-wrapper absolute w-100 bottom-0'>
                 <div className='bg-transparency-2 bg-black mb-2 w-75 m-auto text-start w-50 text-sm p-2 rounded-lg'>
                     <p className='text-white'>{username}</p>
                     <p className='text-white'>{store.currentIdiom == "Español" ? "Quiere aprender: " : "Wants to learn: "} <strong>{learnIdiom}</strong></p>
                     <p className='text-white'>{store.currentIdiom == "Español" ? "Nativo en: " : "Native in: "}<strong>{nativeIdiom}</strong></p>
                 </div>
-                <button className='bg-transparency-1 btn btn-light w-100 font-bold'>Conectar</button>
+                <button className='contact-button border-0 btn btn-light w-100 font-bold'>{store.currentIdiom == "Español" ? "Conectar" : "Conect"}</button>
             </div>
         </div>
     )
