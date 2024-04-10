@@ -31,4 +31,17 @@ def setup_commands(app):
 
     @app.cli.command("insert-test-data")
     def insert_test_data():
-        pass
+        print("Creating test data")
+        user = User()
+        user.email = "example@gmail.com"
+        user.password = "123456"
+        user.is_active = True
+        user.native_language = "English"
+        user.target_language = "Spanish"
+        user.user_type = "Student"
+        user.user_name = "ExampleName"
+        user.user_last_name = "ExampleLastName"
+        user.user_age = 20
+        db.session.add(user)
+        db.session.commit()
+        print("User: ", user.user_name, user.user_last_name, " created.")
