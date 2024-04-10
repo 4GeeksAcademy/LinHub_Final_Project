@@ -33,15 +33,8 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "learning_idiom": self.learning_language.serialize()["idiom_name"] if self.learning_language else "",
-            "native_idiom": self.native_language.serialize()["idiom_name"] if self.learning_language else ""
-            # "is_active": self.is_active,
-            # "native_language": self.native_language,
-            # "target_language": self.target_language,
-            # "user_type": self.user_type,
-            # "user_name": self.user_name,
-            # "user_last_name": self.user_last_name,
-            # "user_age": self.user_age
-            # do not serialize the password, its a security breach
+            "native_idiom": self.native_language.serialize()["idiom_name"] if self.learning_language else "",
+            "is_active": self.is_active
         }
 
 class Idiom(db.Model):
