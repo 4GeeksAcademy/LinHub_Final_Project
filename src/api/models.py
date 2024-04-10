@@ -15,10 +15,9 @@ class User(db.Model):
     learning_language = db.relationship('Idiom', backref = "learning_users")
 
     # user learning languege
-    # native_language_id = db.Column(db.Integer, db.ForeignKey("idioms.id"))
     native_language = db.relationship('Idiom', backref = "native_users")
 
-    # is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     # native_language = db.Column(db.String(80), unique=False, nullable=True)
     # target_language = db.Column(db.String(80), unique=False, nullable=True)
     # user_type = db.Column(db.String(80), unique=False, nullable=True)
