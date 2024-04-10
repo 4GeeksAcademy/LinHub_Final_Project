@@ -5,8 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			changeLanguage: (lenguage) => {
-				setStore({ currentIdiom: lenguage })
+			changeLanguage: (language) => {
+				setStore({ currentIdiom: language })
 			}
 		}
 	};
