@@ -1,3 +1,14 @@
+@font-face {
+    font-family: TF Saeada;
+    src: url(/workspaces/LinHub_Final_Project/src/front/fonts/LTSaeada-Regular.otf);
+    font-style: normal;
+    font-weight: normal;
+}
+
+*{
+    font-family: TF Saeada, sans-serif;
+}
+
 .logo{
     height: 50px;
 }
@@ -50,4 +61,24 @@
 
 .bg-transparency-0{
     opacity: 1 !important;
+}
+
+.shadow{
+    box-shadow: 10px 5px 5px black;
+}
+
+.illustration{
+    align-self: center;
+    margin: 0 10px
+}
+
+#Group_13{
+    transform: translate(19px);
+    animation: moveEyes 1s 2s both
+}
+
+@keyframes moveEyes{
+    100%{
+        transform:unset
+    }
 }

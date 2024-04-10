@@ -18,16 +18,16 @@ const Hero = () => {
                         {currentIdiom === 'Español' ? '!La forma más divertida y efectiva de aprender inglés!' : '! The most fun and effective way to learn English!'}
                     </h1>
                     <div className='flex flex-column justify-center items-center mt-16'>
-                        <button id='boton-hero' type="button" className="text-white text-center m-0 p-0 h-14 rounded-xl border-0">
+                        <button id='boton-hero' type="button" className="text-white text-center m-0 p-0 h-14 w-3/5 rounded-xl border-0">
                             <strong className='py-2'>{currentIdiom === 'Español' ? '¡Empieza ahora!' : 'Start now!'}</strong>
                         </button>
-                        <button id='boton-hero2' type="button" className="text-purple-500 text-center mt-2 p-0 h-14 rounded-xl border-b-0 border-2 border-slate-200">
+                        <button id='boton-hero2' type="button" className="text-purple-500 text-center mt-2 w-3/5 p-0 h-14 rounded-xl border-b-0 border-2 border-slate-200">
                             <strong className='py-2'>{currentIdiom === 'Español' ? '¡Ya tengo cuenta!' : 'I already have an account!'}</strong>
                         </button>
                     </div>
                 </div>
             </div>
-            <div className='border-y-8 flex justify-center items-center py-4 gap-6 border-linear-gradient'>
+            <div className='border-y-4 flex justify-center items-center py-4 gap-6 shadow'>
                 <div className='flex items-center gap-2 cursor-pointer'>
                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy7ISNR7kNLV8sJHhxDWaRBKir0vkiUgrpmw&s' className='flag h-10 w-10 bg-orange-300 rounded-full top-1 start-1' />
                     <p className="font-bold text-xl">English</p>
