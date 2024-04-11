@@ -114,6 +114,15 @@
     opacity: 1;
     transition: all 0.3s;
 }
+/*CSS del Register */
+#form1{
+    width: 550px;
+   
+}
+#pingui-form{
+    width: 300px;
+    transform: rotate(20deg);
+}
 /* 
 #Group_13{
     transform: translate(19px);
