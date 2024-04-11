@@ -18,12 +18,7 @@ class User(db.Model):
     native_language = db.relationship('Idiom', backref = "native_users")
 
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    # native_language = db.Column(db.String(80), unique=False, nullable=True)
-    # target_language = db.Column(db.String(80), unique=False, nullable=True)
-    # user_type = db.Column(db.String(80), unique=False, nullable=True)
-    # user_name = db.Column(db.String(80), unique=False, nullable=True)
-    # user_last_name = db.Column(db.String(80), unique=False, nullable=True)
-    # user_age = db.Column(db.Integer, unique=False, nullable=True)
+
 
     def __repr__(self):
         return f'<User {self.id}>'
