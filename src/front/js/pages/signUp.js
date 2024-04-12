@@ -145,15 +145,14 @@ export const SignUp = () => {
 
           </div>
           <div className="footer" style={{ display: 'flex', justifyContent: 'center' }}>
-            
-            <button className="flex justify-center mt-7 mb-1 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-3 px-10 rounded "
+          <Link to='/PageOne'>
+            <button  className="flex justify-center mt-7 mb-1 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-3 px-10 rounded "
               type="submit"
               title="Ingresar"
               name="Ingresar">
-                 <Link to='/PageOne'>
-                 
-                  </Link>Register</button>
-              
+               
+                 Register</button>
+          </Link>
           </div>
         </div>
 

@@ -20,6 +20,21 @@
     transition: all 0.3s;
 }
 
+#boton-pageOne{
+    position: relative;
+    background-color: #c790da;
+    color:white !important;
+    transition: all 0.3s;
+}
+#boton-pageOne:hover{
+    position: relative;
+    background-color: #b534e4;
+    color: rgb(255, 255, 255) !important;
+    transition: all 0.3s;
+}
+
+
+
 #boton-hero:hover{
     position: relative;
     background-color: #b534e4;
