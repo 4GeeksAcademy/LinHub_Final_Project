@@ -33,15 +33,14 @@ def setup_commands(app):
     def insert_test_data():
         print("Creating test data")
         user = User()
+        user.first_name = "John"
+        user.last_name = "Doe"
         user.email = "example@gmail.com"
         user.password = "123456"
-        user.is_active = True
+        user.learning_language = "Español"
         user.native_language = "English"
-        user.target_language = "Spanish"
-        user.user_type = "Student"
-        user.user_name = "ExampleName"
-        user.user_last_name = "ExampleLastName"
-        user.user_age = 20
+        user.is_active = True
+
         db.session.add(user)
         db.session.commit()
         print("User: ", user.user_name, user.user_last_name, " created.")
