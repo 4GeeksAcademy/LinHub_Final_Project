@@ -100,6 +100,10 @@
     box-shadow: 15px 15px 20px rgb(138, 138, 138);
 }
 
+.shadow-2{
+    box-shadow: 0px 20px 20px rgb(138, 138, 138);
+}
+
 .illustration{
     align-self: center;
     margin: 0 10px
@@ -120,8 +124,9 @@
    
 }
 #pingui-form{
-    width: 300px;
+    width: 150px;
     transform: rotate(20deg);
+    align-self:end
 }
 /* 
 #Group_13{
