@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom'
 
 export const SignUp = () => {
 
@@ -144,10 +145,15 @@ export const SignUp = () => {
 
           </div>
           <div className="footer" style={{ display: 'flex', justifyContent: 'center' }}>
+            
             <button className="flex justify-center mt-7 mb-1 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-3 px-10 rounded "
               type="submit"
               title="Ingresar"
-              name="Ingresar">Register</button>
+              name="Ingresar">
+                 <Link to='/PageOne'>
+                 
+                  </Link>Register</button>
+              
           </div>
         </div>
 
