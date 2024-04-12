@@ -33,7 +33,7 @@ const BottomSection = () => {
     const { store, actions } = useContext(Context)
 
     return (
-        <div className='text-center my-12 py-4 bg-gradient-to-b from-white to-purple-800'>
+        <div className='text-center mt-12 py-4 bg-gradient-to-b from-white to-purple-800'>
             <h1 className='text-6xl font-bold text-violet-500'>{store.currentIdiom == "Español" ? "Intercambio de idomas: " : "Lenguage exchange: "}</h1>
             <div className='flex flex-row justify-center align-center py-32'>
                 <UserCard
