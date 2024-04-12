@@ -8,24 +8,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeLanguage: (language) => {
 				setStore({ currentIdiom: language })
 			},
-			createNewUser: (userInfo) => {
-
-				fetch("/api/users", {
-					method: "POST",
-					body: JSON.stringify(userInfo),
-					headers: {
-						"Content-Type": "application/json"
-					}
-				})
-					.then(response => response.json())
-					.then(data => {
-						console.log(data);
-					})
-					.catch(error => console.log("There was an error creating the user", error));
+			createNewUser: async (userInfo) => {
+				url = process.env.BACKEND_URL + "/api/users";
+				try {
+					const res = await fetch(url, {
+						method: "POST",
+						body: JSON.stringify(userInfo),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+					const data = await res.json();
+					console.log(data);
+				} catch (error) {
+					console.log("There was an error creating a new user", error);
+				}
 			},
 			loginUser: (userInfo) => {
-
-				fetch("/api/login", {
+				url = process.env.BACKEND_URL + "/api/login";
+				fetch(url, {
 					method: "POST",
 					body: JSON.stringify(userInfo),
 					headers: {
