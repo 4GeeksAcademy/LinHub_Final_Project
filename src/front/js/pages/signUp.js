@@ -22,6 +22,7 @@ export const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     actions.createNewUser(userInfo)
+    navigate('/login')
   };
 
   console.log(userInfo)
@@ -153,28 +154,15 @@ export const SignUp = () => {
             </div>
             <div className="footer" style={{ display: 'flex', justifyContent: 'center' }}>
 
-<<<<<<< HEAD
-          </div>
-          <div className="footer" style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to='/PageOne'>
-            <button  className="flex justify-center mt-7 mb-1 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-3 px-10 rounded "
-              type="submit"
-              title="Ingresar"
-              name="Ingresar">
-               
-                 Register</button>
-          </Link>
-=======
               <button className="flex justify-center mt-7 mb-1 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-3 px-10 rounded "
                 type="submit"
                 title="Ingresar"
                 name="Ingresar">Register</button>
 
             </div>
->>>>>>> 6cb456ebac2a287643507aecb8ea67a13cf66435
-          </div>
-        </div>
-      </form>
-    </div>
+          </div >
+        </div >
+      </form >
+    </div >
   )
 }
