@@ -143,6 +143,14 @@
     transform: rotate(20deg);
     align-self:end
 }
+/*CSS de page one */
+#boton-pageOne1{
+    height:50px;
+   width:50px;
+   -moz-border-radius:50px;
+   -webkit-border-radius:50px;
+   border-radius:50px;
+}
 /* 
 #Group_13{
     transform: translate(19px);

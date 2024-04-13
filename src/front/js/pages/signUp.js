@@ -34,8 +34,8 @@ export const SignUp = () => {
         <div className=" flex flex-row justify-center my-4">
           <div id="text-form-title" className="text-3xl text-violet-500 ">
             <div className="mt-12">
-              <h1>Ready to learn your dream lenguague?</h1>
-              <p>Lets Start!</p>
+              <h1>Ready to learn your dream language?</h1>
+              <p>Let's Start!</p>
             </div>
           </div>
           <img id="pingui-form" className="" src="https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/main/src/front/img/section_two.svg" alt="LinHub Penguin (Logo)" margin-left="800px" width="150px" />
@@ -116,7 +116,7 @@ export const SignUp = () => {
             <div className="mt-5 flex justify-between gap-6 w-full h-full" >
               <div className="grow">
                 <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900 w-100 ">
-                  Firts Lenguague
+                  First Language
                 </label>
                 <div className="mt-2">
                   <select
