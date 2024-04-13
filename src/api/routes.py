@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Idiom
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+import jwt
 
 api = Blueprint('api', __name__)
 
@@ -59,6 +60,7 @@ def create_user():
     email = request_body.get('email')
     password = request_body.get('password')
     learning_language = Idiom.query.filter_by(idiom_name=request_body.get("learning_language")).first()
+    token = jwt.encode({'user_id': new_user.id}, 'secret_key', algorithm='HS256')
     native_language = Idiom.query.filter_by(idiom_name=request_body.get("native_language")).first()
     is_active = True
 

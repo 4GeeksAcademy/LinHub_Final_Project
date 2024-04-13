@@ -20,6 +20,7 @@ class User(db.Model):
     native_language = db.relationship('Idiom', backref = "native_users", foreign_keys=[native_language_id])
 
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    token = db.Column(db.String(200), unique=True, nullable=True)
 
 
     def __repr__(self):

@@ -9,9 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ currentIdiom: language })
 			},
 			createNewUser: async (userInfo) => {
-				url = process.env.BACKEND_URL + "/api/users";
 				try {
-					const res = await fetch(url, {
+					const res = await fetch(process.env.BACKEND_URL + '/api/users', {
 						method: "POST",
 						body: JSON.stringify(userInfo),
 						headers: {
@@ -25,8 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			loginUser: (userInfo) => {
-				url = process.env.BACKEND_URL + "/api/login";
-				fetch(url, {
+				fetch(process.env.BACKEND_URL + "/api/users", {
 					method: "POST",
 					body: JSON.stringify(userInfo),
 					headers: {
