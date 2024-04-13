@@ -5,7 +5,6 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Idiom
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-import jwt
 
 api = Blueprint('api', __name__)
 
