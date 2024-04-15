@@ -54,14 +54,13 @@ def get_languages():
 #         return jsonify({"msg": "No data provided"}), 400
 
 
-#     first_name = request_body.get('first_name')
-#     last_name = request_body.get('last_name')
-#     email = request_body.get('email')
-#     password = request_body.get('password')
-#     learning_language = Language.query.filter_by(idiom_name=request_body.get("learning_language")).first()
-#     token = jwt.encode({'user_id': new_user.id}, 'secret_key', algorithm='HS256')
-#     native_language = Language.query.filter_by(idiom_name=request_body.get("native_language")).first()
-#     is_active = True
+    first_name = request_body.get('first_name')
+    last_name = request_body.get('last_name')
+    email = request_body.get('email')
+    password = request_body.get('password')
+    learning_language = Idiom.query.filter_by(idiom_name=request_body.get("learning_language")).first()
+    native_language = Idiom.query.filter_by(idiom_name=request_body.get("native_language")).first()
+    is_active = True
 
 #     if not first_name or not last_name:
 #         return jsonify({"msg": "First name and last name are required"}), 400
