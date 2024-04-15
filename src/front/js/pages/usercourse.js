@@ -42,6 +42,7 @@ export const UserCourse = () => {
                     <span className='ms-5'><strong>Leccion animales</strong></span>
                     <button id='boton-pageOne1' class="rounded-full py-2 bg-green-500 text-white font-bold px-4"></button>
                 </div>
+
                 <div className=' flex items-center justify-between bg-gray-100 mt-5 rounded-full p-5 text-3xl'>
                     <span className='ms-5'><strong>Leccion saludos</strong></span>
                     <button id='boton-pageOne1' class="rounded-full py-2 bg-gray-500 text-white font-bold px-4"></button>
@@ -52,6 +53,7 @@ export const UserCourse = () => {
                     <span className='ms-5'><strong>Leccion formal</strong></span>
                     <button id='boton-pageOne1' class="rounded-full py-2 bg-gray-500 text-white font-bold px-4"></button>
                 </div>
+                
             </div>
         </div>
     );
