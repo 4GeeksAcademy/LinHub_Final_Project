@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export const LogIn = () => {
     const { store, actions } = useContext(Context);
-    const [userInfo, setUserInfo] = useState({ "email": "", "password": "", "confirmPassword": "" });
+    const [userInfo, setUserInfo] = useState({ "email": "", "password": "" });
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -38,14 +38,6 @@ export const LogIn = () => {
                                 required
                                 onChange={handleChange}
                             />
-                            <input
-                                className="mt-2 block w-full h-10 px-2 py-1 border border-gray-300 rounded-md font-overpass text-base text-gray-700 focus:outline-none focus:border-purple-500"
-                                type="password"
-                                placeholder={store.currentIdiom === "Español" ? "Confirma Contraseña" : "Confirm Password"}
-                                name="confirmPassword"
-                                required
-                                onChange={handleChange}
-                            />
                             <button
                                 className="mt-2 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-2 px-4 rounded inline-flex items-center"
                                 type="submit"
@@ -53,7 +45,7 @@ export const LogIn = () => {
                                 name="Ingresar"><Link to="/PageOne">Login</Link></button>
                         </form>
                         <div className="pie-form mt-4">
-                            <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br />
+                            {/* <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br /> */}
                             <Link className="mt-2 text-purple-900" to="/signup">{store.currentIdiom === "Español" ? '¿No tienes Cuenta? Registrate' : 'Need an account Register'}</Link>
                         </div>
                     </div>

@@ -12,12 +12,12 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
 
     # user native language
-    learning_language_id = db.Column(db.Integer, db.ForeignKey('idioms.id'))
-    learning_language = db.relationship('Idiom', backref = "learning_users", foreign_keys=[learning_language_id])
+    learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
+    learning_language = db.relationship('Language', backref = "learning_users", foreign_keys=[learning_language_id])
 
     # user learning languege
-    native_language_id = db.Column(db.Integer, db.ForeignKey('idioms.id'))
-    native_language = db.relationship('Idiom', backref = "native_users", foreign_keys=[native_language_id])
+    native_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
+    native_language = db.relationship('Language', backref = "native_users", foreign_keys=[native_language_id])
 
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
@@ -39,22 +39,22 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
-            "learning_idiom": self.learning_language.serialize()["idiom_name"] if self.learning_language else "",
-            "native_idiom": self.native_language.serialize()["idiom_name"] if self.learning_language else "",
+            "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
+            "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
             "is_active": self.is_active
         }
 
-class Idiom(db.Model):
-    __tablename__ = "idioms"
+class Language(db.Model):
+    __tablename__ = "languages"
 
     id = db.Column(db.Integer, primary_key=True)
-    idiom_name = db.Column(db.String, unique=True)
+    language_name = db.Column(db.String, unique=True)
 
     def __repr__(self):
-        return f'<Idiom {self.idiom_name}'
+        return f'<Language {self.language_name}'
 
     def serialize(self):
         return{
             "id": self.id,
-            "idiom_name": self.idiom_name
+            "language_name": self.language_name
         }
