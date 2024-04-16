@@ -1,4 +1,6 @@
 import React from 'react';
+import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SidebarButton = ({ text }) => {
     return (
@@ -35,8 +37,19 @@ export const UserCourse = () => {
             <div className="hidden md:block w-2/3 bg-white-300 p-4">
 
                 <h2 className="text-lg font-semibold">Lado Derecho</h2>
+
+
                 <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden flex">
                     <div className="absolute left-0 top-0 h-full bg-purple-200 animate-progress-stripes" style={{ width: '65%' }}></div>
+                </div>
+
+                
+
+                <div className='flex flex-row justify-around mt-3'>
+                    <p> 5 <FontAwesomeIcon icon={faHeart} size= "2xl" style={{color: "#ff3d3d",}} /></p>
+                    <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" secondaryColor="red" style={{ color: "#ff9a57", secondaryColor: "red" }} />  </p>
+                    <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{width: '40px'}} />
+
                 </div>
 
                 <LessonItem title="Leccion de comida" isCompleted={true} />
