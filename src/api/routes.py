@@ -46,7 +46,7 @@ def get_languages():
     languages = Language.query.all()
     languages = list(map(lambda x: x.serialize(), languages))
     return jsonify(languages), 200
-
+S
 # @api.route('/users', methods=['POST'])
 # def create_user():
 #     request_body = request.get_json()
