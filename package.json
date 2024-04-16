@@ -73,13 +73,16 @@
 		]
 	},
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^6.5.2",
-		"@fortawesome/free-brands-svg-icons": "^6.5.2",
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
 		"@fortawesome/free-solid-svg-icons": "^6.5.2",
 		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@mui/icons-material": "^5.15.15",
+		"@mui/material": "^5.15.15",
 		"prop-types": "^15.6.1",
-		"react": "^16.8.4",
-		"react-dom": "^16.8.4",
+		"react": "^18.2.0",
+		"react-bootstrap": "^2.10.2",
+		"react-dom": "^18.2.0",
 		"react-icons": "^5.0.1",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0"
