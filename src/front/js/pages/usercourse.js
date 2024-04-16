@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -14,7 +15,7 @@ const LessonItem = ({ title, isCompleted }) => {
     return (
         <div className='flex items-center justify-between bg-gray-200 mt-5 rounded-full p-5 text-3xl'>
             <span className='ms-5'><strong>{title}</strong></span>
-            <button id='boton-pageOne1' className={`rounded-full py-2 ${isCompleted ? 'bg-green-500' : 'bg-gray-500'} text-white font-bold px-4`}></button>
+            <button id='boton-pageOne1' className={`rounded-full py-2 ${isCompleted ? 'bg-green-500' : 'bg-gray-500'} text-white font-bold px-4`} ></button>
         </div>
     );
 };
@@ -24,7 +25,7 @@ export const UserCourse = () => {
         <div className="flex justify-between h-screen p-8">
             <div className="w-full md:w-1/3 bg-gray-200 p-4">
                 <h2 className="text-lg font-semibold">Lado Izquierdo</h2>
-                <SidebarButton text="Perfil" />
+                <SidebarButton text="Perfil"  />
                 <SidebarButton text="Chats" />
                 <SidebarButton text="Peticiones" />
                 <div className="border border-gray-300 p-4 rounded-md shadow-lg mt-20">
