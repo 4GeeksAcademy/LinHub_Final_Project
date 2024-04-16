@@ -42,7 +42,7 @@ export const LogIn = () => {
                                 className="mt-2 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-2 px-4 rounded inline-flex items-center"
                                 type="submit"
                                 title="Ingresar"
-                                name="Ingresar"><Link to="/PageOne">Login</Link></button>
+                                name="Ingresar"><Link to="/UserCourse">Login</Link></button>
                         </form>
                         <div className="pie-form mt-4">
                             {/* <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br /> */}
