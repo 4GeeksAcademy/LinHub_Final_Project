@@ -1,7 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			currentIdiom: "Español"
+			currentIdiom: "Español",
+			userToken: sessionStorage.getItem("token") || ""
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -19,9 +20,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 					const data = await res.json();
-					console.log(data);
+					if (!res.ok) throw new Error
+					return true
 				} catch (error) {
 					console.log("There was an error creating a new user", error);
+					return false
 				}
 			},
 
@@ -35,10 +38,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					})
 					const data = await res.json()
-					console.log(data)
+					if (!res.ok) throw new Error
+					sessionStorage.setItem("token", data.token)
+					setStore({ userToken: data.token })
+					return true
 				}
 				catch (err) {
 					console.log('There was an error', err)
+					return false
 				}
 			},
 		}

@@ -1,20 +1,24 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useState } from "react";
 
 export const LogIn = () => {
     const { store, actions } = useContext(Context);
     const [userInfo, setUserInfo] = useState({ "email": "", "password": "" });
+    const [error, setError] = useState(false)
+    const navigate = useNavigate()
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
         setUserInfo(prev => ({ ...prev, [name]: value }));
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-        actions.loginUser(userInfo)
+        const logged = await actions.loginUser(userInfo)
+        if (logged) navigate('/usercourse')
+        else setError(true)
     }
 
     return (
@@ -51,7 +55,8 @@ export const LogIn = () => {
                                 onClick={(e) => handleLogin(e)}
                             >
                                 Login
-                            </button>
+                            </button><br />
+                            {error && <small>invalid email or password</small>}
                         </form>
                         <div className="pie-form mt-4">
                             {/* <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br /> */}

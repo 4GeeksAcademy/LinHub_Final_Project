@@ -18,13 +18,14 @@ export const SignUp = () => {
   const handleChange = ({ target }) => {
     const { name, value } = target
     setUserInfo({ ...userInfo, [name]: value })
-    console.log(userInfo)
   }
+  console.log(userInfo)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.createNewUser(userInfo)
-    // navigate('/login')
+    const registered = await actions.createNewUser(userInfo)
+    if (registered) navigate('/login')
+    else undefined
   };
 
   return (
@@ -80,7 +81,9 @@ export const SignUp = () => {
                   name="first_name"
                   id="first-name"
                   autoComplete="given-name"
+                  required
                   onChange={handleChange}
+                  value={userInfo.first_name}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -100,7 +103,9 @@ export const SignUp = () => {
                   name="last_name"
                   id="last-name"
                   autoComplete="family-name"
+                  required
                   onChange={handleChange}
+                  value={userInfo.last_name}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -116,7 +121,9 @@ export const SignUp = () => {
                   name="username"
                   id="username"
                   autoComplete="family-name"
+                  required
                   onChange={handleChange}
+                  value={userInfo.username}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -136,7 +143,9 @@ export const SignUp = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  required
                   onChange={handleChange}
+                  value={userInfo.email}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -160,6 +169,7 @@ export const SignUp = () => {
                   autoComplete="current-password"
                   onChange={handleChange}
                   required
+                  value={userInfo.password}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -180,6 +190,7 @@ export const SignUp = () => {
                     name="native_language"
                     autoComplete="Firts Lenguague"
                     onChange={handleChange}
+                    value={userInfo.native_language}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 w-full"
                   >
                     {store.currentIdiom !== "Español" ? (
@@ -210,6 +221,7 @@ export const SignUp = () => {
                     name="learning_language"
                     autoComplete="First Lenguague"
                     onChange={handleChange}
+                    value={userInfo.learning_language}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     {store.currentIdiom !== "Español" ? (

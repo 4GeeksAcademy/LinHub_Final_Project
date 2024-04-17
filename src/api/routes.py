@@ -64,19 +64,19 @@ def create_user():
         return jsonify({"msg": "First name and last name are required"}), 400
     
     if not username:
-        return jsonify({'msg': 'username required'})
+        return jsonify({'msg': 'username required'}), 400
     
     if not email:
-        return jsonify({'msg': 'email required'})
+        return jsonify({'msg': 'email required'}), 400
     
     if not password:
-        return jsonify({'msg': 'password required'})
+        return jsonify({'msg': 'password required'}), 400
     
     if not learning_language:
-        return jsonify({'msg': 'learning language required'})
+        return jsonify({'msg': 'learning language required'}), 400
     
     if not native_language:
-        return jsonify({'msg': 'native language required'})
+        return jsonify({'msg': 'native language required'}), 400
     
     password_in_bytes = bytes(password, 'utf-8')
 
@@ -120,7 +120,7 @@ def login():
     password = request.json.get('password', None)
 
     if not email or not password:
-        return jsonify({'msg': 'email and password needed'})
+        return jsonify({'msg': 'email and password required'}), 400
     
     user = User.query.filter_by(email = email).one_or_none()
     
@@ -128,8 +128,8 @@ def login():
         check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
             access_token = create_access_token(identity=email)
-            return jsonify({'token': access_token, 'identity': user.email})
+            return jsonify({'token': access_token, 'identity': user.email}), 200
         else:
-            return jsonify({'msg': 'wrong password'})
+            return jsonify({'msg': 'wrong password'}) , 404
     else:
-        return jsonify({'msg': 'user not found'})
+        return jsonify({'msg': 'user not found'}), 404
