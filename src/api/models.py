@@ -22,9 +22,10 @@ class User(db.Model):
 
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def __init__(self, first_name, last_name, email, password, is_active, learning_language, native_language):
+    def __init__(self, first_name, last_name, username, email, password, is_active, learning_language, native_language):
         self.first_name = first_name
         self.last_name = last_name
+        self.username = username
         self.email = email
         self.password = password
         self.is_active = is_active
@@ -39,6 +40,7 @@ class User(db.Model):
             "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "username": self.username,
             "email": self.email,
             "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
             "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",

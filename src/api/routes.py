@@ -52,8 +52,8 @@ def create_user():
     username = request_body.get('username')
     email = request_body.get('email')
     password = request_body.get('password')
-    learning_language = Language.query.filter_by(Language_name=request_body.get("learning_language")).first()
-    native_language = Language.query.filter_by(Language_name=request_body.get("native_language")).first()
+    learning_language = Language.query.filter_by(language_name=request_body.get("learning_language")).first()
+    native_language = Language.query.filter_by(language_name=request_body.get("native_language")).first()
     is_active = True
 
     if not first_name or not last_name:
@@ -68,11 +68,11 @@ def create_user():
     if not password:
         return jsonify({'msg': 'password required'})
     
-    if not learning_language:
-        return jsonify({'msg': 'learning language required'})
+    # if not learning_language:
+    #     return jsonify({'msg': 'learning language required'})
     
-    if not native_language:
-        return jsonify({'msg': 'native language required'})
+    # if not native_language:
+    #     return jsonify({'msg': 'native language required'})
 
     new_user = User(
         first_name=first_name,
