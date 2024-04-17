@@ -1,8 +1,6 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
@@ -10,30 +8,24 @@ import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-const steps = ['dog', 'cat', 'house', 'car', 'pencil', 'flower'];
+const steps = {
+  'dog': 'https://cdn.pixabay.com/photo/2018/05/26/18/06/dog-3431913_640.jpg',
+  'cat': 'https://cdn.pixabay.com/photo/2024/04/11/12/31/cat-8689791_640.png',
+  'house': 'https://cdn.pixabay.com/photo/2014/03/25/16/57/house-297700_640.png',
+  'car': 'https://cdn.pixabay.com/photo/2019/03/19/09/04/car-4065110_640.png',
+  'pencil': 'https://cdn.pixabay.com/photo/2012/04/18/14/50/pencil-37254_640.png',
+  'flower': 'https://cdn.pixabay.com/photo/2024/03/24/15/04/flower-8653284_640.png'
+};
+
 
 export function Exercise() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
   const [selectedOption, setSelectedOption] = React.useState(null);
   const [answerIsCorrect, setAnswerIsCorrect] = React.useState(null);
   const [correctAnswers, setCorrectAnswers] = React.useState(0);
   const theme = useTheme();
 
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
     if (answerIsCorrect === steps[activeStep]) {
       setCorrectAnswers(correctAnswers + 1);
       console.log(answerIsCorrect);
@@ -41,7 +33,6 @@ export function Exercise() {
     }
     setSelectedOption(null);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleReset = () => {
@@ -76,11 +67,7 @@ export function Exercise() {
               </Button>
             }
           />
-          {steps.map((label, index) => {
-            const stepProps = {};
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
+          {Object.keys(steps).map((label, index) => {
             return (
               <Step key={label}>
               </Step>
@@ -102,7 +89,7 @@ export function Exercise() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Typography className='flex justify-center' sx={{ mt: 2, mb: 1 }}><strong>Select the: {steps[activeStep]}</strong></Typography>
+            <Typography className='flex justify-center' sx={{ mt: 2, mb: 1 }}><strong>Select the: {Object.keys(steps)[activeStep]}</strong></Typography>
             <div className="flex flex-wrap justify-center flex-column">
               <div className="flex justify-center mt-4">
                 <Button
