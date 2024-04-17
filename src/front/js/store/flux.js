@@ -8,7 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeLanguage: (language) => {
 				setStore({ currentIdiom: language })
 			},
-			
+
 			createNewUser: async (userInfo) => {
 				try {
 					const res = await fetch(process.env.BACKEND_URL + '/api/users', {
@@ -25,19 +25,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			loginUser: (userInfo) => {
-				fetch(process.env.BACKEND_URL + "/api/users", {
-					method: "POST",
-					body: JSON.stringify(userInfo),
-					headers: {
-						"Content-Type": "application/json"
-					}
-				})
-					.then(response => response.json())
-					.then(data => {
-						console.log(data);
+			loginUser: async (userInfo) => {
+				try {
+					const res = await fetch(process.env.BACKEND_URL + "/api/users", {
+						method: "POST",
+						body: JSON.stringify(userInfo),
+						headers: {
+							"Content-Type": "application/json"
+						}
 					})
-					.catch(error => console.log("There was an error logging in the user", error));
+					const data = await res.json()
+					console.log(data)
+				}
+				catch (err) {
+					console.log('There was an error', err)
+				}
 			},
 		}
 	}

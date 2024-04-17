@@ -12,6 +12,11 @@ export const LogIn = () => {
         setUserInfo(prev => ({ ...prev, [name]: value }));
     }
 
+    const handleLogin = (e) => {
+        e.preventDefault()
+        actions.loginUser(userInfo)
+    }
+
     return (
         <>
             <div className="flex items-center justify-center min-w-screen w-full h-full" style={{ minHeight: '88vh' }}>
@@ -42,7 +47,11 @@ export const LogIn = () => {
                                 className="mt-2 bg-purple-900 hover:bg-purple-700 text-purple-200 hover:text-purple-50 font-overpass text-base font-semibold py-2 px-4 rounded inline-flex items-center"
                                 type="submit"
                                 title="Ingresar"
-                                name="Ingresar"><Link to="/UserCourse">Login</Link></button>
+                                name="Ingresar"
+                                onClick={(e) => handleLogin(e)}
+                            >
+                                Login
+                            </button>
                         </form>
                         <div className="pie-form mt-4">
                             {/* <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br /> */}
