@@ -24,12 +24,12 @@ export const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     actions.createNewUser(userInfo)
-    navigate('/login')
+    // navigate('/login')
   };
 
   return (
     <div className='flex flex-col justify-around items-center'>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div className=" flex flex-row justify-center my-4">
           <div id="text-form-title" className="text-3xl text-violet-500 ">
             <div className="mt-12">
@@ -49,7 +49,7 @@ export const SignUp = () => {
           <img id="pingui-form" className="" src="https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/main/src/front/img/section_two.svg" alt="LinHub Penguin (Logo)" margin-left="800px" width="150px" />
 
         </div>
-        <div id="form1" className="border border-gray-900/10 pb-15 p-5 rounded-lg shadow-2">
+        <div id="form1" className="border border-gray-900/10 pb-15 p-4 rounded-lg shadow-2">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             {store.currentIdiom !== "Español" ? (
               <>Personal Information</>

@@ -6,6 +6,7 @@ from api.models import db, User, Language
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -48,6 +49,7 @@ def create_user():
 
     first_name = request_body.get('first_name')
     last_name = request_body.get('last_name')
+    username = request_body.get('username')
     email = request_body.get('email')
     password = request_body.get('password')
     learning_language = Language.query.filter_by(Language_name=request_body.get("learning_language")).first()
@@ -56,16 +58,33 @@ def create_user():
 
     if not first_name or not last_name:
         return jsonify({"msg": "First name and last name are required"}), 400
+    
+    if not username:
+        return jsonify({'msg': 'username required'})
+    
+    if not email:
+        return jsonify({'msg': 'email required'})
+    
+    if not password:
+        return jsonify({'msg': 'password required'})
+    
+    if not learning_language:
+        return jsonify({'msg': 'learning language required'})
+    
+    if not native_language:
+        return jsonify({'msg': 'native language required'})
 
     new_user = User(
         first_name=first_name,
         last_name=last_name,
+        username=username,
         email=email,
         password=password,
         is_active=is_active,
         learning_language=learning_language,
         native_language=native_language
     )
+
     db.session.add(new_user)
     try:
         db.session.commit()

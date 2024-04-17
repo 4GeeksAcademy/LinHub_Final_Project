@@ -8,6 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeLanguage: (language) => {
 				setStore({ currentIdiom: language })
 			},
+			
 			createNewUser: async (userInfo) => {
 				try {
 					const res = await fetch(process.env.BACKEND_URL + '/api/users', {
@@ -23,6 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("There was an error creating a new user", error);
 				}
 			},
+
 			loginUser: (userInfo) => {
 				fetch(process.env.BACKEND_URL + "/api/users", {
 					method: "POST",
