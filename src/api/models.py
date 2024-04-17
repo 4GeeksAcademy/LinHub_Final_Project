@@ -8,6 +8,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(120), unique=False, nullable=False)
     last_name = db.Column(db.String(120), unique=False, nullable=False)
+    username = db.Column(db.String(120), unique = True, nullable = False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
 
@@ -58,3 +59,54 @@ class Language(db.Model):
             "id": self.id,
             "language_name": self.language_name
         }
+
+class Course(db.Model):
+    __tablename__ = "courses"
+
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    course_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
+
+    def __repr__(self):
+        return f'<Course {self.id}'
+
+class Module(db.Model):
+    __tablename__ = "modules"
+
+    id = db.Column(db.Integer, primary_key = True)
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    module_name = db.Column(db.String, nullable = False)
+
+    def __repr__(self):
+        return f'<Module {self.course_name}'
+
+class Lesson(db.Model):
+    __tablename__ = "lessons"
+
+    id = db.Column(db.Integer, primary_key = True)
+    module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
+    lesson_name = db.Column(db.String, nullable = False)
+
+    def __repr__(self):
+        return f'<Lesson {self.course_name}'
+
+class Question(db.Model):
+    __tablename__ = "questions"
+
+    id = db.Column(db.Integer, primary_key = True)
+    lesson_id = db.Column(db.Integer, db.ForeignKey('lessons.id'))
+    question = db.Column(db.String, nullable = False)
+
+    def __repr__(self):
+        return f'<Question {self.question}'
+
+class Option(db.Model):
+    __tablename__ = "options"
+
+    id = db.Column(db.Integer, primary_key = True)
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    option = db.Column(db.String, nullable = False)
+    correct = db.Column(db.Boolean, nullable = False)
+
+    def __repr__(self):
+        return f'<Option {self.option}'
