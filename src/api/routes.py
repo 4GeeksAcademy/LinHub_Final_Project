@@ -127,8 +127,8 @@ def login():
     if user != None:
         check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
-            # access_token = create_access_token(identity=email)
-            return jsonify({'msg': 'welcome to linhub'})
+            access_token = create_access_token(identity=email)
+            return jsonify({'token': access_token, 'identity': user.email})
         else:
             return jsonify({'msg': 'wrong password'})
     else:
