@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createNewUser: async (userInfo) => {
 				try {
-					const res = await fetch(process.env.BACKEND_URL + '/api/users', {
+					const res = await fetch(process.env.BACKEND_URL + '/api/register', {
 						method: "POST",
 						body: JSON.stringify(userInfo),
 						headers: {
@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			loginUser: async (userInfo) => {
 				try {
-					const res = await fetch(process.env.BACKEND_URL + "/api/users", {
+					const res = await fetch(process.env.BACKEND_URL + "/api/login", {
 						method: "POST",
 						body: JSON.stringify(userInfo),
 						headers: {
