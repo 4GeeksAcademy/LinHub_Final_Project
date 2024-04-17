@@ -10,7 +10,7 @@ class User(db.Model):
     last_name = db.Column(db.String(120), unique=False, nullable=False)
     username = db.Column(db.String(120), unique = True, nullable = False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(200), unique=False, nullable=False)
 
     # user native language
     learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
