@@ -8,17 +8,8 @@ import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-const steps = {
-  'dog': 'https://cdn.pixabay.com/photo/2018/05/26/18/06/dog-3431913_640.jpg',
-  'cat': 'https://cdn.pixabay.com/photo/2024/04/11/12/31/cat-8689791_640.png',
-  'house': 'https://cdn.pixabay.com/photo/2014/03/25/16/57/house-297700_640.png',
-  'car': 'https://cdn.pixabay.com/photo/2019/03/19/09/04/car-4065110_640.png',
-  'pencil': 'https://cdn.pixabay.com/photo/2012/04/18/14/50/pencil-37254_640.png',
-  'flower': 'https://cdn.pixabay.com/photo/2024/03/24/15/04/flower-8653284_640.png'
-};
 
-
-export function Exercise() {
+export function Exercise(steps) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [selectedOption, setSelectedOption] = React.useState(null);
   const [answerIsCorrect, setAnswerIsCorrect] = React.useState(null);
@@ -26,11 +17,12 @@ export function Exercise() {
   const theme = useTheme();
 
   const handleNext = () => {
-    if (answerIsCorrect === steps[activeStep]) {
+    if (answerIsCorrect === Object.keys(steps)[activeStep]) {
       setCorrectAnswers(correctAnswers + 1);
-      console.log(answerIsCorrect);
-      console.log(steps[activeStep]);
     }
+    console.log('answerIsCorrect', answerIsCorrect);
+    console.log(Object.keys(steps)[activeStep]);
+
     setSelectedOption(null);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -50,14 +42,14 @@ export function Exercise() {
       <div className="w-100">
         <Stepper activeStep={activeStep}>
           <MobileStepper
-            className="w-full"
+            className=""
             variant="progress"
             steps={6}
             position="static"
             activeStep={activeStep}
-            sx={{ maxWidth: '100%', flexGrow: 2 }} // Modified width to be 100%
+            sx={{ maxWidth: '100%', flexGrow: 1 }} // Modified width to be 100%
             nextButton={
-              <Button size="small" onClick={handleNext} disabled={activeStep === 6}>
+              <Button size="small" onClick={handleNext} disabled={activeStep === Object.keys(steps).length}>
                 Next
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowLeft />
@@ -74,7 +66,7 @@ export function Exercise() {
             );
           })}
         </Stepper>
-        {activeStep === steps.length ? (
+        {activeStep === Object.keys(steps).length ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
               All steps completed - you&apos;re finished
@@ -92,50 +84,17 @@ export function Exercise() {
             <Typography className='flex justify-center' sx={{ mt: 2, mb: 1 }}><strong>Select the: {Object.keys(steps)[activeStep]}</strong></Typography>
             <div className="flex flex-wrap justify-center flex-column">
               <div className="flex justify-center mt-4">
-                <Button
-                  className='mx-2'
-                  variant={selectedOption === 1 ? 'contained' : 'outlined'}
-                  onClick={() => { handleOptionSelect(1); setAnswerIsCorrect(steps[0]); }}
-                >
-                  <img style={{ width: '150px', height: '150px' }} src="https://cdn.pixabay.com/photo/2024/04/11/12/31/cat-8689791_640.png" alt="cat" />
-                </Button>
-                <Button
-                  className='mx-2'
-                  variant={selectedOption === 2 ? 'contained' : 'outlined'}
-                  onClick={() => { handleOptionSelect(2); setAnswerIsCorrect(steps[1]); }}
-                >
-                  <img style={{ width: '150px', height: '150px' }} src="https://cdn.pixabay.com/photo/2018/05/26/18/06/dog-3431913_640.jpg" alt="dog" />
-                </Button>
-                <Button
-                  className='mx-2'
-                  variant={selectedOption === 3 ? 'contained' : 'outlined'}
-                  onClick={() => { handleOptionSelect(3); setAnswerIsCorrect(steps[2]); }}
-                >
-                  <img style={{ width: '150px', height: '150px' }} src="https://cdn.pixabay.com/photo/2014/03/25/16/57/house-297700_640.png" alt="house" />
-                </Button>
-              </div>
-              <div className="flex justify-center mt-4">
-                <Button
-                  className='mx-2'
-                  variant={selectedOption === 4 ? 'contained' : 'outlined'}
-                  onClick={() => { handleOptionSelect(4); setAnswerIsCorrect(steps[3]); }}
-                >
-                  <img style={{ width: '150px', height: '150px' }} src="https://cdn.pixabay.com/photo/2019/03/19/09/04/car-4065110_640.png" alt="car" />
-                </Button>
-                <Button
-                  className='mx-2'
-                  variant={selectedOption === 5 ? 'contained' : 'outlined'}
-                  onClick={() => { handleOptionSelect(5); setAnswerIsCorrect(steps[4]) }}
-                >
-                  <img style={{ width: '150px', height: '150px' }} src="https://cdn.pixabay.com/photo/2012/04/18/14/50/pencil-37254_640.png" alt="pencil" />
-                </Button>
-                <Button
-                  className='mx-2'
-                  variant={selectedOption === 6 ? 'contained' : 'outlined'}
-                  onClick={() => { handleOptionSelect(6); setAnswerIsCorrect(steps[5]) }}
-                >
-                  <img style={{ width: '150px', height: '150px' }} src="https://cdn.pixabay.com/photo/2024/03/24/15/04/flower-8653284_640.png" alt="flower" />
-                </Button>
+                {Object.keys(steps).map((label, index) => (
+                  <Button
+                    key={index}
+                    className='mx-2'
+                    variant={selectedOption === index + 1 ? 'contained' : 'outlined'}
+                    onClick={() => { handleOptionSelect(index + 1); setAnswerIsCorrect(label); }}
+                  >
+                    <img style={{ width: '150px', height: '150px' }} src={steps[label]} alt={label} />
+                  </Button>
+
+                ))}
               </div>
             </div>
           </React.Fragment>
