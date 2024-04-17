@@ -89,12 +89,18 @@ def create_user():
         salt=salt
     )
 
+    check = bcrypt.checkpw(
+            password = password_in_bytes,
+            hashed_password = hash_password
+        )
+
     new_user = User(
         first_name=first_name,
         last_name=last_name,
         username=username,
         email=email,
-        password=hash_password,
+        password=hash_password.decode('utf-8'),
+        salt=salt.decode('utf-8'),
         is_active=is_active,
         learning_language=learning_language,
         native_language=native_language
@@ -103,7 +109,7 @@ def create_user():
     db.session.add(new_user)
     try:
         db.session.commit()
-        return jsonify([new_user.serialize(), {"hash": hash_password.decode('utf-8')}]), 201
+        return jsonify([new_user.serialize(), {"hash": hash_password.decode('utf-8'), "salt": salt.decode('utf-8'), "check":check}]), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "Error creating user", "error": str(e)}), 500
@@ -119,13 +125,10 @@ def login():
     user = User.query.filter_by(email = email).one_or_none()
     
     if user != None:
-        check = bcrypt.checkpw(
-            password = bytes(password, 'utf-8'),
-            hashed_password = bytes(user.password, 'utf-8')
-        )
+        check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
-            access_token = create_access_token(identity=email)
-            return jsonify(access_token = access_token)
+            # access_token = create_access_token(identity=email)
+            return jsonify({'msg': 'welcome to linhub'})
         else:
             return jsonify({'msg': 'wrong password'})
     else:

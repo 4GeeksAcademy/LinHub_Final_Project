@@ -11,6 +11,7 @@ class User(db.Model):
     username = db.Column(db.String(120), unique = True, nullable = False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
+    salt = db.Column(db.String(90), unique=False, nullable=False)
 
     # user native language
     learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
@@ -22,12 +23,13 @@ class User(db.Model):
 
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def __init__(self, first_name, last_name, username, email, password, is_active, learning_language, native_language):
+    def __init__(self, first_name, last_name, username, email, salt, password, is_active, learning_language, native_language):
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
         self.email = email
         self.password = password
+        self.salt = salt
         self.is_active = is_active
         self.learning_language = learning_language
         self.native_language = native_language
