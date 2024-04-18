@@ -16,15 +16,6 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-languages = [
-    {
-        "language_name": "English"
-    },
-    {
-        "language_name": "Español"
-    }
-]
-
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
