@@ -16,15 +16,6 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-languages = [
-    {
-        "language_name": "English"
-    },
-    {
-        "language_name": "Español"
-    }
-]
-
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
@@ -133,3 +124,7 @@ def login():
             return jsonify({'msg': 'wrong password'}) , 404
     else:
         return jsonify({'msg': 'user not found'}), 404
+
+# @api.route('profile/<str:username>')
+# @jwt_required
+# def profile_info(username):
