@@ -21,6 +21,9 @@ const LessonItem = ({ title, isCompleted }) => {
 };
 
 export const UserCourse = () => {
+
+    
+
     return (
         <div className="flex justify-between h-screen p-8">
             <div className="w-full md:w-1/3 bg-gray-200 p-4">

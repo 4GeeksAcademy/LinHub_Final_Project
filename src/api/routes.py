@@ -128,7 +128,7 @@ def login():
         check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
             access_token = create_access_token(identity=email)
-            return jsonify({'token': access_token, 'identity': user.email}), 200
+            return jsonify({'token': access_token, 'identity': user.username}), 200
         else:
             return jsonify({'msg': 'wrong password'}) , 404
     else:

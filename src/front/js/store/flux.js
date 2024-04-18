@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			currentIdiom: "Español",
-			userToken: sessionStorage.getItem("token") || ""
+			userToken: JSON.parse(sessionStorage.getItem('userData')) || ""
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -21,7 +21,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await res.json();
 					if (!res.ok) throw new Error
-					console.log(data)
 					return true
 				} catch (error) {
 					console.log(error);
@@ -37,16 +36,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json"
 						}
-					})
-					const data = await res.json()
-					if (!res.ok) throw new Error
-					sessionStorage.setItem("token", data.token)
-					setStore({ userToken: data.token })
-					return true
-				}
-				catch (err) {
-					console.log('There was an error', err)
-					return false
+					});
+					const data = await res.json();
+					if (!res.ok) throw new Error("Invalid credentials");
+
+					// Guardar el token en sessionStorage
+					sessionStorage.setItem("userData", JSON.stringify(data));
+
+					// Actualizar el store con el token
+					setStore({ userToken: data });
+					// const store = getStore()
+					// console.log(store.userToken);
+
+					return true;
+				} catch (error) {
+					console.error("Error logging in:", error);
+					return false;
 				}
 			},
 		}
