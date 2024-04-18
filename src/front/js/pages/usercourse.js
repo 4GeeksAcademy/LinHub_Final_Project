@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,7 +23,9 @@ const LessonItem = ({ title, isCompleted }) => {
 
 export const UserCourse = () => {
 
-    
+    useEffect(()=>{
+        
+    },[])
 
     return (
         <div className="flex justify-between h-screen p-8">

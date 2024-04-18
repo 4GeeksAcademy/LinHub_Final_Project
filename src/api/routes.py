@@ -133,3 +133,7 @@ def login():
             return jsonify({'msg': 'wrong password'}) , 404
     else:
         return jsonify({'msg': 'user not found'}), 404
+
+# @api.route('profile/<str:username>')
+# @jwt_required
+# def profile_info(username):
