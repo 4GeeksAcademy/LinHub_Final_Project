@@ -104,6 +104,10 @@
     box-shadow: 0px 20px 20px rgb(138, 138, 138);
 }
 
+.shadow-3{
+    box-shadow: 0px 20px 20px rgb(138, 138, 138);
+}
+
 .illustration{
     align-self: center;
     margin: 0 10px
