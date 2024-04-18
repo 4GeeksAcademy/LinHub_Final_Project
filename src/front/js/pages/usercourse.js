@@ -1,6 +1,7 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { useEffect, useContext } from 'react';
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -23,15 +24,24 @@ const LessonItem = ({ title, isCompleted }) => {
 
 export const UserCourse = () => {
 
-    useEffect(()=>{
-        
-    },[])
+    const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (store.userToken) {
+            // actions.getModuleInfo()
+            console.log('logged')
+        }
+        else {
+            navigate('/')
+        }
+    }, [])
 
     return (
         <div className="flex justify-between h-screen p-8">
             <div className="w-full md:w-1/3 bg-gray-200 p-4">
                 <h2 className="text-lg font-semibold">Lado Izquierdo</h2>
-                <SidebarButton text="Perfil"  />
+                <SidebarButton text="Perfil" />
                 <SidebarButton text="Chats" />
                 <SidebarButton text="Peticiones" />
                 <div className="border border-gray-300 p-4 rounded-md shadow-lg mt-20">
@@ -43,18 +53,18 @@ export const UserCourse = () => {
             </div>
             <div className="hidden md:block w-2/3 bg-white-300 p-4">
 
-                
+
 
                 <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden flex p-3">
                     <div className="absolute left-0 top-0 h-full bg-violet-500 animate-progress-stripes" style={{ width: '65%' }}></div>
                 </div>
 
-                
+
 
                 <div className='flex flex-row justify-around mt-3'>
-                    <p> 5 <FontAwesomeIcon icon={faHeart} size= "2xl" style={{color: "#ff3d3d",}} /></p>
+                    <p> 5 <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#ff3d3d", }} /></p>
                     <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" secondaryColor="red" style={{ color: "#ff9a57", secondaryColor: "red" }} />  </p>
-                    <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{width: '40px'}} />
+                    <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
 
                 </div>
 
