@@ -54,6 +54,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			logOut: () => {
+				console.log('out')
+				sessionStorage.clear()
+				setStore({ userToken: "" })
+				window.location.href = '/'
+			}
 		}
 	}
 };
