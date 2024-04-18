@@ -8,6 +8,7 @@ import { LogIn } from "./pages/logIn";
 import { SignUp } from "./pages/signUp";
 import { UserCourse } from "./pages/usercourse";
 import { Exercise } from "./pages/exercises/exercise";
+import { UserProfile } from "./pages/userprofile";
 
 import Navbar from "./component/Navbar";
 import injectContext from "./store/appContext";
@@ -31,6 +32,7 @@ const Layout = () => {
                         <Route element={<SignUp />} path="/signup" />
                         <Route element={<UserCourse />} path="/usercourse" />
                         <Route element={<Exercise />} path="/exercise" />
+                        <Route element={<UserProfile />} path="/userprofile" />
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>

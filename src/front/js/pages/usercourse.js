@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SidebarButton = ({ text }) => {
     return (
-        <button id='boton-pageOne' type="button" className="block m-auto text-center m-0 p-0 h-14 rounded-xl border-0 w-full md:w-96 mt-10">
+        <button id='boton-pageOne' type="button" className="block m-auto mt-5 text-center m-0 p-3 h-14 rounded-xl border-0 w-full md:w-96 mt-10">
             {text}
         </button>
     );
@@ -37,11 +37,10 @@ export const UserCourse = () => {
             </div>
             <div className="hidden md:block w-2/3 bg-white-300 p-4">
 
-                <h2 className="text-lg font-semibold">Lado Derecho</h2>
+                
 
-
-                <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden flex">
-                    <div className="absolute left-0 top-0 h-full bg-purple-200 animate-progress-stripes" style={{ width: '65%' }}></div>
+                <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden flex p-3">
+                    <div className="absolute left-0 top-0 h-full bg-violet-500 animate-progress-stripes" style={{ width: '65%' }}></div>
                 </div>
 
                 
