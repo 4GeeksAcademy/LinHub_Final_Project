@@ -17,7 +17,7 @@ export const LogIn = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         const logged = await actions.loginUser(userInfo)
-        if (logged) navigate(`/usercourse/${userInfo.username}`)
+        if (logged) navigate(`/usercourse`)
         else setError(true)
     }
 

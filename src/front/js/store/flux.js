@@ -21,9 +21,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await res.json();
 					if (!res.ok) throw new Error
+					console.log(data)
 					return true
 				} catch (error) {
-					console.log("There was an error creating a new user", error);
+					console.log(error);
 					return false
 				}
 			},
