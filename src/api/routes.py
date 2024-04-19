@@ -36,18 +36,21 @@ def get_languages():
     languages = list(map(lambda x: x.serialize(), languages))
     return jsonify(languages), 200
 
+# Obtain lessons
 @api.route('/lessons', methods=['GET'])
 def get_lessons():
     lessons = Lesson.query.all()
     lessons = list(map(lambda x: x.serialize(), lessons))
     return jsonify(lessons), 200
 
+# Obtain Module
 @api.route('/module', methods=['GET'])
 def get_module():
     module = Module.query.all()
     module = list(map(lambda x: x.serialize(), module))
     return jsonify(module), 200
 
+# Crear Module
 @api.route('/module', methods=['POST'])
 def create_module():
     request_body = request.get_json()
@@ -61,6 +64,7 @@ def create_module():
     db.session.commit()
     return "Sucess", 200
 
+# Register End Point
 @api.route('/register', methods=['POST'])
 def create_user():
     request_body = request.get_json()
@@ -130,6 +134,8 @@ def create_user():
         db.session.rollback()
         return jsonify({"msg": "Error creating user", "error": str(e)}), 500
     
+
+# Login management end point    
 @api.route('/login', methods=['POST'])
 def login():
     email = request.json.get('email', None)
