@@ -48,6 +48,9 @@ class User(db.Model):
             "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
             "is_active": self.is_active
         }
+   
+     
+
 
 class Language(db.Model):
     __tablename__ = "languages"
@@ -70,6 +73,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     course_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
+    language = db.relationship(Language)
 
     def __repr__(self):
         return f'<Course {self.id}'
@@ -80,9 +84,22 @@ class Module(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     module_name = db.Column(db.String, nullable = False)
+    course = db.relationship(Course)
+    
 
     def __repr__(self):
-        return f'<Module {self.course_name}'
+        return f'<Module {self.module_name}'
+    
+    def serialize(self):
+        return{
+            "id": self.id,
+            "module_name": self.module_name,
+            "lessons": [ item.serialize() for item in self.lessons]
+        }
+    def __init__(self, module_name,course_id):
+            self.module_name = module_name
+            self.course_id = course_id
+            
 
 class Lesson(db.Model):
     __tablename__ = "lessons"
@@ -90,9 +107,17 @@ class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
     lesson_name = db.Column(db.String, nullable = False)
+    class_module = db.relationship(Module,backref="lessons")
 
     def __repr__(self):
         return f'<Lesson {self.course_name}'
+    
+    def serialize(self):
+            return {
+                "id": self.id,
+                "lesson_name":self.lesson_name,
+                "module_id": self.module_id
+            }
 
 class Question(db.Model):
     __tablename__ = "questions"

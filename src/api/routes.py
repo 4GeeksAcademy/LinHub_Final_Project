@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Language
+from api.models import db, User, Language,Lesson,Module
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -36,6 +36,30 @@ def get_languages():
     languages = list(map(lambda x: x.serialize(), languages))
     return jsonify(languages), 200
 
+@api.route('/lessons', methods=['GET'])
+def get_lessons():
+    lessons = Lesson.query.all()
+    lessons = list(map(lambda x: x.serialize(), lessons))
+    return jsonify(lessons), 200
+
+@api.route('/module', methods=['GET'])
+def get_module():
+    module = Module.query.all()
+    module = list(map(lambda x: x.serialize(), module))
+    return jsonify(module), 200
+
+@api.route('/module', methods=['POST'])
+def create_module():
+    request_body = request.get_json()
+    if not request_body:
+        return jsonify({"msg": "No data provided"}), 400
+
+    course_id = request_body.get('course_id')
+    module_name = request_body.get('module_name')
+    new_mudule = Module(module_name = module_name, course_id = course_id)
+    db.session.add(new_mudule)
+    db.session.commit()
+    return "Sucess", 200
 
 @api.route('/register', methods=['POST'])
 def create_user():
