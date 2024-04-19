@@ -92,22 +92,22 @@ export const UserProfile = () => {
                             </div>
                             <div class="mt-1">
                                 <div class="sm:col-span-3">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                         {store.currentIdiom !== "Español" ? (
-                                            <>First name</>
+                                            <>Email</>
                                         ) : (
-                                            <>Nombre</>
+                                            <>Correo</>
                                         )}
                                     </label>
                                     <div className="">
                                         <input
                                             type="text"
-                                            name="first_name"
-                                            id="first-name"
-                                            defaultValue= {user?.first_name}
+                                            name="email"
+                                            id="email"
+                                            defaultValue= {user?.email}
                                             onChange={handleChange}
                                             autoComplete="family-name"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
 
@@ -116,19 +116,19 @@ export const UserProfile = () => {
                                 </div>
                                 <div class="sm:col-span-3">
 
-                                    <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                         {store.currentIdiom !== "Español" ? (
-                                            <>Email</>
+                                            <>Password</>
                                         ) : (
-                                            <>Email</>
+                                            <>Contraseña</>
                                         )}
                                     </label>
                                     <div className="">
                                         <input
                                             type="text"
-                                            name="last_name"
-                                            id="last-name"
-                                            defaultValue= {user?.last_name}
+                                            name="password"
+                                            id="password"
+                                            defaultValue= {user?.password}
                                             onChange={handleChange}
                                             autoComplete="family-name"
                                             className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

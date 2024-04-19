@@ -87,9 +87,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const res = await fetch(process.env.BACKEND_URL + "/api/user", {
 						method: "PUT",
 						body: JSON.stringify({
-							last_name: user.last_name ,
-							username: user.username,
-							first_name: user.first_name, }),
+							username: user.username ,
+							email: user.email,
+							password: user.password, }),
 
 						headers: {
 							"Access-Control-Allow-Credentials": true,
