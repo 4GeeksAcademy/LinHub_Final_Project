@@ -15,7 +15,7 @@ import bcrypt
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
-CORS(api)
+CORS(api, supports_credentials= True)
 
 @api.route('/users', methods=['GET'])
 def get_users():
@@ -157,6 +157,18 @@ def login():
         return jsonify({'msg': 'user not found'}), 404
 
 
+@api.route('/currentUser', methods=['GET'])
+@jwt_required()
+def get_current_user():
+
+    email = get_jwt_identity()
+    user = User.query.filter_by(email=email).one_or_none() 
+
+    if user is None:
+        raise APIException('User not found', status_code=404)
+    return jsonify(user.serialize()), 200
+
+
 @api.route("/user", methods=["PUT"])
 @jwt_required()
 def update_user():
@@ -190,3 +202,4 @@ def update_user():
 # @api.route('profile/<str:username>')
 # @jwt_required
 # def profile_info(username):
+
