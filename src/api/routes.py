@@ -59,8 +59,8 @@ def create_module():
 
     course_id = request_body.get('course_id')
     module_name = request_body.get('module_name')
-    new_mudule = Module(module_name = module_name, course_id = course_id)
-    db.session.add(new_mudule)
+    new_module = Module(module_name = module_name, course_id = course_id)
+    db.session.add(new_module)
     db.session.commit()
     return "Sucess", 200
 
