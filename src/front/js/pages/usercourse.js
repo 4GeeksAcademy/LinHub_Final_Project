@@ -46,7 +46,9 @@ export const UserCourse = () => {
         <div className="flex justify-between p-8" style={{ minHeight: '89vh' }}>
             <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-xl">
                 {/* <h2 className="text-lg font-semibold">Lado Izquierdo</h2> */}
+                <Link to="/userprofile">
                 <SidebarButton text="Perfil" />
+                </Link>
                 <SidebarButton text="Chats" />
                 <SidebarButton text="Peticiones" />
                 <div className="border border-gray-300 p-4 rounded-2xl shadow-lg mt-12">

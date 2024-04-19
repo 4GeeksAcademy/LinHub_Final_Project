@@ -1,9 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const UserProfile = () => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate()
+    const [user, setUser] = useState(null)
+
+    const handleChange = ({ target }) => {
+        const { name, value } = target;
+        setUser(prev => ({ ...prev, [name]: value }));
+    }
+
+    const handleCancel= async () => {
+      
+        navigate("/usercourse/username")
+    }
+
+    const handleSave= async () => {
+        const userSave = await actions.updateUser(store.userToken.token, user)
+        navigate("/usercourse/username")
+    }
+     
+    useEffect(() => {
+        if (store.userToken) {
+            console.log(store.userToken)
+             const getCurrentUser = async (e) => {
+             //   e.preventDefault()
+                const user = await actions.currentUser(store.userToken.token)
+                setUser(user)
+             
+            }
+        getCurrentUser()
+        }
+        
+        else {
+            navigate('/')
+        }
+    }, [])
+
+
     return (<>
         <div className='mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3 bg-gradient-to-br from-indigo-100 to-purple-400'>
             <form>
@@ -54,6 +91,8 @@ export const UserProfile = () => {
                                 </label>
                                 <div className="">
                                     <input
+                                        defaultValue= {user?.username}
+                                        onChange={handleChange}
                                         type="text"
                                         name="username"
                                         id="username"
@@ -76,6 +115,8 @@ export const UserProfile = () => {
                                             type="text"
                                             name="first_name"
                                             id="first-name"
+                                            defaultValue= {user?.first_name}
+                                            onChange={handleChange}
                                             autoComplete="family-name"
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -97,6 +138,8 @@ export const UserProfile = () => {
                                             type="text"
                                             name="last_name"
                                             id="last-name"
+                                            defaultValue= {user?.last_name}
+                                            onChange={handleChange}
                                             autoComplete="family-name"
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -105,7 +148,7 @@ export const UserProfile = () => {
                                 </div>
 
                                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                                    <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+                                    <button onClick={handleCancel} type="button" class="text-sm font-semibold leading-6 text-gray-900">
                                         {store.currentIdiom !== "Español" ? (
                                             <>Cancel</>
                                         ) : (
@@ -113,7 +156,8 @@ export const UserProfile = () => {
                                         )}
 
                                     </button>
-                                    <button type="submit" class="rounded-md bg-purple-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    <button onClick= {handleSave} type= "button" class="rounded-md bg-purple-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    
                                     {store.currentIdiom !== "Español" ? (
                                             <>Save</>
                                         ) : (
