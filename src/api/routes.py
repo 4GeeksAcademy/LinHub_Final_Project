@@ -8,6 +8,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+
 import bcrypt
 
 
@@ -124,6 +125,37 @@ def login():
             return jsonify({'msg': 'wrong password'}) , 404
     else:
         return jsonify({'msg': 'user not found'}), 404
+
+
+@api.route("/user", methods=["PUT"])
+@jwt_required()
+def update_user():
+
+    first_name = request.json.get("first_name", None)
+    last_name = request.json.get("last_name", None)
+    username = request.json.get("username", None)
+
+    if first_name == None or last_name == None or username == None:
+        return jsonify({"msg": "Name, last name or user name cannot be empty"}), 400
+    email = get_jwt_identity()
+
+    user = User.query.filter_by(email=email).one_or_none() 
+    
+    if user != None:
+        user.first_name= first_name 
+        user.last_name= last_name
+        user.username= username
+        db.session.add(user)
+        try:
+            db.session.commit()
+            return jsonify(user.serialize()), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
+     
+        
+    return jsonify({"msg": "User not found"}), 404  
+
 
 # @api.route('profile/<str:username>')
 # @jwt_required
