@@ -20,7 +20,7 @@ export const UserProfile = () => {
 
     const handleSave= async () => {
         const userSave = await actions.updateUser(store.userToken.token, user)
-        navigate("/usercourse/username")
+        navigate("/userprofile")
     }
      
     useEffect(() => {
@@ -94,17 +94,17 @@ export const UserProfile = () => {
                                 <div class="sm:col-span-3">
                                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                         {store.currentIdiom !== "Español" ? (
-                                            <>Email</>
+                                            <>First Name</>
                                         ) : (
-                                            <>Correo</>
+                                            <>Nombre</>
                                         )}
                                     </label>
                                     <div className="">
                                         <input
                                             type="text"
-                                            name="email"
-                                            id="email"
-                                            defaultValue= {user?.email}
+                                            name="first_name"
+                                            id="first_name"
+                                            defaultValue= {user?.first_name}
                                             onChange={handleChange}
                                             autoComplete="family-name"
                                             className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

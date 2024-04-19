@@ -88,7 +88,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "PUT",
 						body: JSON.stringify({
 							username: user.username ,
-							email: user.email,
+							first_name: user.first_name,
 							password: user.password, }),
 
 						headers: {

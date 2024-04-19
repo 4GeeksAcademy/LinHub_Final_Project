@@ -173,20 +173,23 @@ def get_current_user():
 @jwt_required()
 def update_user():
 
-    email = request.json.get("email", None)
+    first_name = request.json.get("first_name", None)
     password = request.json.get("password", None)
     username = request.json.get("username", None)
 
-    if email == None or password == None or username == None:
-        return jsonify({"msg": "Name, last name or user name cannot be empty"}), 400
+   # if email == None or password == None or username == None:
+      #  return jsonify({"msg": "Email, password or user name cannot be empty"}), 400
     email = get_jwt_identity()
 
     user = User.query.filter_by(email=email).one_or_none() 
     
     if user != None:
-        user.email= email 
-        user.password= password
-        user.username= username
+        if first_name != None: 
+            user.first_name= first_name
+        if password != None:    
+            user.password= password
+        if username != None:    
+            user.username= username
         db.session.add(user)
         try:
             db.session.commit()
