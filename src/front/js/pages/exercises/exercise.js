@@ -1,14 +1,26 @@
 import * as React from 'react';
 import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { createClient } from 'pexels';
 
-export function Exercise(steps) {
+const client = createClient('pdSaE5ImyRjq1WWMe7Hk8gIxELfoMiosLjjIPaJh8QgHHlBJCHyG2OfT');
+
+const steps = {
+    "dog": "https://cdn.pixabay.com/photo/2018/05/26/18/06/dog-3431913_640.jpg",
+    "cat": "https://cdn.pixabay.com/photo/2014/11/30/14/11/kitty-551554_640.jpg",
+    "elephant": "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_640.jpg",
+    "horse": "https://cdn.pixabay.com/photo/2017/02/01/12/14/animal-2030012_640.png",
+    "cow": "https://cdn.pixabay.com/photo/2012/04/12/21/26/cow-30710_640.png",
+    "sheep": "https://cdn.pixabay.com/photo/2016/05/12/23/03/lamb-1388937_1280.png"
+};
+
+
+export function Exercise() {
     const [activeStep, setActiveStep] = React.useState(0);
     const [selectedOption, setSelectedOption] = React.useState(null);
     const [answerIsCorrect, setAnswerIsCorrect] = React.useState(null);
@@ -37,11 +49,12 @@ export function Exercise(steps) {
     };
 
     return (
-        <div className="flex justify-center">
-            <div className="w-100">
-                <Stepper activeStep={activeStep}>
+        <div className="flex justify-center my-3">
+            <div className="w-50">
+                <Stepper className='flex justify-between' activeStep={activeStep}>
+                    <div></div>
                     <MobileStepper
-                        className=""
+                        className="w-100"
                         variant="progress"
                         steps={6}
                         position="static"
@@ -58,12 +71,6 @@ export function Exercise(steps) {
                             </Button>
                         }
                     />
-                    {Object.keys(steps).map((label, index) => {
-                        return (
-                            <Step key={label}>
-                            </Step>
-                        );
-                    })}
                 </Stepper>
                 {activeStep === Object.keys(steps).length ? (
                     <React.Fragment>
@@ -82,11 +89,11 @@ export function Exercise(steps) {
                     <React.Fragment>
                         <Typography className='flex justify-center' sx={{ mt: 2, mb: 1 }}><strong>Select the: {Object.keys(steps)[activeStep]}</strong></Typography>
                         <div className="flex flex-wrap justify-center flex-column">
-                            <div className="flex justify-center mt-4">
+                            <div className="flex justify-around mt-4 flex-wrap">
                                 {Object.keys(steps).map((label, index) => (
                                     <Button
                                         key={index}
-                                        className='mx-2'
+                                        className='my-2'
                                         variant={selectedOption === index + 1 ? 'contained' : 'outlined'}
                                         onClick={() => { handleOptionSelect(index + 1); setAnswerIsCorrect(label); }}
                                     >
