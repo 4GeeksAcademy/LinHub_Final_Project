@@ -6,9 +6,9 @@ import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import { createClient } from 'pexels';
+// import { createClient } from 'pexels';
 
-const client = createClient('pdSaE5ImyRjq1WWMe7Hk8gIxELfoMiosLjjIPaJh8QgHHlBJCHyG2OfT');
+// const client = createClient('pdSaE5ImyRjq1WWMe7Hk8gIxELfoMiosLjjIPaJh8QgHHlBJCHyG2OfT');
 
 const steps = {
     "dog": "https://cdn.pixabay.com/photo/2018/05/26/18/06/dog-3431913_640.jpg",

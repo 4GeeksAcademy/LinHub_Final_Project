@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { faFire, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -34,8 +34,11 @@ export const UserCourse = () => {
 
     useEffect(() => {
         if (store.userToken) {
-            // actions.getModuleInfo()
-            console.log('logged')
+            if (store.userToken.identity.learning_language === 'Español')
+                actions.getModuleInfo(3)
+            if (store.userToken.identity.learning_language === 'English')
+                actions.getModuleInfo(1)
+            console.log(store.userToken)
         }
         else {
             navigate('/')
@@ -47,7 +50,7 @@ export const UserCourse = () => {
             <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-xl">
                 {/* <h2 className="text-lg font-semibold">Lado Izquierdo</h2> */}
                 <Link to="/userprofile">
-                <SidebarButton text="Perfil" />
+                    <SidebarButton text={store.userToken.identity.username} />
                 </Link>
                 <SidebarButton text="Chats" />
                 <SidebarButton text="Peticiones" />
@@ -71,14 +74,16 @@ export const UserCourse = () => {
 
                 <div className='flex flex-row justify-around mt-3'>
                     <p> 5 <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#ff3d3d", }} /></p>
-                    <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" secondaryColor="red" style={{ color: "#ff9a57", secondaryColor: "red" }} />  </p>
+                    <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
                     <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
 
                 </div>
 
-                <LessonItem title="Leccion de comida ! 🍙🍿🥨" isCompleted={true} />
-                <LessonItem title="Leccion viajes ! 🧳👜🛫" isCompleted={true} />
-                <LessonItem title="Leccion animales ! 🐼🐱🦝" isCompleted={true} />
+                {store.lessons &&
+                    store.lessons.map(lesson => {
+                        <LessonItem title={lesson.lesson_name} isCompleted={true} />
+                    })
+                }
             </div>
         </div>
     );

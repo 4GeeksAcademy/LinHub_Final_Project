@@ -3,8 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			currentIdiom: "Español",
 			userToken: JSON.parse(sessionStorage.getItem('userData')) || "",
-			courses: [{}
-			]
+			courses: [{}],
+			lessons: ['ehy']
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -45,11 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Guardar el token en sessionStorage
 					sessionStorage.setItem("userData", JSON.stringify(data));
 
-					// Actualizar el store con el token
 					setStore({ userToken: data });
-					// const store = getStore()
-					// console.log(store.userToken);
-
 					return true;
 				} catch (error) {
 					console.error("Error logging in:", error);
@@ -67,7 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const res = await fetch(process.env.BACKEND_URL + "/api/currentUser", {
 						method: "GET",
-					
+
 						headers: {
 							"Access-Control-Allow-Credentials": true,
 							"Authorization": 'Bearer ' + token
@@ -82,16 +78,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			
+
 			updateUser: async (token, user) => {
 				try {
-					
+
 					const res = await fetch(process.env.BACKEND_URL + "/api/user", {
 						method: "PUT",
 						body: JSON.stringify({
-							username: user.username ,
+							username: user.username,
 							first_name: user.first_name,
-							password: user.password, }),
+							password: user.password,
+						}),
 
 						headers: {
 							"Access-Control-Allow-Credentials": true,
@@ -109,6 +106,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			getModuleInfo: async (course_id) => {
+				try {
+					const res = await fetch(process.env.BACKEND_URL + `/api/module/${course_id}`)
+					const data = await res.json()
+					if (!res.ok) throw new Error
+					setStore({ lessons: data[0].lessons })
+				}
+				catch (err) {
+					console.log(err)
+				}
+			}
 
 		}
 	}

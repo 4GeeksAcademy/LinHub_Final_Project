@@ -50,9 +50,17 @@ def get_module():
     module = list(map(lambda x: x.serialize(), module))
     return jsonify(module), 200
 
+@api.route('/module/<int:course_id>', methods=['GET'])
+def get_module_bylanguage(course_id):
+    module = Module.query.filter_by(course_id = course_id).all()
+    if module is None:
+        return jsonify("lol no"), 404
+    module = list(map(lambda x: x.serialize(), module))
+    return jsonify(module), 200
+
 # Crear Module
 @api.route('/module', methods=['POST'])
-def create_module():
+def create_module(): 
     request_body = request.get_json()
     if not request_body:
         return jsonify({"msg": "No data provided"}), 400
@@ -150,7 +158,7 @@ def login():
         check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
             access_token = create_access_token(identity=email)
-            return jsonify({'token': access_token, 'identity': user.username}), 200
+            return jsonify({'token': access_token, 'identity': user.serialize()}), 200
         else:
             return jsonify({'msg': 'wrong password'}) , 404
     else:
@@ -177,8 +185,6 @@ def update_user():
     password = request.json.get("password", None)
     username = request.json.get("username", None)
 
-   # if email == None or password == None or username == None:
-      #  return jsonify({"msg": "Email, password or user name cannot be empty"}), 400
     email = get_jwt_identity()
 
     user = User.query.filter_by(email=email).one_or_none() 

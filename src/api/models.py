@@ -106,7 +106,7 @@ class Lesson(db.Model):
     class_module = db.relationship(Module,backref="lessons")
 
     def __repr__(self):
-        return f'<Lesson {self.course_name}'
+        return f'<Lesson {self.lesson_name}'
     
     def serialize(self):
         return {
