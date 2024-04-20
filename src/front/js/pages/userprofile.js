@@ -7,34 +7,40 @@ export const UserProfile = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate()
     const [user, setUser] = useState(null)
+    const [showAlert, setShowAlert] = useState(false);
+
+
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
         setUser(prev => ({ ...prev, [name]: value }));
     }
 
-    const handleCancel= async () => {
-      
+    const handleCancel = async () => {
+
         navigate("/usercourse/username")
     }
 
-    const handleSave= async () => {
+    const handleSave = async () => {
         const userSave = await actions.updateUser(store.userToken.token, user)
-        navigate("/userprofile")
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 5000); 
     }
-     
+
     useEffect(() => {
         if (store.userToken) {
             console.log(store.userToken)
-             const getCurrentUser = async (e) => {
-             //   e.preventDefault()
+            const getCurrentUser = async (e) => {
+                //   e.preventDefault()
                 const user = await actions.currentUser(store.userToken.token)
                 setUser(user)
-             
+
             }
-        getCurrentUser()
+            getCurrentUser()
         }
-        
+
         else {
             navigate('/')
         }
@@ -42,6 +48,29 @@ export const UserProfile = () => {
 
 
     return (<>
+
+        {showAlert && (
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-2" role="alert">
+                <p class="font-bold">
+                {store.currentIdiom !== "Español" ? (
+                                <>Modified Profile</>
+                            ) : (
+                                <>Perfil modificado</>
+                            )}
+                    </p>
+                <p class="text-sm">
+                {store.currentIdiom !== "Español" ? (
+                                <>Profile has been successfully modified</>
+                            ) : (
+                                <>El perfil ha sido modificado exitosamente</>
+                            )}
+                
+                
+                </p>
+            </div>
+        )}
+
+
         <div className='mt-28 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
             <form>
                 <div class="space-y-40 mt-3">
@@ -80,7 +109,7 @@ export const UserProfile = () => {
                                 </label>
                                 <div className="">
                                     <input
-                                        defaultValue= {user?.username}
+                                        defaultValue={user?.username}
                                         onChange={handleChange}
                                         type="text"
                                         name="username"
@@ -104,7 +133,7 @@ export const UserProfile = () => {
                                             type="text"
                                             name="first_name"
                                             id="first_name"
-                                            defaultValue= {user?.first_name}
+                                            defaultValue={user?.first_name}
                                             onChange={handleChange}
                                             autoComplete="family-name"
                                             className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -118,19 +147,14 @@ export const UserProfile = () => {
 
                                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                         {store.currentIdiom !== "Español" ? (
-                                            <>Password</>
+                                            <>Email</>
                                         ) : (
-                                            <>Contraseña</>
+                                            <>Correo</>
                                         )}
                                     </label>
                                     <div className="">
-                                        <input
-                                            type="text"
-                                            name="password"
-                                            id="password"
-                                            defaultValue= {user?.password}
-                                            onChange={handleChange}
-                                            autoComplete="family-name"
+                                        <input disabled
+                                            placeholder={user?.email}
                                             className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -145,9 +169,9 @@ export const UserProfile = () => {
                                         )}
 
                                     </button>
-                                    <button onClick= {handleSave} type= "button" class="rounded-md bg-purple-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    
-                                    {store.currentIdiom !== "Español" ? (
+                                    <button onClick={handleSave} type="button" class="rounded-md bg-purple-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+
+                                        {store.currentIdiom !== "Español" ? (
                                             <>Save</>
                                         ) : (
                                             <>Guardar</>
