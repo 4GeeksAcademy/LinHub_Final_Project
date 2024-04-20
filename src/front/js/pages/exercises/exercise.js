@@ -8,7 +8,6 @@ import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-
 export function Exercise(steps) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [selectedOption, setSelectedOption] = React.useState(null);
