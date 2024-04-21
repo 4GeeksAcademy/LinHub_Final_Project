@@ -27,6 +27,8 @@ export function Exercise() {
     const [correctAnswers, setCorrectAnswers] = React.useState(0);
     const theme = useTheme();
 
+    
+
     const handleNext = () => {
         if (answerIsCorrect === Object.keys(steps)[activeStep]) {
             setCorrectAnswers(correctAnswers + 1);

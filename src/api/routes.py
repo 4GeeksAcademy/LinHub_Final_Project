@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Language,Lesson,Module
+from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -36,6 +36,12 @@ def get_languages():
     languages = list(map(lambda x: x.serialize(), languages))
     return jsonify(languages), 200
 
+@api.route('/availableCourses', methods=['GET'])
+def get_avilable_courses():
+    courses_av = AvailableCourse.query.all()
+    courses_av = list(map(lambda x: x.serialize(), courses_av))
+    return jsonify(courses_av), 200
+
 # Obtain lessons
 @api.route('/lessons', methods=['GET'])
 def get_lessons():
@@ -44,19 +50,86 @@ def get_lessons():
     return jsonify(lessons), 200
 
 # Obtain Module
-@api.route('/module', methods=['GET'])
-def get_module():
-    module = Module.query.all()
-    module = list(map(lambda x: x.serialize(), module))
-    return jsonify(module), 200
+# @api.route('/module', methods=['GET'])
+# def get_module():
+#     module = Module.query.all()
+#     module = list(map(lambda x: x.serialize(), module))
+#     return jsonify(module), 200
 
-@api.route('/module/<int:course_id>', methods=['GET'])
-def get_module_bylanguage(course_id):
-    module = Module.query.filter_by(course_id = course_id).all()
-    if module is None:
-        return jsonify("lol no"), 404
-    module = list(map(lambda x: x.serialize(), module))
-    return jsonify(module), 200
+# Get module lessons depending on the user
+@api.route('/module_lessons')
+@jwt_required()
+def get_lessons_by_lang():
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'})
+
+    course = Course.query.filter_by(user_id = user.id).first()
+
+    available_course = db.session.query(AvailableCourse, Language.language_name, AvailableCourse.id, AvailableCourse.name)\
+    .join(Language, AvailableCourse.language_id == Language.id)\
+    .filter(AvailableCourse.id == course.available_course_id).one_or_none()
+    
+    course = {
+        'language_name': available_course.language_name,
+        'id': available_course.id,
+        'name': available_course.name
+    }
+
+    lessons = db.session.query(Module, Lesson.id, Lesson.lesson_name)\
+    .join(Lesson, Module.id == Lesson.module_id)\
+    .filter(Module.available_course_id == available_course.id).all()
+    
+    courses_lessons = []
+
+    for lesson in lessons:
+        lesson_dict = {
+            'lesson_id': lesson.id,
+            'lesson_name': lesson.lesson_name,
+        }
+        courses_lessons.append(lesson_dict)
+        
+    return jsonify(courses_lessons)
+
+# Get Questions from lesson
+@api.route('/lesson_questions/<int:lesson_id>')
+def get_questions_by_lesson(lesson_id):
+    lesson = Lesson.query.filter_by(id = lesson_id).first()
+
+    questions = Question.query.filter_by(lesson_id = lesson.id).all()
+
+    if questions is None:
+        return jsonify({'msg': 'no questions for the selected lesson'}), 404
+    
+    info = []
+
+    for question in questions:
+        options = db.session.query(Question, Option.id, Option.option).join(Question, Question.id == Option.question_id).filter(question.id == Option.question_id).all()
+        question_dic = {
+            "question_id": question.id,
+            "question": question.question,
+            "options": [{'id':option.id, 'option':option.option} for option in options]
+        }
+        info.append(question_dic)
+
+    return jsonify(info)
+
+# Get Correct or Incorrect
+@api.route('/correct_option/<int:option_id>')
+def correct_option(option_id):
+    option = Option.query.filter_by(id = option_id).one_or_none()
+    
+    if option is None:
+        return jsonify({'msg': 'option not found'}), 404
+    
+    if option.correct == False:
+        return jsonify({'msg': 'wrong answer'}), 400
+    
+    if option.correct == True:
+        return jsonify({'msg': 'correct answer'}), 200
 
 # Crear Module
 @api.route('/module', methods=['POST'])
@@ -75,6 +148,8 @@ def create_module():
 # Register End Point
 @api.route('/register', methods=['POST'])
 def create_user():
+    db.session.begin()
+
     request_body = request.get_json()
     if not request_body:
         return jsonify({"msg": "No data provided"}), 400
@@ -84,9 +159,8 @@ def create_user():
     username = request_body.get('username')
     email = request_body.get('email')
     password = request_body.get('password')
-    learning_language = Language.query.filter_by(language_name=request_body.get("learning_language")).first()
-    native_language = Language.query.filter_by(language_name=request_body.get("native_language")).first()
-    is_active = True
+    learning_language = request_body.get("learning_language")
+    native_language = request_body.get("native_language")
 
     if not first_name or not last_name:
         return jsonify({"msg": "First name and last name are required"}), 400
@@ -129,14 +203,29 @@ def create_user():
         email=email,
         password=hash_password.decode('utf-8'),
         salt=salt.decode('utf-8'),
-        is_active=is_active,
-        learning_language=learning_language,
-        native_language=native_language
+        learning_language_id = learning_language,
+        native_language_id = native_language
     )
+
 
     db.session.add(new_user)
     try:
         db.session.commit()
+
+        id_user = db.session.query(User.id).order_by(User.id.desc()).first()[0]
+
+        available_course = AvailableCourse.query.filter_by(language_id = learning_language).first()
+        print(available_course)
+        new_course = Course(available_course_id = available_course.id, user_id = id_user)
+        db.session.add(new_course)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.delete(new_user)
+            db.session.rollback()
+            return jsonify({"msg": "Error creating course", "error": str(e)}), 500
+
         return jsonify([new_user.serialize(), {"hash": hash_password.decode('utf-8'), "salt": salt.decode('utf-8'), "check":check}]), 201
     except Exception as e:
         db.session.rollback()

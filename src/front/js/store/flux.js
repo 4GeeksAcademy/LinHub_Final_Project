@@ -106,12 +106,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getModuleInfo: async (course_id) => {
+			getModuleInfo: async (id, language) => {
 				try {
-					const res = await fetch(process.env.BACKEND_URL + `/api/module/${course_id}`)
+					// console.log(id, language)
+					const res = await fetch(process.env.BACKEND_URL + `api/user/${id}/course/${language}/lessons`)
 					const data = await res.json()
 					if (!res.ok) throw new Error
-					setStore({ lessons: data[0].lessons })
+					console.log(data)
 				}
 				catch (err) {
 					console.log(err)

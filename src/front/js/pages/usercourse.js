@@ -20,9 +20,9 @@ const SidebarButton = ({ text, handleClick }) => {
 
 const LessonItem = ({ title, isCompleted }) => {
     return (
-        <div className='flex items-center justify-between bg-gray-100 mt-3 rounded-xl p-4 text-3xl'>
+        <div className='flex items-center justify-between bg-gray-100 mt-3 rounded-xl p-8 text-3xl'>
             <span className='ms-5'><strong>{title}</strong></span>
-            <button id='boton-pageOne1' className={`rounded-full py-2 ${isCompleted ? 'bg-green-500' : 'bg-gray-500'} text-white font-bold px-4`} ></button>
+            {/* <button id='boton-pageOne1' className={`rounded-full py-2 ${isCompleted ? 'bg-green-500' : 'bg-gray-500'} text-white font-bold px-4`} ></button> */}
         </div>
     );
 };
@@ -31,20 +31,37 @@ export const UserCourse = () => {
 
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
+    const [lessons, setLessons] = useState([])
 
     useEffect(() => {
         if (store.userToken) {
-            if (store.userToken.identity.learning_language === 'Español')
-                actions.getModuleInfo(3)
-            if (store.userToken.identity.learning_language === 'English')
-                actions.getModuleInfo(1)
-            console.log(store.userToken)
+            const currentUser = async () => {
+                try {
+                    const res = await fetch(process.env.BACKEND_URL + "/api/module_lessons", {
+                        method: "GET",
+
+                        headers: {
+                            "Access-Control-Allow-Credentials": true,
+                            "Authorization": 'Bearer ' + store.userToken.token
+                        }
+                    });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error("Invalid credentials");
+
+                    setLessons(data)
+                } catch (error) {
+                    console.error("Error logging in:", error);
+                    return false;
+                }
+            }
+            currentUser()
         }
         else {
             navigate('/')
         }
     }, [])
 
+    console.log(lessons)
     return (
         <div className="flex justify-between p-8" style={{ minHeight: '89vh' }}>
             <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-xl">
@@ -63,26 +80,21 @@ export const UserCourse = () => {
                 <SidebarButton text="Log out" handleClick={() => actions.logOut()} />
             </div>
             <div className="hidden md:block w-2/3 bg-white-300 p-4">
-
-
-
                 <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden flex p-3">
                     <div className="absolute left-0 top-0 h-full bg-violet-500 animate-progress-stripes" style={{ width: '65%' }}></div>
                 </div>
-
-
 
                 <div className='flex flex-row justify-around mt-3'>
                     <p> 5 <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#ff3d3d", }} /></p>
                     <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
                     <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
-
                 </div>
 
-                {store.lessons &&
-                    store.lessons.map(lesson => {
-                        <LessonItem title={lesson.lesson_name} isCompleted={true} />
-                    })
+                {lessons.map(lesson => {
+                    return (
+                        <LessonItem key={lesson.lesson_id} title={lesson.lesson_name} />
+                    )
+                })
                 }
             </div>
         </div>
