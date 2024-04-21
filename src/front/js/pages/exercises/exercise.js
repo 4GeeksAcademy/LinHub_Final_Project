@@ -6,17 +6,17 @@ import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-// import { createClient } from 'pexels';
-
-// const client = createClient('pdSaE5ImyRjq1WWMe7Hk8gIxELfoMiosLjjIPaJh8QgHHlBJCHyG2OfT');
 
 const steps = {
-    "dog": "https://cdn.pixabay.com/photo/2018/05/26/18/06/dog-3431913_640.jpg",
-    "cat": "https://cdn.pixabay.com/photo/2014/11/30/14/11/kitty-551554_640.jpg",
-    "elephant": "https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_640.jpg",
-    "horse": "https://cdn.pixabay.com/photo/2017/02/01/12/14/animal-2030012_640.png",
-    "cow": "https://cdn.pixabay.com/photo/2012/04/12/21/26/cow-30710_640.png",
-    "sheep": "https://cdn.pixabay.com/photo/2016/05/12/23/03/lamb-1388937_1280.png"
+    'Question': 'this is the question',
+    'options': {
+        'dog': 'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        'cat': 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        'fish': 'https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        'bird': 'https://images.pexels.com/photos/145146/pexels-photo-145146.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        'elephant': 'https://images.pexels.com/photos/10700/elephant-africa-african-elephant.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        'lion': 'https://images.pexels.com/photos/6675/lion-animal-savanna.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    }
 };
 
 
@@ -89,10 +89,10 @@ export function Exercise() {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <Typography className='flex justify-center' sx={{ mt: 2, mb: 1 }}><strong>Select the: {Object.keys(steps)[activeStep]}</strong></Typography>
+                        <Typography className='flex justify-center' sx={{ mt: 2, mb: 1 }}><strong>{steps['question']}</strong></Typography>
                         <div className="flex flex-wrap justify-center flex-column">
                             <div className="flex justify-around mt-4 flex-wrap">
-                                {Object.keys(steps).map((label, index) => (
+                                {Object.keys(steps.options).map((label, index) => (
                                     <Button
                                         key={index}
                                         className='my-2'
