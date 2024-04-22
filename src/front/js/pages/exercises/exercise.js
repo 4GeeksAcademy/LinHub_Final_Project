@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { Context } from "../../store/appContext";
+
 import Stepper from '@mui/material/Stepper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -6,6 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import context from 'react-bootstrap/esm/AccordionContext';
 
 const steps = {
     'Question': 'this is the question',
@@ -21,13 +26,36 @@ const steps = {
 
 
 export function Exercise() {
+    const { store, actions } = useContext(Context)
+
     const [activeStep, setActiveStep] = React.useState(0);
     const [selectedOption, setSelectedOption] = React.useState(null);
     const [answerIsCorrect, setAnswerIsCorrect] = React.useState(null);
     const [correctAnswers, setCorrectAnswers] = React.useState(0);
+    const [questions, setQuestions] = React.useState([])
     const theme = useTheme();
+    const { id } = useParams()
 
-    
+    React.useEffect(() => {
+        if (store.userToken) {
+            const currentLesson = async () => {
+                try {
+                    const res = await fetch(process.env.BACKEND_URL + `/api/lesson_questions/${id}`)
+                    const data = await res.json();
+                    if (!res.ok) throw new Error("Invalid credentials");
+                    console.log(data)
+                    // setQuestions(data)
+                } catch (error) {
+                    console.error("Error logging in:", error);
+                    return false;
+                }
+            }
+            currentLesson()
+        }
+        else {
+            navigate('/')
+        }
+    }, [])
 
     const handleNext = () => {
         if (answerIsCorrect === Object.keys(steps)[activeStep]) {

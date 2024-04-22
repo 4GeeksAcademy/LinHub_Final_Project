@@ -18,9 +18,11 @@ const SidebarButton = ({ text, handleClick }) => {
     );
 };
 
-const LessonItem = ({ title, isCompleted }) => {
+const LessonItem = ({ title, isCompleted, id }) => {
+    const navigate = useNavigate()
+
     return (
-        <div className='flex items-center justify-between bg-gray-100 mt-3 rounded-xl p-8 text-3xl'>
+        <div className='cursor-pointer flex items-center justify-between bg-gray-100 mt-3 rounded-xl p-8 text-3xl' onClick={() => navigate(`/exercise/${id}`)}>
             <span className='ms-5'><strong>{title}</strong></span>
             {/* <button id='boton-pageOne1' className={`rounded-full py-2 ${isCompleted ? 'bg-green-500' : 'bg-gray-500'} text-white font-bold px-4`} ></button> */}
         </div>
@@ -92,7 +94,7 @@ export const UserCourse = () => {
 
                 {lessons.map(lesson => {
                     return (
-                        <LessonItem key={lesson.lesson_id} title={lesson.lesson_name} />
+                        <LessonItem key={lesson.lesson_id} title={lesson.lesson_name} id={lesson.lesson_id} />
                     )
                 })
                 }
