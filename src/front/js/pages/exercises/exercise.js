@@ -10,12 +10,10 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 const steps = {
     'Question': 'this is the question',
     'options': {
-        'dog': 'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-        'cat': 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-        'fish': 'https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-        'bird': 'https://images.pexels.com/photos/145146/pexels-photo-145146.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-        'elephant': 'https://images.pexels.com/photos/10700/elephant-africa-african-elephant.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-        'lion': 'https://images.pexels.com/photos/6675/lion-animal-savanna.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        'option1': { 'word': 'this is the option 1' },
+        'option2': { 'word': 'this is the option 2' },
+        'option3': { 'word': 'this is the option 3' },
+        'option4': { 'word': 'this is the option 4' }
     }
 };
 
