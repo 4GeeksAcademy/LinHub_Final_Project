@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentIdiom: "Español",
 			userToken: JSON.parse(sessionStorage.getItem('userData')) || "",
 			courses: [{}],
-			lessons: ['ehy']
+			lessons: ['ehy'],
+			correctAnswers: 0,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
