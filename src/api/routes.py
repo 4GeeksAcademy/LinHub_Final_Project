@@ -344,6 +344,8 @@ def update_user():
     password = request.json.get("password", None)
     username = request.json.get("username", None)
 
+
+
     email = get_jwt_identity()
 
     user = User.query.filter_by(email=email).one_or_none() 
