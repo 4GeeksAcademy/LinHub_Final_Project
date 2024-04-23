@@ -338,6 +338,7 @@ def get_current_user():
 @api.route("/user", methods=["PUT"])
 @jwt_required()
 def update_user():
+    upload_file(request)
 
     first_name = request.json.get("first_name", None)
     password = request.json.get("password", None)
@@ -365,9 +366,8 @@ def update_user():
     return jsonify({"msg": "User not found"}), 404  
 
 
-    
-@api.route('/image', methods=["POST"])
-def upload_file():
+
+def upload_file(request):
     
     image = request.files.get("image", None)
 

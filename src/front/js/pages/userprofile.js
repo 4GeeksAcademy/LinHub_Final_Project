@@ -33,7 +33,7 @@ export const UserProfile = () => {
     }
 
     const handleSave = async () => {
-        const userSave = await actions.updateUser(store.userToken.token, user)
+        const userSave = await actions.updateUser(store.userToken.token, user, file)
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
