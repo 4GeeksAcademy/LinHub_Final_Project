@@ -92,7 +92,7 @@ export const UserCourse = () => {
                 {lessons.user &&
                     <div className='flex flex-row justify-around mt-3'>
                         <p> {lessons.user.lives} <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#ff3d3d", }} /></p>
-                        <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
+                        <p> {lessons.user.streak} <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
                         <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
                     </div>
                 }
