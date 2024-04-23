@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,14 @@ export const UserProfile = () => {
         setfile(files[0])
     }
 
+    const fileUpload = useRef(null);
+    const uploadProfilePic = (e) => {
+      console.log(e);
+    };
+  
+    const handleUpload = () => {
+      console.log(fileUpload.current.click(), "fileUpload");
+    };
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -21,7 +29,7 @@ export const UserProfile = () => {
 
     const handleCancel = async () => {
 
-        navigate("/usercourse/username")
+        navigate("/usercourse")
     }
 
     const handleSave = async () => {
@@ -29,7 +37,7 @@ export const UserProfile = () => {
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
-        }, 5000); 
+        }, 5000);
     }
 
     useEffect(() => {
@@ -55,20 +63,20 @@ export const UserProfile = () => {
         {showAlert && (
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-2" role="alert">
                 <p class="font-bold">
-                {store.currentIdiom !== "Español" ? (
-                                <>Modified Profile</>
-                            ) : (
-                                <>Perfil modificado</>
-                            )}
-                    </p>
+                    {store.currentIdiom !== "Español" ? (
+                        <>Modified Profile</>
+                    ) : (
+                        <>Perfil modificado</>
+                    )}
+                </p>
                 <p class="text-sm">
-                {store.currentIdiom !== "Español" ? (
-                                <>Profile has been successfully modified</>
-                            ) : (
-                                <>El perfil ha sido modificado exitosamente</>
-                            )}
-                
-                
+                    {store.currentIdiom !== "Español" ? (
+                        <>Profile has been successfully modified</>
+                    ) : (
+                        <>El perfil ha sido modificado exitosamente</>
+                    )}
+
+
                 </p>
             </div>
         )}
@@ -87,35 +95,36 @@ export const UserProfile = () => {
 
                         </h2>
                         <div class="mt-2 flex justify-center items-center gap-x-5">
-                        <div class="h-48 w-48 text-gray-600 rounded-full overflow-hidden">
-                                    {/* Mostrar la imagen si hay un archivo seleccionado */}
-                                    {file && <img src={URL.createObjectURL(file)} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover'  }} />}
-                                    {/* SVG para mostrar si no hay un archivo seleccionado */}
-                                    {!file && (
-                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-                                        </svg>
-                                    )}
-                                </div>
-                                <button
-                                    type="button"
-                                    class="rounded-md bg-purple-900 text-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-purple-500"
-                                >
-                                    {store.currentIdiom !== "Español" ? (
-                                        <>Change</>
-                                    ) : (
-                                        <>Cambiar</>
-                                    )}
-                                </button>
-                                <input
-                                    type="file"
-                                    id="archivos"
-                                    name="archivos"
-                                    accept=".jpg, .png, .gif"
-                                    onChange={(event) => handleFiles(event.target.files)}
-                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                />
-                           
+                            <div class="h-48 w-48 text-gray-600 rounded-full overflow-hidden">
+                                {/* Mostrar la imagen si hay un archivo seleccionado */}
+                                {file && <img src={URL.createObjectURL(file)} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
+                                {/* SVG para mostrar si no hay un archivo seleccionado */}
+                                {!file && (
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                                    </svg>
+                                )}
+                            </div>
+                            <button onClick={() => handleUpload()}
+                                type="button"
+                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            >
+                                {store.currentIdiom !== "Español" ? (
+                                    <>Change</>
+                                ) : (
+                                    <>Cambiar</>
+                                )}
+                            </button>
+                            {/* Input para seleccionar un archivo */}
+                            <input
+                                type="file"
+                                ref={fileUpload}
+                                style={{ opacity: "0", }}
+                                accept=".jpg, .png, .gif"
+                                onChange={(event) => handleFiles(event.target.files)}
+                            />
+
+
                         </div>
                         <div class="mt-1">
                             <div class="sm:col-span-4">
