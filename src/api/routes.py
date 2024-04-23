@@ -351,7 +351,6 @@ def update_user():
         except Exception as e:
             db.session.rollback()
             return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
-     
         
     return jsonify({"msg": "User not found"}), 404  
 
