@@ -82,7 +82,7 @@ export const UserProfile = () => {
         )}
 
 
-        <div className='mt-28 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
+        <div className='mt-20 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
             <form>
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
@@ -94,8 +94,8 @@ export const UserProfile = () => {
                             )}
 
                         </h2>
-                        <div class="mt-2 flex justify-center items-center gap-x-5">
-                            <div class="h-48 w-48 text-gray-600 rounded-full overflow-hidden">
+                        <div class="mt-2 flex justify-center items-center gap-x-5 ">
+                            <div class="h-48 w-48 text-gray-600 rounded-full overflow-hidden ">
                                 {/* Mostrar la imagen si hay un archivo seleccionado */}
                                 {file && <img src={URL.createObjectURL(file)} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
                                 {/* SVG para mostrar si no hay un archivo seleccionado */}
