@@ -10,6 +10,16 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
 import bcrypt
+import firebase_admin
+from firebase_admin import credentials, storage
+
+cred = credentials.Certificate("./google-services.json")
+firebase_admin.initialize_app(cred, {
+    'storageBucket': "linhub-68184.appspot.com"
+})
+
+
+bucket = storage.bucket()
 
 
 api = Blueprint('api', __name__)
@@ -191,6 +201,32 @@ def update_user():
      
         
     return jsonify({"msg": "User not found"}), 404  
+
+
+    
+@api.route('/image', methods=["POST"])
+def upload_file():
+    
+    image = request.files.get("image", None)
+
+    if image == None:
+        return 'No hay image en la peticion', 400
+
+    # Subir la imagen al Bucket
+    blob = bucket.blob(image.filename)
+    blob.upload_from_file(image, content_type=image.content_type)
+    blob.make_public()
+    
+    # Generar la URL permanente
+    url = blob.public_url
+    from urllib.parse import quote
+    # Generar la URL permanente manualmente
+    bucket_name = "linhub-68184.appspot.com"
+    encoded_image_name = quote(image.filename)
+    url = f'https://storage.googleapis.com/{bucket_name}/{encoded_image_name}'
+
+    # Retornar la URL permanente
+    return jsonify({"success": "La imagen ha sido cargada correctamente", "url": url}), 200 
 
 
 # @api.route('profile/<str:username>')
