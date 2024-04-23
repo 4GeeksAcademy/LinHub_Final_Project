@@ -82,13 +82,14 @@ export function Exercise() {
                         <div></div>
                         <MobileStepper
                             className="w-100"
+                            color='purple'
                             variant="progress"
                             steps={Object.keys(steps).length}
                             position="static"
                             activeStep={activeStep}
                             sx={{ maxWidth: '100%', flexGrow: 1 }}
                             nextButton={
-                                <Button size="small" onClick={handleNext} disabled={activeStep === Object.keys(steps).length}>
+                                <Button style={{ color: 'purple' }} size="small" onClick={handleNext} disabled={activeStep === Object.keys(steps).length}>
                                     Next
                                     {theme.direction === 'rtl' ? (
                                         <KeyboardArrowLeft style={{ color: 'purple' }} />
