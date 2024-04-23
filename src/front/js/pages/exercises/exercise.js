@@ -43,7 +43,14 @@ export function Exercise() {
 
     const handleNext = async () => {
         try {
-            const res = await fetch(process.env.BACKEND_URL + `/api/correct_option/${selectedOption}`);
+            const res = await fetch(process.env.BACKEND_URL + `/api/correct_option/${selectedOption}`, {
+                method: "GET",
+
+                headers: {
+                    "Access-Control-Allow-Credentials": true,
+                    "Authorization": 'Bearer ' + store.userToken.token
+                }
+            });
             const data = await res.json();
             if (res.ok) {
                 setCorrectAnswers(correctAnswers + 1);

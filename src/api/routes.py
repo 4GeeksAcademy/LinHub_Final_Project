@@ -8,6 +8,8 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from datetime import datetime
+import math
 
 import bcrypt
 
@@ -17,6 +19,7 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api, supports_credentials= True)
 
+#Obtener la informacion del usuario actual
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
@@ -57,7 +60,7 @@ def get_lessons():
 #     return jsonify(module), 200
 
 # Get module lessons depending on the user
-@api.route('/module_lessons')
+@api.route('/courseinfo')
 @jwt_required()
 def get_lessons_by_lang():
     user_email = get_jwt_identity()
@@ -91,8 +94,27 @@ def get_lessons_by_lang():
             'lesson_name': lesson.lesson_name,
         }
         courses_lessons.append(lesson_dict)
-        
-    return jsonify(courses_lessons)
+
+    ultimo_wrong = user.last_wrong # Fecha y hora del último error
+    ultimo_ingreso = datetime.now()  # Fecha y hora del último ingreso a la página de lecciones
+
+    # Calcula la diferencia entre los dos datetimes
+    diferencia = ultimo_ingreso - ultimo_wrong
+
+    # Calcula las horas transcurridas
+    horas_transcurridas = math.floor(diferencia.total_seconds() / 3600)
+    
+    if horas_transcurridas > 0 and user.lives < 100:
+        user.lives = user.lives + horas_transcurridas
+        db.session.commit()
+
+    returned_object = {
+        'user': user.serialize(),
+        'data': courses_lessons
+    }
+
+
+    return jsonify(returned_object)
 
 # Get Questions from lesson
 @api.route('/lesson_questions/<int:lesson_id>')
@@ -119,13 +141,25 @@ def get_questions_by_lesson(lesson_id):
 
 # Get Correct or Incorrect
 @api.route('/correct_option/<int:option_id>')
+@jwt_required()
 def correct_option(option_id):
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'})
+
     option = Option.query.filter_by(id = option_id).one_or_none()
     
     if option is None:
         return jsonify({'msg': 'option not found'}), 404
     
     if option.correct == False:
+        if user.lives > 0: 
+            user.lives = user.lives - 1
+            user.last_wrong = datetime.now()
+            db.session.commit()
         return jsonify({'msg': 'wrong answer'}), 400
     
     if option.correct == True:

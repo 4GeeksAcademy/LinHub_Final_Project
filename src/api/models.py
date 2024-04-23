@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -12,6 +13,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
     salt = db.Column(db.String(90), unique=False, nullable=False)
+    lives = db.Column(db.Integer, default=99)
+    last_wrong = db.Column(db.DateTime, default=datetime.now())
 
     # user native language
     learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
@@ -39,6 +42,7 @@ class User(db.Model):
             "last_name": self.last_name,
             "username": self.username,
             "email": self.email,
+            "lives": self.lives,
             # "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
             # "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
         }
