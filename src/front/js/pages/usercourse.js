@@ -70,7 +70,6 @@ export const UserCourse = () => {
     return (
         <div className="flex justify-between p-8" style={{ minHeight: '89vh' }}>
             <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-xl">
-                {/* <h2 className="text-lg font-semibold">Lado Izquierdo</h2> */}
                 <Link to="/userprofile">
                     <SidebarButton text={store.userToken.identity.username} />
                 </Link>
@@ -92,8 +91,12 @@ export const UserCourse = () => {
                 {lessons.user &&
                     <div className='flex flex-row justify-around mt-3'>
                         <p> {lessons.user.lives} <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#ff3d3d", }} /></p>
-                        <p> 4 <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
-                        <img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
+                        <p> {lessons.user.streak} <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
+                        {store.userToken.learning_language == "English" ?
+                            < img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
+                            :
+                            < img src='https://upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg' style={{ width: '40px' }} />
+                        }
                     </div>
                 }
 

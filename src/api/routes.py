@@ -115,14 +115,17 @@ def get_lessons_by_lang():
     horas_transcurridas = math.floor(diferencia.total_seconds() / 3600)
     
     if horas_transcurridas > 0 and user.lives < 100:
-        user.lives = user.lives + horas_transcurridas
-        db.session.commit()
+        if (user.lives + horas_transcurridas) > 100:
+            user.lives = 100
+            db.session.commit()
+        else: 
+            user.lives = user.lives + horas_transcurridas
+            db.session.commit()
 
     returned_object = {
         'user': user.serialize(),
         'data': courses_lessons
     }
-
 
     return jsonify(returned_object)
 
@@ -291,6 +294,28 @@ def login():
         check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
             access_token = create_access_token(identity=email)
+
+            # variables for last login and current login
+            last_login = user.last_login
+            current_login = datetime.now()
+
+            # sustraction between last login and current
+            difference = current_login - last_login 
+
+            # calculate hours passed
+            hours_passed = math.floor(difference.total_seconds() / 3600)
+
+            if hours_passed < 24:
+                pass
+            elif hours_passed > 24 and hours_passed < 48:
+                user.streak += 1
+                user.last_login = datetime.now()
+                db.session.commit()
+            elif hours_passed >= 48:
+                user.streak = 1
+                user.last_login = datetime.now()
+                db.session.commit()
+
             return jsonify({'token': access_token, 'identity': user.serialize()}), 200
         else:
             return jsonify({'msg': 'wrong password'}) , 404
@@ -336,7 +361,6 @@ def update_user():
         except Exception as e:
             db.session.rollback()
             return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
-     
         
     return jsonify({"msg": "User not found"}), 404  
 
