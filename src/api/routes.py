@@ -2,12 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Language,Lesson,Module
+from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from datetime import datetime
+import math
 
 import bcrypt
 import firebase_admin
@@ -27,6 +29,7 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api, supports_credentials= True)
 
+#Obtener la informacion del usuario actual
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
@@ -46,33 +49,151 @@ def get_languages():
     languages = list(map(lambda x: x.serialize(), languages))
     return jsonify(languages), 200
 
+@api.route('/availableCourses', methods=['GET'])
+def get_avilable_courses():
+    courses_av = AvailableCourse.query.all()
+    courses_av = list(map(lambda x: x.serialize(), courses_av))
+    return jsonify(courses_av), 200
+
+# Obtain lessons
 @api.route('/lessons', methods=['GET'])
 def get_lessons():
     lessons = Lesson.query.all()
     lessons = list(map(lambda x: x.serialize(), lessons))
     return jsonify(lessons), 200
 
-@api.route('/module', methods=['GET'])
-def get_module():
-    module = Module.query.all()
-    module = list(map(lambda x: x.serialize(), module))
-    return jsonify(module), 200
+# Obtain Module
+# @api.route('/module', methods=['GET'])
+# def get_module():
+#     module = Module.query.all()
+#     module = list(map(lambda x: x.serialize(), module))
+#     return jsonify(module), 200
 
+# Get module lessons depending on the user
+@api.route('/courseinfo')
+@jwt_required()
+def get_lessons_by_lang():
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'})
+
+    course = Course.query.filter_by(user_id = user.id).first()
+
+    available_course = db.session.query(AvailableCourse, Language.language_name, AvailableCourse.id, AvailableCourse.name)\
+    .join(Language, AvailableCourse.language_id == Language.id)\
+    .filter(AvailableCourse.id == course.available_course_id).one_or_none()
+    
+    course = {
+        'language_name': available_course.language_name,
+        'id': available_course.id,
+        'name': available_course.name
+    }
+
+    lessons = db.session.query(Module, Lesson.id, Lesson.lesson_name)\
+    .join(Lesson, Module.id == Lesson.module_id)\
+    .filter(Module.available_course_id == available_course.id).all()
+    
+    courses_lessons = []
+
+    for lesson in lessons:
+        lesson_dict = {
+            'lesson_id': lesson.id,
+            'lesson_name': lesson.lesson_name,
+        }
+        courses_lessons.append(lesson_dict)
+
+    ultimo_wrong = user.last_wrong # Fecha y hora del último error
+    ultimo_ingreso = datetime.now()  # Fecha y hora del último ingreso a la página de lecciones
+
+    # Calcula la diferencia entre los dos datetimes
+    diferencia = ultimo_ingreso - ultimo_wrong
+
+    # Calcula las horas transcurridas
+    horas_transcurridas = math.floor(diferencia.total_seconds() / 3600)
+    
+    if horas_transcurridas > 0 and user.lives < 100:
+        user.lives = user.lives + horas_transcurridas
+        db.session.commit()
+
+    returned_object = {
+        'user': user.serialize(),
+        'data': courses_lessons
+    }
+
+
+    return jsonify(returned_object)
+
+# Get Questions from lesson
+@api.route('/lesson_questions/<int:lesson_id>')
+def get_questions_by_lesson(lesson_id):
+    lesson = Lesson.query.filter_by(id = lesson_id).first()
+
+    questions = Question.query.filter_by(lesson_id = lesson.id).all()
+
+    if questions is None:
+        return jsonify({'msg': 'no questions for the selected lesson'}), 404
+    
+    info = []
+
+    for question in questions:
+        options = db.session.query(Question, Option.id, Option.option).join(Question, Question.id == Option.question_id).filter(question.id == Option.question_id).all()
+        question_dic = {
+            "question_id": question.id,
+            "question": question.question,
+            "options": [{'id':option.id, 'option':option.option} for option in options]
+        }
+        info.append(question_dic)
+
+    return jsonify(info)
+
+# Get Correct or Incorrect
+@api.route('/correct_option/<int:option_id>')
+@jwt_required()
+def correct_option(option_id):
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'})
+
+    option = Option.query.filter_by(id = option_id).one_or_none()
+    
+    if option is None:
+        return jsonify({'msg': 'option not found'}), 404
+    
+    if option.correct == False:
+        if user.lives > 0: 
+            user.lives = user.lives - 1
+            user.last_wrong = datetime.now()
+            db.session.commit()
+        return jsonify({'msg': 'wrong answer'}), 400
+    
+    if option.correct == True:
+        return jsonify({'msg': 'correct answer'}), 200
+
+# Crear Module
 @api.route('/module', methods=['POST'])
-def create_module():
+def create_module(): 
     request_body = request.get_json()
     if not request_body:
         return jsonify({"msg": "No data provided"}), 400
 
     course_id = request_body.get('course_id')
     module_name = request_body.get('module_name')
-    new_mudule = Module(module_name = module_name, course_id = course_id)
-    db.session.add(new_mudule)
+    new_module = Module(module_name = module_name, course_id = course_id)
+    db.session.add(new_module)
     db.session.commit()
     return "Sucess", 200
 
+# Register End Point
 @api.route('/register', methods=['POST'])
 def create_user():
+    db.session.begin()
+
     request_body = request.get_json()
     if not request_body:
         return jsonify({"msg": "No data provided"}), 400
@@ -82,9 +203,8 @@ def create_user():
     username = request_body.get('username')
     email = request_body.get('email')
     password = request_body.get('password')
-    learning_language = Language.query.filter_by(language_name=request_body.get("learning_language")).first()
-    native_language = Language.query.filter_by(language_name=request_body.get("native_language")).first()
-    is_active = True
+    learning_language = request_body.get("learning_language")
+    native_language = request_body.get("native_language")
 
     if not first_name or not last_name:
         return jsonify({"msg": "First name and last name are required"}), 400
@@ -127,19 +247,36 @@ def create_user():
         email=email,
         password=hash_password.decode('utf-8'),
         salt=salt.decode('utf-8'),
-        is_active=is_active,
-        learning_language=learning_language,
-        native_language=native_language
+        learning_language_id = learning_language,
+        native_language_id = native_language
     )
+
 
     db.session.add(new_user)
     try:
         db.session.commit()
+
+        id_user = db.session.query(User.id).order_by(User.id.desc()).first()[0]
+
+        available_course = AvailableCourse.query.filter_by(language_id = learning_language).first()
+        print(available_course)
+        new_course = Course(available_course_id = available_course.id, user_id = id_user)
+        db.session.add(new_course)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.delete(new_user)
+            db.session.rollback()
+            return jsonify({"msg": "Error creating course", "error": str(e)}), 500
+
         return jsonify([new_user.serialize(), {"hash": hash_password.decode('utf-8'), "salt": salt.decode('utf-8'), "check":check}]), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "Error creating user", "error": str(e)}), 500
     
+
+# Login management end point    
 @api.route('/login', methods=['POST'])
 def login():
     email = request.json.get('email', None)
@@ -154,7 +291,7 @@ def login():
         check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
         if check:
             access_token = create_access_token(identity=email)
-            return jsonify({'token': access_token, 'identity': user.username}), 200
+            return jsonify({'token': access_token, 'identity': user.serialize()}), 200
         else:
             return jsonify({'msg': 'wrong password'}) , 404
     else:
@@ -178,19 +315,20 @@ def get_current_user():
 def update_user():
 
     first_name = request.json.get("first_name", None)
-    last_name = request.json.get("last_name", None)
+    password = request.json.get("password", None)
     username = request.json.get("username", None)
 
-    if first_name == None or last_name == None or username == None:
-        return jsonify({"msg": "Name, last name or user name cannot be empty"}), 400
     email = get_jwt_identity()
 
     user = User.query.filter_by(email=email).one_or_none() 
     
     if user != None:
-        user.first_name= first_name 
-        user.last_name= last_name
-        user.username= username
+        if first_name != None: 
+            user.first_name= first_name
+        if password != None:    
+            user.password= password
+        if username != None:    
+            user.username= username
         db.session.add(user)
         try:
             db.session.commit()
@@ -232,4 +370,3 @@ def upload_file():
 # @api.route('profile/<str:username>')
 # @jwt_required
 # def profile_info(username):
-

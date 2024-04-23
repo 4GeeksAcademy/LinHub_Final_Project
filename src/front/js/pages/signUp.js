@@ -1,9 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 
 export const SignUp = () => {
   const { store, actions } = useContext(Context);
+
+  const [availableLanguages, setAvailableLanguages] = useState([])
+  const [availableCourses, setAvailableCourses] = useState([])
+
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     first_name: "",
@@ -11,13 +15,15 @@ export const SignUp = () => {
     username: "",
     email: "",
     password: "",
-    native_language: "Español",
-    learning_language: "English"
+    native_language: 1,
+    learning_language: 2
   })
 
   const handleChange = ({ target }) => {
     const { name, value } = target
-    setUserInfo({ ...userInfo, [name]: value })
+    if (name === "learning_language" || name === "native_language") setUserInfo({ ...userInfo, [name]: Number(value) })
+    else setUserInfo({ ...userInfo, [name]: value })
+
   }
   console.log(userInfo)
 
@@ -28,6 +34,40 @@ export const SignUp = () => {
     else undefined
   };
 
+  useEffect(() => {
+    const getAvailableLanguages = async () => {
+      try {
+        const res = await fetch(process.env.BACKEND_URL + '/api/languages');
+        const data = await res.json();
+        setAvailableLanguages(data)
+        if (!res.ok) throw new Error
+        return true
+      } catch (error) {
+        console.log(error);
+        return false
+      }
+    }
+    getAvailableLanguages()
+  }, [])
+
+  useEffect(() => {
+    const getAvailableCourses = async () => {
+      try {
+        const res = await fetch(process.env.BACKEND_URL + '/api/availableCourses');
+        const data = await res.json();
+        setAvailableCourses(data)
+        if (!res.ok) throw new Error
+        return true
+      } catch (error) {
+        console.log(error);
+        return false
+      }
+    }
+    getAvailableCourses()
+  }, [])
+
+  console.log(availableCourses)
+  console.log(availableLanguages)
   return (
     <div className='flex flex-col justify-around items-center'>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
@@ -193,17 +233,12 @@ export const SignUp = () => {
                     value={userInfo.native_language}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 w-full"
                   >
-                    {store.currentIdiom !== "Español" ? (
-                      <>
-                        <option>Spanish</option>
-                        <option>English</option>
-                      </>
-                    ) : (
-                      <>
-                        <option>Español</option>
-                        <option>English</option>
-                      </>
-                    )}
+                    {availableLanguages.map(language => {
+                      return (
+                        <option key={language.id} value={language.id}>{language.language_name}</option>
+                      )
+                    })
+                    }
                   </select>
                 </div>
               </div>
@@ -224,17 +259,12 @@ export const SignUp = () => {
                     value={userInfo.learning_language}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
-                    {store.currentIdiom !== "Español" ? (
-                      <>
-                        <option>English</option>
-                        <option>Spanish</option>
-                      </>
-                    ) : (
-                      <>
-                        <option>English</option>
-                        <option>Español</option>
-                      </>
-                    )}
+                    {availableCourses.map(course => {
+                      return (
+                        <option key={course.id} value={course.language_id}>{course.name}</option>
+                      )
+                    })
+                    }
                   </select>
                 </div>
 

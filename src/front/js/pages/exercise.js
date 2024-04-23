@@ -1,1 +1,0 @@
-/*no se si esto lo deberia hacer con un componente o de otra forma*/
