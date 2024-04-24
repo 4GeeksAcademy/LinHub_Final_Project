@@ -375,10 +375,11 @@ def update_user():
 
 
 @api.route('/image', methods=["POST"])
-def upload_file(request):
+@jwt_required()
+def upload_file():
     
     image = request.files.get("image", None)
-
+    print(request.files)
     if image == None:
         return 'No hay image en la peticion', 400
 
@@ -395,8 +396,22 @@ def upload_file(request):
     encoded_image_name = quote(image.filename)
     url = f'https://storage.googleapis.com/{bucket_name}/{encoded_image_name}'
 
-    # Retornar la URL permanente
-    return jsonify({"success": "La imagen ha sido cargada correctamente", "url": url}), 200 
+    email = get_jwt_identity()
+
+    user = User.query.filter_by(email=email).one_or_none() 
+
+    if user != None:
+        if url != None: 
+            user.image= url
+
+    db.session.add(user)
+    try:
+        db.session.commit()
+        return jsonify(user.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
+
 
 
 # @api.route('profile/<str:username>')

@@ -46,7 +46,8 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
             "lives": self.lives,
-            "streak": self.streak
+            "streak": self.streak,
+            "image": self.image
             # "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
             # "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
         }
