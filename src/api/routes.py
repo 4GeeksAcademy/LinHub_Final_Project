@@ -271,12 +271,12 @@ def create_user():
         except Exception as e:
             db.session.delete(new_user)
             db.session.rollback()
-            return jsonify({"msg": "Error creating course", "error": str(e)}), 500
+            return jsonify({"msg": "Error creating course", "error": str(e)}), 404
 
         return jsonify([new_user.serialize(), {"hash": hash_password.decode('utf-8'), "salt": salt.decode('utf-8'), "check":check}]), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({"msg": "Error creating user", "error": str(e)}), 500
+        return jsonify({"msg": "Error creating user", "error": str(e)}), 400
     
 
 # Login management end point    

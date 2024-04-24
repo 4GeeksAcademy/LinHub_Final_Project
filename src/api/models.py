@@ -17,7 +17,7 @@ class User(db.Model):
     last_wrong = db.Column(db.DateTime, default=datetime.now())
     streak = db.Column(db.Integer, default=0)
     last_login = db.Column(db.DateTime, default=datetime.now())
-    image= db.Column (db.String(3000), nullable=False)
+    image= db.Column (db.String(3000), nullable=True)
 
     # user native language
     learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
