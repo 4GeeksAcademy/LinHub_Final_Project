@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option
+from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option, FriendshipRequest
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -118,6 +118,59 @@ def get_lessons_by_lang():
     }
 
     return jsonify(returned_object)
+
+# Obtain all received and sent requests and friends
+@api.route('/user/<int:user_id>/friends_and_requests', methods=['GET'])
+def get_user_friends_and_requests(user_id):
+    # Obtain all request where user is sender or receiver
+    accepted_requests = FriendshipRequest.query.filter(
+        (FriendshipRequest.sender_id == user_id) | (FriendshipRequest.receiver_id == user_id),
+        FriendshipRequest.accepted == True
+    ).all()
+
+    # Identidy all friends of the users as well as requests
+    friend_ids = set()
+    sent_requests = []
+    received_requests = []
+    for request in accepted_requests:
+        if request.sender_id == user_id:
+            friend_ids.add(request.receiver_id)
+            sent_requests.append({'timestamp': request.timestamp, 'receiver': request.receiver.username})
+        else:
+            friend_ids.add(request.sender_id)
+            received_requests.append({'timestamp': request.timestamp, 'sender': request.sender.username})
+
+    # Obtener los objetos de usuario para los IDs de amigos
+    friends = User.query.filter(User.id.in_(friend_ids)).all()
+
+    # Preparar los datos para devolver
+    friends_data = [{'id': friend.id, 'username': friend.username, 'first_name': friend.first_name, 'last_name': friend.last_name} for friend in friends]
+
+    # Devolver amigos y solicitudes en una sola respuesta JSON
+    response_data = {
+        'friends': friends_data,
+        'sent_requests': sent_requests,
+        'received_requests': received_requests
+    }
+
+    return jsonify(response_data)
+
+# Send a friend request
+@api.route('/user/<int:sender_id>/send_request/<int:receiver_id>', methods=['POST'])
+def send_friend_request(sender_id, receiver_id):
+    # check if user exists
+    receiver = User.query.get(receiver_id)
+    if receiver is None:
+        return jsonify({'error': 'El usuario receptor no existe'}), 404
+
+    # create friend request
+    friendship_request = FriendshipRequest(sender_id=sender_id, receiver_id=receiver_id, timestamp=datetime.now())
+
+    # Add friend request to the db
+    db.session.add(friendship_request)
+    db.session.commit()
+
+    return jsonify({'message': 'Solicitud de amistad enviada correctamente'}), 201
 
 # Get Questions from lesson
 @api.route('/lesson_questions/<int:lesson_id>')

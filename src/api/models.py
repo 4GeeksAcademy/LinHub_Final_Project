@@ -17,6 +17,7 @@ class User(db.Model):
     last_wrong = db.Column(db.DateTime, default=datetime.now())
     streak = db.Column(db.Integer, default=0)
     last_login = db.Column(db.DateTime, default=datetime.now())
+    
 
     # user native language
     learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
@@ -49,6 +50,19 @@ class User(db.Model):
             # "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
             # "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
         }
+
+class FriendshipRequest(db.Model):
+    __tablename__ = 'friendship_requests'
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    accepted = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now())
+
+    # Definir las relaciones con la tabla de usuarios
+    sender = db.relationship(User, foreign_keys=[sender_id])
+    receiver = db.relationship(User, foreign_keys=[receiver_id])
 
 class Language(db.Model):
     __tablename__ = "languages"
