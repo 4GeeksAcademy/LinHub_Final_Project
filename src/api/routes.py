@@ -340,8 +340,8 @@ def get_current_user():
 def update_user():
    
 
-    image_url = upload_file(request)  # Obtener la URL de la imagen
-    if not image_url:
+    image = upload_file(request)  # Obtener la URL de la imagen
+    if not image:
         return jsonify({"msg": "Error uploading image"}), 500
 
 
@@ -362,7 +362,8 @@ def update_user():
             user.password= password
         if username != None:    
             user.username= username
-        user.image_url = image_url 
+        if image != None: 
+            user.image = image 
 
         db.session.add(user)
         try:
@@ -375,7 +376,7 @@ def update_user():
     return jsonify({"msg": "User not found"}), 404  
 
 
-
+@api.route('/image', methods=["POST"])
 def upload_file(request):
     
     image = request.files.get("image", None)
