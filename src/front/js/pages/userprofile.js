@@ -9,6 +9,9 @@ export const UserProfile = () => {
     const [user, setUser] = useState(null)
     const [showAlert, setShowAlert] = useState(false);
     const [file, setfile] = useState(null)
+    const [serverResponse, setServerResponse] = useState('');
+
+
     const handleFiles = (files) => {
         setfile(files[0])
     }
@@ -31,9 +34,29 @@ export const UserProfile = () => {
 
         navigate("/usercourse")
     }
+    const handleSubmit = async (event) => {
+        if(!file) return
+
+        const formData = new FormData();
+
+        formData.append('image', file);
+        formData.append('name', '')
+
+        try{
+            const resp = await  fetch(process.env.BACKEND_URL + '/api/image', {
+                method: 'POST',
+                body: formData,
+            })
+            const data = await resp.json()
+            setServerResponse(data.url)
+        }catch(err){
+            setServerResponse(err.message)
+        }
+    };
+
 
     const handleSave = async () => {
-        const userSave = await actions.updateUser(store.userToken.token, user, file)
+        const userSave = await actions.updateUser(store.userToken.token, user,)
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
@@ -105,7 +128,8 @@ export const UserProfile = () => {
                                     </svg>
                                 )}
                             </div>
-                            <button onClick={() => handleUpload()}
+                            {serverResponse}
+                            <button onClick={() => handleSubmit()}
                                 type="button"
                                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >

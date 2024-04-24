@@ -15,6 +15,11 @@ import bcrypt
 import firebase_admin
 from firebase_admin import credentials, storage
 
+
+app = Flask(__name__)
+CORS(app)
+
+
 cred = credentials.Certificate("./google-services.json")
 firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
@@ -338,12 +343,7 @@ def get_current_user():
 @api.route("/user", methods=["PUT"])
 @jwt_required()
 def update_user():
-   
-
-    image = upload_file(request)  # Obtener la URL de la imagen
-    if not image:
-        return jsonify({"msg": "Error uploading image"}), 500
-
+    
 
     first_name = request.json.get("first_name", None)
     password = request.json.get("password", None)
@@ -362,9 +362,7 @@ def update_user():
             user.password= password
         if username != None:    
             user.username= username
-        if image != None: 
-            user.image = image 
-
+     
         db.session.add(user)
         try:
             db.session.commit()

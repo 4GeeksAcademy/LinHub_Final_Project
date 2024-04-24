@@ -80,7 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateUser: async (token, user, file) => {
+			updateUser: async (token, user,) => {
 				try {
 
 					const res = await fetch(process.env.BACKEND_URL + "/api/user", {
@@ -89,7 +89,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							username: user.username,
 							first_name: user.first_name,
 							password: user.password,
-							image: file,
+							
+							
 						}),
 
 						headers: {
@@ -109,6 +110,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+
+		
+
 
 			getModuleInfo: async (id, language) => {
 				try {
