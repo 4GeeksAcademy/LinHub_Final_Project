@@ -228,10 +228,15 @@
 
 .pata{
     animation: moverpatas 2s infinite;
-
+    transform-origin: 50%;
 }
 
 @keyframes moverpatas {
+    0%,100%{
+        transform: scale(90%);
+    }50%{
+        transform: scale(100%);
+    }
 }
 
 /*login styles*/
