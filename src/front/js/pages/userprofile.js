@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,8 +8,22 @@ export const UserProfile = () => {
     const navigate = useNavigate()
     const [user, setUser] = useState(null)
     const [showAlert, setShowAlert] = useState(false);
+    const [file, setfile] = useState(null)
+    const [serverResponse, setServerResponse] = useState('');
 
 
+    const handleFiles = (files) => {    
+        setfile(files[0])
+    }
+
+    const fileUpload = useRef(null);
+    const uploadProfilePic = (e) => {
+      console.log(e);
+    };
+  
+    const handleUpload = () => {
+      console.log(fileUpload.current.click(), "fileUpload");
+    };
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -18,15 +32,45 @@ export const UserProfile = () => {
 
     const handleCancel = async () => {
 
-        navigate("/usercourse/username")
+        navigate("/usercourse")
     }
+    
+		const handleSubmit= async (file) => {
+				if(!file) return
+		
+				const formData = new FormData();
+		
+				formData.append('image', file);
+				
+				try{
+					const resp = await  fetch(process.env.BACKEND_URL + '/api/image', {
+						method: 'POST',
+						body: formData,
+						headers: {
+							"Access-Control-Allow-Credentials": true,
+							"Authorization": 'Bearer ' + store.userToken.token,
+				   
+						}
+		
+					},
+						
+				)
+					const data = await resp.json()
+					setServerResponse(data.url)
+				}catch(err){
+					setServerResponse(err.message)
+				}
+			}
+
+
 
     const handleSave = async () => {
-        const userSave = await actions.updateUser(store.userToken.token, user)
+        await actions.updateUser(store.userToken.token, user,)
+        handleSubmit(file)
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
-        }, 5000); 
+        }, 5000);
     }
 
     useEffect(() => {
@@ -52,26 +96,26 @@ export const UserProfile = () => {
         {showAlert && (
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-2" role="alert">
                 <p class="font-bold">
-                {store.currentIdiom !== "Español" ? (
-                                <>Modified Profile</>
-                            ) : (
-                                <>Perfil modificado</>
-                            )}
-                    </p>
+                    {store.currentIdiom !== "Español" ? (
+                        <>Modified Profile</>
+                    ) : (
+                        <>Perfil modificado</>
+                    )}
+                </p>
                 <p class="text-sm">
-                {store.currentIdiom !== "Español" ? (
-                                <>Profile has been successfully modified</>
-                            ) : (
-                                <>El perfil ha sido modificado exitosamente</>
-                            )}
-                
-                
+                    {store.currentIdiom !== "Español" ? (
+                        <>Profile has been successfully modified</>
+                    ) : (
+                        <>El perfil ha sido modificado exitosamente</>
+                    )}
+
+
                 </p>
             </div>
         )}
 
 
-        <div className='mt-28 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
+        <div className='mt-20 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
             <form>
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
@@ -83,20 +127,39 @@ export const UserProfile = () => {
                             )}
 
                         </h2>
-                        <div class="mt-2 flex justify-center items-center gap-x-5">
-                            <svg class="h-40 w-40 text-gray-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-                            </svg>
-                            <button
+                        <div class="mt-2 flex justify-center items-center gap-x-5 ">
+                            <div class="h-48 w-48 text-gray-600 rounded-full overflow-hidden ">
+                                {/* Mostrar la imagen si hay un archivo seleccionado */}
+                                {file && <img src={URL.createObjectURL(file)} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
+                                {/* SVG para mostrar si no hay un archivo seleccionado */}
+                                {!file && !user?.image && (
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                                    </svg>
+                                )}
+                                {!file && user?.image && <img src={user?.image} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
+                            </div>
+                            {serverResponse}
+                            <button onClick={() => handleUpload()}
                                 type="button"
-                                class="rounded-md bg-purple-900 text-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-purple-500">
+                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            >
                                 {store.currentIdiom !== "Español" ? (
                                     <>Change</>
                                 ) : (
                                     <>Cambiar</>
                                 )}
-
                             </button>
+                            {/* Input para seleccionar un archivo */}
+                            <input
+                                type="file"
+                                ref={fileUpload}
+                                style={{ opacity: "0", }}
+                                accept=".jpg, .png, .gif"
+                                onChange={(event) => handleFiles(event.target.files)}
+                            />
+
+
                         </div>
                         <div class="mt-1">
                             <div class="sm:col-span-4">

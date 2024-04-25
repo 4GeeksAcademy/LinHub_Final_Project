@@ -80,7 +80,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateUser: async (token, user) => {
+
+			updateUser: async (token, user,) => {
 				try {
 
 					const res = await fetch(process.env.BACKEND_URL + "/api/user", {
@@ -89,6 +90,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							username: user.username,
 							first_name: user.first_name,
 							password: user.password,
+							
+							
 						}),
 
 						headers: {
@@ -97,6 +100,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						}
 					});
+						
+
 					const data = await res.json();
 					if (!res.ok) throw new Error("Invalid credentials");
 
@@ -106,6 +111,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+
+		
+
 
 			getModuleInfo: async (id, language) => {
 				try {

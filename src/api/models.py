@@ -17,7 +17,7 @@ class User(db.Model):
     last_wrong = db.Column(db.DateTime, default=datetime.now())
     streak = db.Column(db.Integer, default=0)
     last_login = db.Column(db.DateTime, default=datetime.now())
-    
+    image= db.Column (db.String(3000), nullable=True)
 
     # user native language
     learning_language_id = db.Column(db.Integer, db.ForeignKey('languages.id'))
@@ -46,7 +46,8 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
             "lives": self.lives,
-            "streak": self.streak
+            "streak": self.streak,
+            "image": self.image
             # "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
             # "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
         }
@@ -186,3 +187,5 @@ class Option(db.Model):
 
     def __repr__(self):
         return f'<Option {self.option}'
+
+

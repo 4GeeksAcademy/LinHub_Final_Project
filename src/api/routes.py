@@ -12,6 +12,21 @@ from datetime import datetime
 import math
 
 import bcrypt
+import firebase_admin
+from firebase_admin import credentials, storage
+
+
+app = Flask(__name__)
+CORS(app)
+
+
+cred = credentials.Certificate("./google-services.json")
+firebase_admin.initialize_app(cred, {
+    'storageBucket': "linhub-68184.appspot.com"
+})
+
+
+bucket = storage.bucket()
 
 
 api = Blueprint('api', __name__)
@@ -314,12 +329,12 @@ def create_user():
         except Exception as e:
             db.session.delete(new_user)
             db.session.rollback()
-            return jsonify({"msg": "Error creating course", "error": str(e)}), 500
+            return jsonify({"msg": "Error creating course", "error": str(e)}), 404
 
         return jsonify([new_user.serialize(), {"hash": hash_password.decode('utf-8'), "salt": salt.decode('utf-8'), "check":check}]), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({"msg": "Error creating user", "error": str(e)}), 500
+        return jsonify({"msg": "Error creating user", "error": str(e)}), 400
     
 
 # Login management end point    
@@ -381,10 +396,13 @@ def get_current_user():
 @api.route("/user", methods=["PUT"])
 @jwt_required()
 def update_user():
+    
 
     first_name = request.json.get("first_name", None)
     password = request.json.get("password", None)
     username = request.json.get("username", None)
+
+
 
     email = get_jwt_identity()
 
@@ -397,6 +415,7 @@ def update_user():
             user.password= password
         if username != None:    
             user.username= username
+     
         db.session.add(user)
         try:
             db.session.commit()
@@ -406,6 +425,46 @@ def update_user():
             return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
         
     return jsonify({"msg": "User not found"}), 404  
+
+
+@api.route('/image', methods=["POST"])
+@jwt_required()
+def upload_file():
+    
+    image = request.files.get("image", None)
+    print(request.files)
+    if image == None:
+        return 'No hay image en la peticion', 400
+
+    # Subir la imagen al Bucket
+    blob = bucket.blob(image.filename)
+    blob.upload_from_file(image, content_type=image.content_type)
+    blob.make_public()
+    
+    # Generar la URL permanente
+    url = blob.public_url
+    from urllib.parse import quote
+    # Generar la URL permanente manualmente
+    bucket_name = "linhub-68184.appspot.com"
+    encoded_image_name = quote(image.filename)
+    url = f'https://storage.googleapis.com/{bucket_name}/{encoded_image_name}'
+
+    email = get_jwt_identity()
+
+    user = User.query.filter_by(email=email).one_or_none() 
+
+    if user != None:
+        if url != None: 
+            user.image= url
+
+    db.session.add(user)
+    try:
+        db.session.commit()
+        return jsonify(user.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
+
 
 
 # @api.route('profile/<str:username>')
