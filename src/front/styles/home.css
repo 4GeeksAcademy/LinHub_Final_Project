@@ -156,17 +156,67 @@
     transition: all 0.3s;
 }
 
-/* 
 #Group_13{
-    transform: translate(19px);
-    animation: moveEyes 1s 2s both
+    animation: moveEyes 1.5s ease-in-out infinite;
+    display: none;
+}
+
+#Ellipse-18{
+    animation: moveEyes 4s ease-in-out infinite;
+    transform: translate(0);
+}
+
+#Ellipse-17{
+    animation: moveEyes 4s ease-in-out infinite;
+    transform: translate(0);
 }
 
 @keyframes moveEyes{
-    100%{
-        transform:unset
+    0%{
+        transform:translate(-7%);
     }
-} */
+    50%{
+        transform:translate(3%)
+    }
+    100%{
+        transform:translate(-7%)
+
+    }
+} 
+
+
+/* Animación para el aleteo con inclinación */
+@keyframes flap {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.7);
+    }
+}
+
+/* Animación para el guiño */
+@keyframes wink {
+    0%, 100%{
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.1);
+    }
+}
+
+/* Aplicando la animación al ala */
+#wing {
+    animation: flap 2s infinite;
+    transform-origin: 65% 65%; /* Ajustar a la posición correcta del ala */
+}
+
+/* Aplicando la animación al ojo */
+#eye {
+    animation: wink 2s infinite;
+    transform-origin: 50% 50%; /* Ajustar a la posición correcta del ojo */
+}
+
 
 /*login styles*/
 .login-wrapper {

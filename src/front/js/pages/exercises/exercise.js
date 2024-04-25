@@ -130,7 +130,7 @@ export function Exercise() {
                                             onClick={() => handleOptionSelect(option.id)}
                                             style={{ borderColor: 'purple', color: 'purple' }}
                                         >
-                                            {option.option}
+                                            {option.option.substring(0, 4) === "http" ? <img src={option.option} alt="option" style={{ width: '100px' }} /> : option.option}
                                         </Button>
                                     ))}
                                 </div>
