@@ -93,26 +93,26 @@ export const UserProfile = () => {
 
     return (<>
 
-        {showAlert && (
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-2" role="alert">
-                <p class="font-bold">
-                    {store.currentIdiom !== "Español" ? (
-                        <>Modified Profile</>
-                    ) : (
-                        <>Perfil modificado</>
-                    )}
-                </p>
-                <p class="text-sm">
-                    {store.currentIdiom !== "Español" ? (
-                        <>Profile has been successfully modified</>
-                    ) : (
-                        <>El perfil ha sido modificado exitosamente</>
-                    )}
-
-
-                </p>
-            </div>
-        )}
+{showAlert && (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="font-bold text-lg text-green-700 mb-2">
+                {store.currentIdiom !== "Español" ? (
+                    <>Modified Profile</>
+                ) : (
+                    <>Perfil modificado</>
+                )}
+            </p>
+            <p className="text-sm text-gray-700">
+                {store.currentIdiom !== "Español" ? (
+                    <>Profile has been successfully modified</>
+                ) : (
+                    <>El perfil ha sido modificado exitosamente</>
+                )}
+            </p>
+        </div>
+    </div>
+)}
 
 
         <div className='mt-20 rounded-lg mx-auto max-w-screen-sm px-4 sm:px-4 sm:px-4 py-4 shadow-3'>
@@ -179,7 +179,7 @@ export const UserProfile = () => {
                                         name="username"
                                         id="username"
                                         autoComplete="family-name"
-                                        className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className=" hover:ring-indigo-600 hover:ring-2 shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -200,7 +200,7 @@ export const UserProfile = () => {
                                             defaultValue={user?.first_name}
                                             onChange={handleChange}
                                             autoComplete="family-name"
-                                            className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className=" hover:ring-indigo-600 hover:ring-2 shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
 
