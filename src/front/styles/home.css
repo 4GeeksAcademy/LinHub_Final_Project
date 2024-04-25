@@ -5,34 +5,34 @@
     font-weight: normal;
 }
 
-*{
+* {
     font-family: TF Saeada, sans-serif;
 }
 
-.logo{
+.logo {
     height: 50px;
 }
 
-#boton-hero{
+#boton-hero {
     position: relative;
     background-color: #C93AFC;
-    color:white !important;
+    color: white !important;
     transition: all 0.3s;
 }
 
-#boton-hero:hover{
+#boton-hero:hover {
     position: relative;
     background-color: #b534e4;
     color: rgb(255, 255, 255) !important;
     transition: all 0.3s;
 }
 
-#boton-hero2{
+#boton-hero2 {
     position: relative;
     transition: all 0.3s;
 }
 
-#boton-hero2:hover{
+#boton-hero2:hover {
     position: relative;
     background-color: #ececec;
     color: rgb(253, 253, 253) !important;
@@ -40,7 +40,7 @@
 }
 
 
-#boton-hero::after{
+#boton-hero::after {
     content: '';
     padding: 0;
     position: absolute;
@@ -53,12 +53,12 @@
     background-color: #7E0FA5;
 }
 
-#boton-hero:hover::after{
+#boton-hero:hover::after {
     background-color: #6e007c;
     transition: all 0.3s;
 }
 
-#boton-hero2::after{
+#boton-hero2::after {
     content: '';
     padding: 0;
     position: absolute;
@@ -71,7 +71,7 @@
     background-color: #c7cacf;
 }
 
-#boton-hero2:hover::after{
+#boton-hero2:hover::after {
     background-color: #b8b8b8;
     transition: all 0.3s;
 }
@@ -79,112 +79,116 @@
 .border-linear-gradient {
     border-style: solid;
     border-image: linear-gradient(to right, darkblue, darkorchid) 1;
-  }
+}
 
-.bg-transparency-1{
+.bg-transparency-1 {
     opacity: .8;
     transition: all 0.3s;
 }
 
-.bg-transparency-2{
+.bg-transparency-2 {
     opacity: .6;
     transition: all 0.3s;
 }
 
-.bg-transparency-0{
+.bg-transparency-0 {
     opacity: 1;
     transition: all 0.3s;
 }
 
-.shadow{
+.shadow {
     box-shadow: 15px 15px 20px rgb(138, 138, 138);
 }
 
-.shadow-2{
+.shadow-2 {
     box-shadow: 0px 20px 20px rgb(138, 138, 138);
 }
 
-.shadow-3{
+.shadow-3 {
     box-shadow: 0px 2px 20px rgb(138, 138, 138);
 }
 
-.illustration{
+.illustration {
     align-self: center;
     margin: 0 10px
 }
 
-.contact-button{
+.contact-button {
     opacity: .8;
     transition: all 0.3s;
 }
 
-.person-wrapper:hover > .contact-button{
+.person-wrapper:hover>.contact-button {
     opacity: 1;
     transition: all 0.3s;
 }
 
 /*CSS del Register */
-#form1{
+#form1 {
     width: 550px;
-   
+
 }
 
-#pingui-form{
+#pingui-form {
     width: 150px;
     transform: rotate(20deg);
-    align-self:end
+    align-self: end
 }
 
 /*CSS de page one */
-#boton-pageOne1{
-    height:50px;
-    width:50px;
-   -moz-border-radius:50px;
-   -webkit-border-radius:50px;
-    border-radius:50px;
+#boton-pageOne1 {
+    height: 50px;
+    width: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
 }
 
-#boton-pageOne{
+#boton-pageOne {
     background-color: #982fbb;
-    color:white !important;
+    color: white !important;
     transition: all 0.3s;
 }
 
-#boton-pageOne:hover{
+#boton-pageOne:hover {
     background-color: #953cb6;
     color: rgb(255, 255, 255) !important;
     transition: all 0.3s;
 }
 
-#Ellipse-18{
+#Ellipse-18 {
     animation: moveEyes 4s cubic-bezier(0.73, 0.02, 0.74, 0.02) infinite;
     transform: translate(0);
 }
 
-#Ellipse-17{
+#Ellipse-17 {
     animation: moveEyes 4s cubic-bezier(0.73, 0.02, 0.74, 0.02) infinite;
     transform: translate(0);
 }
 
-@keyframes moveEyes{
-    0%{
-        transform:translate(-7%);
+@keyframes moveEyes {
+    0% {
+        transform: translate(-7%);
     }
-    50%{
-        transform:translate(3%)
-    }
-    100%{
-        transform:translate(-7%)
 
+    50% {
+        transform: translate(3%)
     }
-} 
+
+    100% {
+        transform: translate(-7%)
+    }
+}
 
 
 /* Animación para el aleteo con inclinación */
 @keyframes flap {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scaleY(1);
     }
+
     50% {
         transform: scaleY(0.7);
     }
@@ -192,9 +196,12 @@
 
 /* Animación para el guiño */
 @keyframes wink {
-    0%, 100%{
+
+    0%,
+    100% {
         transform: translate(6px);
     }
+
     50% {
         transform: translate(2px)
     }
@@ -203,59 +210,59 @@
 /* Aplicando la animación al ala */
 #wing {
     animation: flap 2s infinite;
-    transform-origin: 65% 65%; /* Ajustar a la posición correcta del ala */
+    transform-origin: 65% 65%;
+    /* Ajustar a la posición correcta del ala */
 }
 
 /* Aplicando la animación al ojo */
 #eye {
     animation: wink 2s infinite;
-    transform-origin: 50% 50%; /* Ajustar a la posición correcta del ojo */
+    transform-origin: 50% 50%;
+    /* Ajustar a la posición correcta del ojo */
 }
 
-.body{
+.body {
     animation: movement 2s infinite;
     transform-origin: 0%;
 }
 
 @keyframes movement {
-    0% ,100%{
+
+    0%,
+    100% {
         transform: translateY(7%);
     }
-    50%{
+
+    50% {
         transform: translateY(3%)
     }
 }
 
-.pata{
+.pata {
     animation: moverpatas 2s infinite;
     transform-origin: 50%;
 }
 
 @keyframes moverpatas {
-    0%,100%{
+
+    0%,
+    100% {
         transform: scale(90%);
-    }50%{
+    }
+
+    50% {
         transform: scale(100%);
     }
 }
 
-.barrita {
-    width: 100%;
-    height: 5px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    animation: changeColor 3s linear infinite normal both;
+#progress {
+    animation: loading;
     animation-timeline: scroll();
 }
 
-@keyframes changeColor {
-    0%{
-        background-color: #6e007c;
-    }50% {
-        background-color: #FF5733;
-    }100%{
-        background-color: #c7cacf;
+@keyframes loading {
+    to {
+        width: 100%;
     }
 }
 
