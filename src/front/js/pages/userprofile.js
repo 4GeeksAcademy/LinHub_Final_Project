@@ -115,7 +115,7 @@ export const UserProfile = () => {
         )}
 
 
-        <div className='mt-20 rounded-lg mx-auto max-w-screen-sm px-4 sm:px-6 sm:px-6 py-6 shadow-3'>
+        <div className='mt-20 rounded-lg mx-auto max-w-screen-sm px-4 sm:px-4 sm:px-4 py-4 shadow-3'>
             <form>
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
@@ -139,6 +139,7 @@ export const UserProfile = () => {
                                 )}
                                 {!file && user?.image && <img src={user?.image} alt="image-preview" style={{  objectFit: 'cover' }} />}
                             </div>
+                            <div className="mt-3 flex justify-center items-center flex-col gap-y-2">
                             {serverResponse}
                             <button onClick={() => handleUpload()}
                                 type="button"
@@ -154,11 +155,11 @@ export const UserProfile = () => {
                             <input
                                 type="file"
                                 ref={fileUpload}
-                                style={{ opacity: "0", }}
+                                style={{ opacity: "0", width: '20px'}}
                                 accept=".jpg, .png, .gif"
                                 onChange={(event) => handleFiles(event.target.files)}
                             />
-
+                        </div>
 
                         </div>
                         <div class="mt-5">
