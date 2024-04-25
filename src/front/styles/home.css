@@ -156,18 +156,13 @@
     transition: all 0.3s;
 }
 
-#Group_13{
-    animation: moveEyes 1.5s ease-in-out infinite;
-    display: none;
-}
-
 #Ellipse-18{
-    animation: moveEyes 4s ease-in-out infinite;
+    animation: moveEyes 4s cubic-bezier(0.73, 0.02, 0.74, 0.02) infinite;
     transform: translate(0);
 }
 
 #Ellipse-17{
-    animation: moveEyes 4s ease-in-out infinite;
+    animation: moveEyes 4s cubic-bezier(0.73, 0.02, 0.74, 0.02) infinite;
     transform: translate(0);
 }
 
@@ -198,10 +193,10 @@
 /* Animación para el guiño */
 @keyframes wink {
     0%, 100%{
-        transform: scaleY(1);
+        transform: translate(6px);
     }
     50% {
-        transform: scaleY(0.1);
+        transform: translate(2px)
     }
 }
 
@@ -217,6 +212,27 @@
     transform-origin: 50% 50%; /* Ajustar a la posición correcta del ojo */
 }
 
+.body{
+    animation: movement 2s infinite;
+    transform-origin: 0%;
+}
+
+@keyframes movement {
+    0% ,100%{
+        transform: translateY(7%);
+    }
+    50%{
+        transform: translateY(3%)
+    }
+}
+
+.pata{
+    animation: moverpatas 2s infinite;
+
+}
+
+@keyframes moverpatas {
+}
 
 /*login styles*/
 .login-wrapper {
