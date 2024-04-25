@@ -80,6 +80,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			handleSubmit: async (file) => {
+				if(!file) return
+		
+				const formData = new FormData();
+		
+				formData.append('image', file);
+				
+				try{
+					const resp = await  fetch(process.env.BACKEND_URL + '/api/image', {
+						method: 'POST',
+						body: formData,
+						headers: {
+							"Access-Control-Allow-Credentials": true,
+							"Authorization": 'Bearer ' + store.userToken.token,
+				   
+						}
+		
+					},
+					
+				
+				)
+					const data = await resp.json()
+					setServerResponse(data.url)
+				}catch(err){
+					setServerResponse(err.message)
+				}
+			},
+
 			updateUser: async (token, user,) => {
 				try {
 
