@@ -115,7 +115,7 @@ export const UserProfile = () => {
         )}
 
 
-        <div className='mt-20 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
+        <div className='mt-20 rounded-lg mx-auto max-w-screen-sm px-4 sm:px-6 sm:px-6 py-6 shadow-3'>
             <form>
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
@@ -127,17 +127,17 @@ export const UserProfile = () => {
                             )}
 
                         </h2>
-                        <div class="mt-2 flex justify-center items-center gap-x-5 ">
+                        <div class="mt-3 flex justify-center items-center gap-x-5 ">
                             <div class="h-48 w-48 text-gray-600 rounded-full overflow-hidden ">
                                 {/* Mostrar la imagen si hay un archivo seleccionado */}
-                                {file && <img src={URL.createObjectURL(file)} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
+                                {file && <img src={URL.createObjectURL(file)} alt="image-preview" style={{  objectFit: 'cover' }} />}
                                 {/* SVG para mostrar si no hay un archivo seleccionado */}
                                 {!file && !user?.image && (
                                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
                                     </svg>
                                 )}
-                                {!file && user?.image && <img src={user?.image} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
+                                {!file && user?.image && <img src={user?.image} alt="image-preview" style={{  objectFit: 'cover' }} />}
                             </div>
                             {serverResponse}
                             <button onClick={() => handleUpload()}
@@ -161,7 +161,7 @@ export const UserProfile = () => {
 
 
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-5">
                             <div class="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                                     {store.currentIdiom !== "Español" ? (
