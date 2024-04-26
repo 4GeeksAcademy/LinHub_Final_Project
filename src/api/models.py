@@ -129,11 +129,6 @@ class Module(db.Model):
     def __repr__(self):
         return f'<Module {self.module_name}'
     
-    def __init__(self, id, module_name,available_course_id):
-        self.id = id
-        self.module_name = module_name
-        self.available_course_id = available_course_id
-    
     def serialize(self):
         return{
             "id": self.id,
