@@ -55,7 +55,7 @@ export const LogIn = () => {
                             <p className="">Ingresa a tu cuenta</p>
 
 
-                            <div className="border-y border-purple-900 mt-3 mb-4">
+                            <div className="border-y border-purple-900 mt-3 mb-4 w-full">
                                 <input
                                     className="mt-3 block w-full h-10 px-2 py-1 border border-gray-300 rounded-md font-overpass text-base text-gray-700 focus:outline-none focus:border-purple-500"
                                     type="text"
