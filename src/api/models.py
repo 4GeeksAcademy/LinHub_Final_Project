@@ -141,6 +141,7 @@ class Lesson(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     lesson_name = db.Column(db.String, nullable = False)
+    description = db.Column(db.String, nullable= True)
     module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
     module = db.relationship(Module)
 

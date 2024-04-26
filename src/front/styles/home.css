@@ -312,14 +312,35 @@
     top: 60px
 }
 
-.usercourse-lesson:nth-child(2n + 1)>.lesson-background {
-    background: rgb(63, 94, 251);
-    background: linear-gradient(38deg, rgba(63, 94, 251, 1) 0%, rgb(0, 0, 0) 100%);
-}
-
 .lesson-background:nth-child(1) {
     background: rgb(63, 94, 251);
     background: linear-gradient(38deg, rgba(63, 94, 251, 1) 0%, rgba(222, 71, 102, 1) 100%);
+}
+
+.usercourse-lesson:nth-child(2)>.lesson-background {
+    background: rgb(247, 105, 245);
+    background: linear-gradient(140deg, rgba(247, 105, 245, 1) 0%, rgba(226, 106, 34, 1) 100%);
+}
+
+.usercourse-lesson:nth-child(3)>.lesson-background {
+    background: rgb(90, 255, 82);
+    background: linear-gradient(140deg, rgba(90, 255, 82, 1) 0%, rgba(222, 39, 66, 1) 100%);
+}
+
+.usercourse-lesson:nth-child(4)>.lesson-background {
+    background: rgb(255, 24, 205);
+    background: linear-gradient(308deg, rgba(255, 24, 205, 1) 0%, rgba(39, 66, 222, 1) 100%);
+}
+
+.usercourse-lesson:nth-child(5)>.lesson-background {
+    background: rgb(24, 240, 255);
+    background: linear-gradient(117deg, rgba(24, 240, 255, 1) 0%, rgba(222, 39, 173, 1) 100%);
+}
+
+.usercourse-lesson:nth-child(6)>.lesson-background {
+    background: rgb(24, 240, 255);
+    background: linear-gradient(218deg, rgba(24, 240, 255, 1) 0%, rgba(222, 145, 39, 1) 100%);
+    margin-bottom: 30px;
 }
 
 .lesson-background {

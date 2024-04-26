@@ -56,8 +56,8 @@ def setup_commands(app):
     def insert_lessons():
         print("Creating lessons")
 
-        en_lessons = ["Start a conversation!", "Introduce yourself!", "Talk about your hobbies!", "Go out eating", "Ask someone out!"]
-        es_lessons = ["Empiza una conversacion!", "Presentate!", "Habla de tus hobbies", "Sal a comer algo!", "Invita a alguien a salir!"]
+        en_lessons = ["Start a conversation!", "Introduce yourself!", "Talk about your hobbies!", "Go out eating", "Ask someone out!", "Final Lesson"]
+        es_lessons = ["Empiza una conversacion!", "Presentate!", "Habla de tus hobbies", "Sal a comer algo!", "Invita a alguien a salir!", "Leccion Final"]
 
         modules = db.session.query(Module).all()
 
@@ -88,10 +88,12 @@ def setup_commands(app):
             ["What do you like to do?", "Do you like to read?"],
             ["Would you like to order now?", "What would you like to eat?"],
             ["Do you want to do something?", "I'm sooo bored"],
+            ["Do you want to do something?", "I'm sooo bored"],
             ["Hola! ¿Como estas?", "Hola, ¿como te llamas?"],
             ["Hola!", "¿Que edad tienes?"],
             ["¿Que te gusta hacer?", "¿Te gusta leer?"],
             ["¿Le gustaria ordenar ahora?", "¿Que le gustaria comer?"],
+            ["¿Quieres hacer algo?", "Estoy taaan aburrido"],
             ["¿Quieres hacer algo?", "Estoy taaan aburrido"],
         ]
 
@@ -161,6 +163,16 @@ def setup_commands(app):
                 {"option": "Maybe later", "correct": False}
             ],
             [
+                {"option": "Yes! let's go eating", "correct": True},
+                {"option": "No thanks", "correct": False},
+                {"option": "Maybe later", "correct": False}
+            ],
+            [
+                {"option": "Would you like to netflix and chill?", "correct": True},
+                {"option": "No thanks", "correct": False},
+                {"option": "Maybe later", "correct": False}
+            ],
+            [
                 {"option": "Hola, todo bien", "correct": True},
                 {"option": "Esternocleidomastoideo", "correct": False},
                 {"option": "Paralelepipedo", "correct": False}
@@ -197,6 +209,16 @@ def setup_commands(app):
             ],
             [
                 {"option": "Quiero una pizza de peperoni", "correct": True},
+                {"option": "Esternocleidomastoideo", "correct": False},
+                {"option": "Paralelepipedo", "correct": False}
+            ],
+            [
+                {"option": "Si! ¿Te apetece ir a nadar?", "correct": True},
+                {"option": "Esternocleidomastoideo", "correct": False},
+                {"option": "Paralelepipedo", "correct": False}
+            ],
+            [
+                {"option": "Yo tambien! Salgamos a caminar un rato", "correct": True},
                 {"option": "Esternocleidomastoideo", "correct": False},
                 {"option": "Paralelepipedo", "correct": False}
             ],

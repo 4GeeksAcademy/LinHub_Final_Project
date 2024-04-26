@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-
+import LoggedNavbar from '../component/usercourse_components/LoggedNav'
 
 export const UserProfile = () => {
     const { store, actions } = useContext(Context);
@@ -12,17 +12,17 @@ export const UserProfile = () => {
     const [serverResponse, setServerResponse] = useState('');
 
 
-    const handleFiles = (files) => {    
+    const handleFiles = (files) => {
         setfile(files[0])
     }
 
     const fileUpload = useRef(null);
     const uploadProfilePic = (e) => {
-      console.log(e);
+        console.log(e);
     };
-  
+
     const handleUpload = () => {
-      console.log(fileUpload.current.click(), "fileUpload");
+        console.log(fileUpload.current.click(), "fileUpload");
     };
 
     const handleChange = ({ target }) => {
@@ -34,33 +34,33 @@ export const UserProfile = () => {
 
         navigate("/usercourse")
     }
-    
-		const handleSubmit= async (file) => {
-				if(!file) return
-		
-				const formData = new FormData();
-		
-				formData.append('image', file);
-				
-				try{
-					const resp = await  fetch(process.env.BACKEND_URL + '/api/image', {
-						method: 'POST',
-						body: formData,
-						headers: {
-							"Access-Control-Allow-Credentials": true,
-							"Authorization": 'Bearer ' + store.userToken.token,
-				   
-						}
-		
-					},
-						
-				)
-					const data = await resp.json()
-					setServerResponse(data.url)
-				}catch(err){
-					setServerResponse(err.message)
-				}
-			}
+
+    const handleSubmit = async (file) => {
+        if (!file) return
+
+        const formData = new FormData();
+
+        formData.append('image', file);
+
+        try {
+            const resp = await fetch(process.env.BACKEND_URL + '/api/image', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    "Access-Control-Allow-Credentials": true,
+                    "Authorization": 'Bearer ' + store.userToken.token,
+
+                }
+
+            },
+
+            )
+            const data = await resp.json()
+            setServerResponse(data.url)
+        } catch (err) {
+            setServerResponse(err.message)
+        }
+    }
 
 
 
@@ -93,6 +93,11 @@ export const UserProfile = () => {
 
     return (<>
 
+        <LoggedNavbar
+            // userImage={lessons.user.image}
+            username={store.userToken.identity.first_name + ' ' + store.userToken.identity.last_name}
+        // language={lessons.user.learning_language == 1 ? "English" : "Español"}
+        />
         {showAlert && (
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-2" role="alert">
                 <p class="font-bold">

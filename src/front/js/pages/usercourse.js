@@ -4,9 +4,6 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFireFlameCurved } from "react-icons/fa6";
 import { FaHeartbeat } from "react-icons/fa";
-
-
-
 import LoggedNavbar from '../component/usercourse_components/LoggedNav'
 
 // const SidebarButton = ({ text, handleClick }) => {
@@ -89,8 +86,9 @@ export const UserCourse = () => {
                                     <div className='lesson-background'>
                                         <p className='text-white text-9xl'>{index + 1}</p>
                                     </div>
-                                    <div className='px-4'>
+                                    <div className='px-4 flex flex-col'>
                                         <p className='text-xl'>{lesson.lesson_name}</p>
+                                        <p className='text-slate-400'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                                     </div>
                                     <div className='px-4 pb-2'>
                                         <button
@@ -128,46 +126,5 @@ export const UserCourse = () => {
                 </div>
             </div>
         </>
-        // <div className="flex justify-between p-8" style={{ minHeight: '89vh' }}>
-        //     <div className="w-full md:w-1/3 bg-gray-200 p-4 rounded-xl">
-        //         <Link to="/userprofile">
-        //             <SidebarButton text={store.userToken.identity.username} />
-        //         </Link>
-        //         <SidebarButton text="Chats" />
-        //         <SidebarButton text="Peticiones" />
-        //         <div className="border border-gray-300 p-4 rounded-2xl shadow-lg mt-12">
-        //             <h2 className="text-lg font-semibold mb-2">
-        //                 <SidebarButton text="Agenda Clase Privada!" />
-        //             </h2>
-        //             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam viverra enim nec tincidunt hendrerit.</p>
-        //         </div>
-        //         <SidebarButton text="Log out" handleClick={() => actions.logOut()} />
-        //     </div>
-        //     <div className="hidden md:block w-2/3 bg-white-300 p-4">
-        //         <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden flex p-3">
-        //             <div className="absolute left-0 top-0 h-full bg-violet-500 animate-progress-stripes" style={{ width: '65%' }}></div>
-        //         </div>
-
-        //         {lessons.user &&
-        //             <div className='flex flex-row justify-around mt-3'>
-        //                 <p> {lessons.user.lives} <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#ff3d3d", }} /></p>
-        //                 <p> {lessons.user.streak} <FontAwesomeIcon icon={faFire} size="2xl" style={{ color: "#ff9a57" }} />  </p>
-        //                 {store.userToken.learning_language == "English" ?
-        //                     < img src='https://static.wikia.nocookie.net/duolingo/images/7/79/Ingles.png/revision/latest?cb=20230710181050&path-prefix=es' style={{ width: '40px' }} />
-        //                     :
-        //                     < img src='https://upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg' style={{ width: '40px' }} />
-        //                 }
-        //             </div>
-        //         }
-
-        //         {lessons.data &&
-        //             lessons.data.map(lesson => {
-        //                 return (
-        //                     <LessonItem key={lesson.lesson_id} title={lesson.lesson_name} id={lesson.lesson_id} />
-        //                 )
-        //             })
-        //         }
-        //     </div>
-        // </div>
     );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import Navbar from "../component/home_components/Navbar";
 
 export const SignUp = () => {
   const { store, actions } = useContext(Context);
@@ -68,7 +69,8 @@ export const SignUp = () => {
 
   console.log(availableCourses)
   console.log(availableLanguages)
-  return (
+  return (<>
+    <Navbar />
     <div className='flex flex-col justify-around items-center'>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div className=" flex flex-row justify-center my-4">
@@ -289,5 +291,6 @@ export const SignUp = () => {
         </div >
       </form >
     </div >
+  </>
   );
 }

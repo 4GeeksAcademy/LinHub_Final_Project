@@ -97,7 +97,7 @@ def get_lessons_by_lang():
         'name': available_course.name
     }
 
-    lessons = db.session.query(Module, Lesson.id, Lesson.lesson_name)\
+    lessons = db.session.query(Module, Lesson.id, Lesson.lesson_name, Lesson.description)\
     .join(Lesson, Module.id == Lesson.module_id)\
     .filter(Module.available_course_id == available_course.id).all()
     
@@ -107,6 +107,7 @@ def get_lessons_by_lang():
         lesson_dict = {
             'lesson_id': lesson.id,
             'lesson_name': lesson.lesson_name,
+            'description': lesson.description
         }
         courses_lessons.append(lesson_dict)
 
