@@ -94,7 +94,7 @@ export const UserProfile = () => {
     return (<>
 
         <LoggedNavbar
-            // userImage={lessons.user.image}
+            userImage={store.userToken.identity.image}
             username={store.userToken.identity.first_name + ' ' + store.userToken.identity.last_name}
         // language={lessons.user.learning_language == 1 ? "English" : "Español"}
         />
