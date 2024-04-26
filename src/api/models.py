@@ -47,9 +47,9 @@ class User(db.Model):
             "email": self.email,
             "lives": self.lives,
             "streak": self.streak,
-            "image": self.image
-            # "learning_language": self.learning_language.serialize()["language_name"] if self.learning_language else "",
-            # "native_language": self.native_language.serialize()["language_name"] if self.learning_language else "",
+            "image": self.image,
+            "learning_language": self.learning_language_id,
+            "native_language": self.native_language_id
         }
 
 class FriendshipRequest(db.Model):

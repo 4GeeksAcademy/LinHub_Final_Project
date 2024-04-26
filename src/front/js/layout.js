@@ -12,7 +12,7 @@ import { UserProfile } from "./pages/userprofile";
 import { UploadFile } from "./pages/UploadFile";
 
 
-import Navbar from "./component/Navbar";
+
 import injectContext from "./store/appContext";
 
 //create your first component
@@ -27,7 +27,6 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<LogIn />} path="/login" />
@@ -36,7 +35,6 @@ const Layout = () => {
                         <Route element={<Exercise />} path="/exercise/:id" />
                         <Route element={<UserProfile />} path="/userprofile" />
                         <Route element={<UploadFile />} path="/uploadfile" />
-
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>

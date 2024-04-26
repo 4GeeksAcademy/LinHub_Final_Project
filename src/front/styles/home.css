@@ -108,6 +108,10 @@
     box-shadow: 0px 2px 20px rgb(138, 138, 138);
 }
 
+.shadow-4 {
+    box-shadow: 0px 2px 5px rgb(138, 138, 138);
+}
+
 .illustration {
     align-self: center;
     margin: 0 10px
@@ -270,3 +274,69 @@
 .login-wrapper {
     box-shadow: 1px 1px 10px black !important;
 }
+
+/*USERCOURSE STYLES*/
+
+.usercourse-container {
+    padding: 20px 300px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px
+}
+
+.usercourse-container-left {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.usercourse-container-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.usercourse-lesson {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+    height: 370px;
+    box-shadow: 1px 1px 5px #a2a2a2;
+    border-radius: 20px;
+    margin: 0 auto;
+    transition: all 0.4s;
+}
+
+.usercourse-lesson:nth-child(2n) {
+    top: 60px
+}
+
+.usercourse-lesson:nth-child(2n + 1)>.lesson-background {
+    background: rgb(63, 94, 251);
+    background: linear-gradient(38deg, rgba(63, 94, 251, 1) 0%, rgb(0, 0, 0) 100%);
+}
+
+.lesson-background:nth-child(1) {
+    background: rgb(63, 94, 251);
+    background: linear-gradient(38deg, rgba(63, 94, 251, 1) 0%, rgba(222, 71, 102, 1) 100%);
+}
+
+.lesson-background {
+    height: 230px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.usercourse-lesson:hover {
+    transform: scale(1.05);
+    transition: all 0.4s;
+}
+
+/* .user-logged-drop{
+    opacity: ;
+} */
