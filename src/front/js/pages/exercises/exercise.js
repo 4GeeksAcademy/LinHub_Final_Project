@@ -89,6 +89,9 @@ export function Exercise() {
     return (
         <div className='w-100'>
             <LoggedNavbar
+                userImage={store.userToken.identity.image}
+                username={store.userToken.identity.first_name + ' ' + store.userToken.identity.last_name}
+                language={store.userToken.identity.language == 1 ? "English" : "Español"}
             />
             <div className="flex justify-around items-center my-3" >
                 <div className='flex'>
