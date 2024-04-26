@@ -19,14 +19,13 @@ const SectionShowOne = () => {
                         <p className='font-bold text-gray-500 text-xl'>Immerse yourself in our short lessons designed to provide you with a unique interactive experience. Here, you will not only learn, but also strengthen your language skills alongside real people!</p>
                     </div>
                 )}
-
                 <div className='relative'>
                     <div className='absolute left-1/2 top-16 -translate-x-1/2 h-4 w-[80%] rounded-xl bg-gray-300' >
                         <div id='progress' className='h-full bg-purple-500 rounded-[inherit]' style={{ width: '0' }}></div>
                     </div>
 
                     <svg width="230" height="420" viewBox="0 0 178 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2.5" y="2.5" width="173" height="275" rx="23.5" fill="white" stroke="#FF9600" stroke-width="5" />
+                        <rect x="2.5" y="2.5" width="173" height="275" rx="23.5" fill="white" stroke="#FF9600" strokeWidth="5" />
                         <rect x="26" y="227" width="125" height="27" rx="10" fill="#A75DE1" />
                         <rect x="26" y="72" width="60" height="50" rx="5" fill="#F1F1F1" />
                         <path d="M65.4171 107.494C61.8758 110.835 52.1242 110.835 48.5829 107.494C46.3189 105.357 47.1483 101 47.1483 101H66.8517C66.8517 101 67.6812 105.357 65.4171 107.494Z" fill="#F2B65C" />

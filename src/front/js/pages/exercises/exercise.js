@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Context } from "../../store/appContext";
 
 import Stepper from '@mui/material/Stepper';
@@ -14,6 +14,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 export function Exercise() {
     const { store, actions } = useContext(Context)
+    const navigate = useNavigate();
     const [activeStep, setActiveStep] = React.useState(0);
     const [selectedOption, setSelectedOption] = React.useState(null);
     const [correctAnswers, setCorrectAnswers] = React.useState(0);
