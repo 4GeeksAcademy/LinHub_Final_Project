@@ -51,8 +51,8 @@ export const LogIn = () => {
                     <div id="login" className="border-4 rounded border-gray-200 drop-shadow-md p-5 ">
                         
 
-                        <form className="border-b border-purple-900 text-3xl text-purple-900 flex flex-column justify-center items-center" id="loginform">
-                            <p className="">Ingresa a tu cuenta</p>
+                        <form className="border-b border-purple-900 flex flex-column justify-center items-center text-wrap" id="loginform">
+                            <p className="text-3xl text-purple-900">Ingresa a tu cuenta</p>
 
 
                             <div className="border-y border-purple-900 mt-3 mb-4 w-full">
@@ -86,6 +86,16 @@ export const LogIn = () => {
                                 Login
                             </button><br />
                             {error && <small>invalid email or password</small>}
+
+                            <div className="text-wrap text-xs text-center" style={{ maxWidth: "300px" }}>
+                                <p>
+                                    Al continuar, aceptas nuestros  <strong> Términos </strong> y nuestra 
+                                </p>
+                                <p className=""> 
+                                    <strong>Política de privacidad.</strong>  
+                                </p>
+                            </div>
+
                         </form>
                         <div className="pie-form flex justify-center ">
                             {/* <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br /> */}
