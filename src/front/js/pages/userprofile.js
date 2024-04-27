@@ -70,7 +70,7 @@ export const UserProfile = () => {
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
-        }, 5000);
+        }, 2000);
     }
 
     useEffect(() => {
@@ -162,7 +162,7 @@ export const UserProfile = () => {
                             <input
                                 type="file"
                                 ref={fileUpload}
-                                style={{ opacity: "0", Width:"10px" }}
+                                style={{opacity: "0", width:"10px",}}
                                 accept=".jpg, .png, .gif"
                                 onChange={(event) => handleFiles(event.target.files)}
                             />
