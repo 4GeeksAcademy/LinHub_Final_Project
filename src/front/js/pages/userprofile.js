@@ -144,6 +144,7 @@ export const UserProfile = () => {
                                 )}
                                 {!file && user?.image && <img src={user?.image} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
                             </div>
+                            <div className="mt-3 flex justify-center items-center flex-col gap-y-2">
                             {serverResponse}
 
                             
@@ -161,11 +162,11 @@ export const UserProfile = () => {
                             <input
                                 type="file"
                                 ref={fileUpload}
-                                style={{ opacity: "0", Width:"10px" }}
+                                style={{ opacity: "0", Width:"20px" }}
                                 accept=".jpg, .png, .gif"
                                 onChange={(event) => handleFiles(event.target.files)}
                             />
-
+                         </div>
 
                         </div>
                         <div class="mt-1">
