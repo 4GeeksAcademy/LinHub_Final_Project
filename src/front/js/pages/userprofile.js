@@ -98,29 +98,29 @@ export const UserProfile = () => {
             username={store.userToken.identity.first_name + ' ' + store.userToken.identity.last_name}
             language={store.userToken.identity.language == 1 ? "English" : "Español"}
         />
-        {showAlert && (
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-2" role="alert">
-                <p class="font-bold">
-                    {store.currentIdiom !== "Español" ? (
-                        <>Modified Profile</>
-                    ) : (
-                        <>Perfil modificado</>
-                    )}
-                </p>
-                <p class="text-sm">
-                    {store.currentIdiom !== "Español" ? (
-                        <>Profile has been successfully modified</>
-                    ) : (
-                        <>El perfil ha sido modificado exitosamente</>
-                    )}
+       {showAlert && (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="font-bold text-lg text-green-700 mb-2">
+                {store.currentIdiom !== "Español" ? (
+                    <>Modified Profile</>
+                ) : (
+                    <>Perfil modificado</>
+                )}
+            </p>
+            <p className="text-sm text-gray-700">
+                {store.currentIdiom !== "Español" ? (
+                    <>Profile has been successfully modified</>
+                ) : (
+                    <>El perfil ha sido modificado exitosamente</>
+                )}
+            </p>
+        </div>
+    </div>
+)}
 
 
-                </p>
-            </div>
-        )}
-
-
-        <div className='mt-20 rounded-lg mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-6 py-6 shadow-3'>
+        <div className='mt-20 rounded-lg mx-auto max-w-screen-sm px-4 sm:px-4 sm:px-4 py-4 shadow-3'>
             <form>
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
@@ -145,6 +145,8 @@ export const UserProfile = () => {
                                 {!file && user?.image && <img src={user?.image} alt="image-preview" style={{ Width: '100%', Height: '100%', objectFit: 'cover' }} />}
                             </div>
                             {serverResponse}
+
+                            
                             <button onClick={() => handleUpload()}
                                 type="button"
                                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -159,7 +161,7 @@ export const UserProfile = () => {
                             <input
                                 type="file"
                                 ref={fileUpload}
-                                style={{ opacity: "0", }}
+                                style={{ opacity: "0", Width:"10px" }}
                                 accept=".jpg, .png, .gif"
                                 onChange={(event) => handleFiles(event.target.files)}
                             />
