@@ -57,7 +57,7 @@ def setup_commands(app):
         print("Creating lessons")
 
         en_lessons = ["Start a conversation!", "Introduce yourself!", "Talk about your hobbies!", "Go out eating", "Ask someone out!", "Final Lesson"]
-        es_lessons = ["Empiza una conversacion!", "Presentate!", "Habla de tus hobbies", "Sal a comer algo!", "Invita a alguien a salir!", "Leccion Final"]
+        es_lessons = ["Empieza una conversacion!", "Presentate!", "Habla de tus hobbies", "Sal a comer algo!", "Invita a alguien a salir!", "Leccion Final"]
 
         modules = db.session.query(Module).all()
 
