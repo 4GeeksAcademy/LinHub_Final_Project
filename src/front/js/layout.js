@@ -10,8 +10,7 @@ import { UserCourse } from "./pages/usercourse";
 import { Exercise } from "./pages/exercises/exercise";
 import { UserProfile } from "./pages/userprofile";
 import { UploadFile } from "./pages/UploadFile";
-
-
+import { Chat } from "./pages/chats";
 
 import injectContext from "./store/appContext";
 
@@ -35,6 +34,7 @@ const Layout = () => {
                         <Route element={<Exercise />} path="/exercise/:id" />
                         <Route element={<UserProfile />} path="/userprofile" />
                         <Route element={<UploadFile />} path="/uploadfile" />
+                        <Route element={<Chat />} path="/chat" />
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>
