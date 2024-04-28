@@ -153,11 +153,11 @@ export const UserCourse = () => {
             setFeedBackMsg({
                 "state": "error",
                 "render": true,
-                "msg": "Error Accepting"
+                "msg": "Request already accepted (refresh)"
             })
 
             setTimeout(() => {
-                setFeedBackMsg({ state: "", render: false, msg: "Error Accepting" });
+                setFeedBackMsg({ state: "", render: false, msg: "Request already accepted (refresh)" });
             }, 3000);
         }
     }

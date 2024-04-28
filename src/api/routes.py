@@ -204,6 +204,9 @@ def accept_requests(request_id):
     if request is None:
         return jsonify({'msg': 'request not found'}), 404
     
+    if request.accepted is True:
+        return jsonify({'msg': 'Request already accepted'}), 404
+    
     request.accepted = True
 
     db.session.commit()
