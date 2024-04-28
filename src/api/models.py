@@ -51,6 +51,13 @@ class User(db.Model):
             "learning_language": self.learning_language_id,
             "native_language": self.native_language_id
         }
+    
+    def serialize_recommended(self):
+        return{
+            "id": self.id,
+            "username": self.username,
+            "native_language": self.native_language_id
+        }
 
 class FriendshipRequest(db.Model):
     __tablename__ = 'friendship_requests'
@@ -61,9 +68,17 @@ class FriendshipRequest(db.Model):
     accepted = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, default=datetime.now())
 
-    # Definir las relaciones con la tabla de usuarios
+    # Relation with user
     sender = db.relationship(User, foreign_keys=[sender_id])
     receiver = db.relationship(User, foreign_keys=[receiver_id])
+
+    def serialize(self):
+        return{
+            'id': self.id,
+            'sender': self.sender.serialize(),
+            'receiver': self.receiver.serialize(),
+            'accepted': self.accepted
+        }
 
 class Language(db.Model):
     __tablename__ = "languages"

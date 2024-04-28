@@ -34,13 +34,16 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api, supports_credentials= True)
 
-#Obtener la informacion del usuario actual
+
+##### INFO DEL USER ACTUAL #####
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
     users = list(map(lambda x: x.serialize(), users))
     return jsonify(users), 200
 
+
+#### USER INFO USING ID ######
 @api.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
     user = User.query.get(id)
@@ -48,33 +51,36 @@ def get_user(id):
         raise APIException('User not found', status_code=404)
     return jsonify(user.serialize()), 200
 
+
+
+#### LANGUAGES ####
 @api.route('/languages', methods=['GET'])
 def get_languages():
     languages = Language.query.all()
     languages = list(map(lambda x: x.serialize(), languages))
     return jsonify(languages), 200
 
+
+
+## AVAILABLE COURSES ###
 @api.route('/availableCourses', methods=['GET'])
 def get_avilable_courses():
     courses_av = AvailableCourse.query.all()
     courses_av = list(map(lambda x: x.serialize(), courses_av))
     return jsonify(courses_av), 200
 
-# Obtain lessons
+
+
+### OBTAIN LESSONS ###
 @api.route('/lessons', methods=['GET'])
 def get_lessons():
     lessons = Lesson.query.all()
     lessons = list(map(lambda x: x.serialize(), lessons))
     return jsonify(lessons), 200
 
-# Obtain Module
-# @api.route('/module', methods=['GET'])
-# def get_module():
-#     module = Module.query.all()
-#     module = list(map(lambda x: x.serialize(), module))
-#     return jsonify(module), 200
 
-# Get module lessons depending on the user
+
+### GET LESSONS AND USER INFORMATION ###
 @api.route('/courseinfo')
 @jwt_required()
 def get_lessons_by_lang():
@@ -135,60 +141,111 @@ def get_lessons_by_lang():
 
     return jsonify(returned_object)
 
-# Obtain all received and sent requests and friends
-@api.route('/user/<int:user_id>/friends_and_requests', methods=['GET'])
-def get_user_friends_and_requests(user_id):
-    # Obtain all request where user is sender or receiver
+
+
+### RECEIVED AND FRIEND REQUESTS FOR A USER ###
+@api.route('/friends_and_requests', methods=['GET'])
+@jwt_required()
+def get_user_friends_and_requests():
+    # Obtener el idioma nativo del usuario actual
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'}), 404
+
+    native_language = user.native_language_id
+
+    # Obtener todas las solicitudes aceptadas y pendientes donde el usuario es remitente o receptor
     accepted_requests = FriendshipRequest.query.filter(
-        (FriendshipRequest.sender_id == user_id) | (FriendshipRequest.receiver_id == user_id),
+        (FriendshipRequest.sender_id == user.id) | (FriendshipRequest.receiver_id == user.id),
         FriendshipRequest.accepted == True
     ).all()
 
-    # Identidy all friends of the users as well as requests
-    friend_ids = set()
-    sent_requests = []
-    received_requests = []
-    for request in accepted_requests:
-        if request.sender_id == user_id:
-            friend_ids.add(request.receiver_id)
-            sent_requests.append({'timestamp': request.timestamp, 'receiver': request.receiver.username})
-        else:
-            friend_ids.add(request.sender_id)
-            received_requests.append({'timestamp': request.timestamp, 'sender': request.sender.username})
+    pending_requests = FriendshipRequest.query.filter(
+        (FriendshipRequest.receiver_id == user.id),
+        FriendshipRequest.accepted == False
+    ).all()
 
-    # Obtener los objetos de usuario para los IDs de amigos
-    friends = User.query.filter(User.id.in_(friend_ids)).all()
+    # Obtener usuarios que quieran aprender el idioma nativo del usuario actual
+    recommended_users = User.query.filter_by(learning_language_id=native_language)\
+    .filter(
+        ~User.id.in_([request.sender_id for request in accepted_requests]) &
+        ~User.id.in_([request.receiver_id for request in accepted_requests]) &
+        ~User.id.in_([request.sender_id for request in pending_requests]) &
+        ~User.id.in_([request.receiver_id for request in pending_requests])
+    ).limit(3).all()
 
-    # Preparar los datos para devolver
-    friends_data = [{'id': friend.id, 'username': friend.username, 'first_name': friend.first_name, 'last_name': friend.last_name} for friend in friends]
-
-    # Devolver amigos y solicitudes en una sola respuesta JSON
-    response_data = {
-        'friends': friends_data,
-        'sent_requests': sent_requests,
-        'received_requests': received_requests
+    # Serializar resultados
+    accepted_and_pending = {
+        "friends": [request.serialize() for request in accepted_requests],
+        "pending": [request.serialize() for request in pending_requests],
+        "recommended_users": [user.serialize() for user in recommended_users]
     }
 
-    return jsonify(response_data)
+    return jsonify(accepted_and_pending), 200
 
-# Send a friend request
-@api.route('/user/<int:sender_id>/send_request/<int:receiver_id>', methods=['POST'])
-def send_friend_request(sender_id, receiver_id):
+
+
+### ACCEPT A FRIEND REQUEST ###
+@api.route('/accept_requests/<int:request_id>', methods=['GET'])
+@jwt_required()
+def accept_requests(request_id):
+    # Obtain all request where user is sender or receiver
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'}), 404
+
+    request = FriendshipRequest.query.filter_by(id = request_id).one_or_none()
+
+    if request is None:
+        return jsonify({'msg': 'request not found'}), 404
+    
+    request.accepted = True
+
+    db.session.commit()
+
+    return jsonify({'msg': 'request accepted'}), 200
+
+
+
+### SENDING A FRINED REQUEST ###
+@api.route('/send_request/<int:receiver_id>', methods=['GET'])
+@jwt_required()
+def send_friend_request(receiver_id):
     # check if user exists
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'}), 404
+
     receiver = User.query.get(receiver_id)
     if receiver is None:
         return jsonify({'error': 'El usuario receptor no existe'}), 404
+    print(receiver.id)
+
+    # avoid duplicated request
+    friend_request = FriendshipRequest.query.filter_by(sender_id = user.id, receiver_id=receiver_id).first()
+
+    if friend_request is not None:
+        return jsonify({'msg': 'already sent a request to this user, or is added'}), 404
 
     # create friend request
-    friendship_request = FriendshipRequest(sender_id=sender_id, receiver_id=receiver_id, timestamp=datetime.now())
+    friendship_request = FriendshipRequest(sender_id=user.id, receiver_id=receiver_id, timestamp=datetime.now())
 
     # Add friend request to the db
     db.session.add(friendship_request)
     db.session.commit()
 
-    return jsonify({'message': 'Solicitud de amistad enviada correctamente'}), 201
+    return jsonify({'message': 'Friendship request sent'}), 201
 
-# Get Questions from lesson
+
+
+### GET THE QUESTION FROM A SELECTED LESSON
 @api.route('/lesson_questions/<int:lesson_id>')
 def get_questions_by_lesson(lesson_id):
     lesson = Lesson.query.filter_by(id = lesson_id).first()
@@ -211,7 +268,9 @@ def get_questions_by_lesson(lesson_id):
 
     return jsonify(info)
 
-# Get Correct or Incorrect
+
+
+### CORRECT OR INCORRECT CHECK ###
 @api.route('/correct_option/<int:option_id>')
 @jwt_required()
 def correct_option(option_id):
@@ -237,7 +296,9 @@ def correct_option(option_id):
     if option.correct == True:
         return jsonify({'msg': 'correct answer'}), 200
 
-# Crear Module
+
+
+### CREATE A MODULE ###
 @api.route('/module', methods=['POST'])
 def create_module(): 
     request_body = request.get_json()
@@ -251,7 +312,9 @@ def create_module():
     db.session.commit()
     return "Sucess", 200
 
-# Register End Point
+
+
+### REGISTER A USER ###
 @api.route('/register', methods=['POST'])
 def create_user():
     db.session.begin()
@@ -338,7 +401,8 @@ def create_user():
         return jsonify({"msg": "Error creating user", "error": str(e)}), 400
     
 
-# Login management end point    
+
+### LOGIN A USER ### 
 @api.route('/login', methods=['POST'])
 def login():
     email = request.json.get('email', None)
@@ -428,6 +492,8 @@ def update_user():
     return jsonify({"msg": "User not found"}), 404  
 
 
+
+### SAVE A SELECTED IMAGE ###
 @api.route('/image', methods=["POST"])
 @jwt_required()
 def upload_file():
@@ -465,9 +531,3 @@ def upload_file():
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
-
-
-
-# @api.route('profile/<str:username>')
-# @jwt_required
-# def profile_info(username):

@@ -103,7 +103,7 @@ export const UserProfile = () => {
         <div className="bg-white p-6 rounded-lg shadow-md">
             <p className="font-bold text-lg text-green-700 mb-2">
                 {store.userToken.identity.language !== "1" ? (
-                    <>Modified Profile</>
+                    <>Modified Profile</> 
                 ) : (
                     <>Perfil modificado</>
                 )}
