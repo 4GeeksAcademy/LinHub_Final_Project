@@ -22,6 +22,7 @@ flask-jwt-extended = "*"
 bcrypt = "*"
 firebase-admin = "*"
 google-cloud-storage = "*"
+flask-socketio = "*"
 
 [requires]
 python_version = "3.10"
