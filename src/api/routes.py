@@ -2,18 +2,21 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option, FriendshipRequest
+from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option, FriendshipRequest, Message
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+
 from datetime import datetime
 import math
 
 import bcrypt
 import firebase_admin
 from firebase_admin import credentials, storage
+
+from flask_socketio import SocketIO
 
 
 app = Flask(__name__)
@@ -25,6 +28,7 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
 })
 
+socketio = SocketIO(app)
 
 bucket = storage.bucket()
 
@@ -534,3 +538,24 @@ def upload_file():
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
+
+
+### HANDLE SEND MESSAGE
+
+@socketio.on('send_message')
+@jwt_required()
+def handle_message(data):
+    # Obtain message data
+    user = get_jwt_identity 
+
+    sender_id = user.id
+    receiver_id = data.get('receiver_id')
+    content = data.get('content')
+
+    # Save message in db
+    nuevo_mensaje = Message(sender_id=sender_id, receiver_id=receiver_id, content=content)
+    db.session.add(nuevo_mensaje)
+    db.session.commit()
+
+    # Send message to all the clients connected
+    socketio.emit('received_message', data)
