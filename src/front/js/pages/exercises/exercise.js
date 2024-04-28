@@ -21,7 +21,7 @@ export function Exercise() {
     const [correctAnswers, setCorrectAnswers] = React.useState(0);
     const [steps, setSteps] = React.useState([]);
     const [response, setResponse] = React.useState("");
-    const [linResponse, setlinResponse] = React.useState("you can do it!");
+    const [linResponse, setlinResponse] = React.useState("");
     const [ShowLin, setShowLin] = React.useState(false);
     const theme = useTheme();
     const { id } = useParams();
@@ -61,17 +61,17 @@ export function Exercise() {
             const data = await res.json();
             if (res.ok) {
                 setCorrectAnswers(correctAnswers + 1);
-                setlinResponse(true);
+                setlinResponse("correct, keep going!");
             } else {
-                setlinResponse(false);
-            } 
+                setlinResponse("incorrect, practice more!");
+            }
             console.log(data.msg);
         } catch (error) {
             console.error("Error checking option:", error);
         }
         setTimeout(() => {
             setShowLin(false);
-        }, 5000);
+        }, 1600);
         setShowLin(true);
         setSelectedOption(null);
         setResponse("");
