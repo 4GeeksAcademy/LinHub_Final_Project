@@ -80,13 +80,22 @@ class FriendshipRequest(db.Model):
             'accepted': self.accepted
         }
 
+# class Friend(db.Model):
+#     __tablename__ = 'friends'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     friend1_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+#     friend2_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+#     friend1 = db.relationship(User, foreign_keys=[friend1_id])
+#     friend2 = db.relationship(User, foreign_keys=[friend2_id])
+
 class Chat(db.Model):
     __tablename__ = 'chats'
 
     id = db.Column(db.Integer, primary_key=True)
     user1_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user2_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    Messages = db.relationship("Message")
 
     user1 = db.relationship(User, foreign_keys=[user1_id])
     user2 = db.relationship(User, foreign_keys=[user2_id])
@@ -113,7 +122,6 @@ class Message(db.Model):
     def serialize(self):
         return{
             'id': self.id,
-            'chat': self.chat.serialize(),
             'sender': self.sender.serialize(),
             'message': self.message,
             'timestamp': self.timestamp

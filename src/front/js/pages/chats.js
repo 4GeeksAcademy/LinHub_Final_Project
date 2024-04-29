@@ -3,17 +3,24 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
-export const Chat = (id) => {
+export const Chat = () => {
     const { store, actions } = useContext(Context);
     const [message, setMessage] = useState('');
     const [users, setUsers] = useState([]);
     const [chat, setChat] = useState([]);
     const { id } = useParams();
-    
+
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
     }, [message, chat]);
+
+    // useEffect(() => {
+    //     const getChatMessages = async () =>{
+    //         const res = await fetch(process.env.BACKEND_URL + ``)
+    //     }
+    //     getChatMessages()
+    // }, [])
 
     const handleSend = () => {
         if (message.trim() === '') return;

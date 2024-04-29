@@ -34,7 +34,7 @@ const Layout = () => {
                         <Route element={<Exercise />} path="/exercise/:id" />
                         <Route element={<UserProfile />} path="/userprofile" />
                         <Route element={<UploadFile />} path="/uploadfile" />
-                        <Route element={<Chat />} path="/chat" />
+                        <Route element={<Chat />} path="/chat/:id" />
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>

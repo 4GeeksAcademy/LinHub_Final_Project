@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option, FriendshipRequest, Message
+from api.models import db, User, Language,Lesson,Module, Course, AvailableCourse, Question, Option, FriendshipRequest, Message, Chat
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -167,7 +167,7 @@ def get_user_friends_and_requests():
     ).all()
 
     pending_requests = FriendshipRequest.query.filter(
-        (FriendshipRequest.receiver_id == user.id),
+        (FriendshipRequest.sender_id == user.id) | (FriendshipRequest.receiver_id == user.id),
         FriendshipRequest.accepted == False
     ).all()
 
@@ -215,6 +215,12 @@ def accept_requests(request_id):
 
     db.session.commit()
 
+    chat = Chat(user1_id = user.id, user2_id = request.sender_id)
+
+    db.session.add(chat)
+    db.session.commit()
+
+
     return jsonify({'msg': 'request accepted'}), 200
 
 
@@ -250,6 +256,37 @@ def send_friend_request(receiver_id):
 
     return jsonify({'message': 'Friendship request sent'}), 201
 
+
+### ACCESS A CHAT
+@api.route('/get_chat/<int:friend_id>', methods=['GET'])
+@jwt_required()
+def access_chat(friend_id):
+    # check if user exists
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).one_or_none()
+
+    if user is None:
+        return jsonify({'msg': 'user not found'}), 404
+
+    chat = Chat.query.filter_by(user1_id = user.id, user2_id = friend_id).one_or_none()
+
+    if chat is None:
+        return jsonify({'msg': 'chat not found'})
+
+    return jsonify({'chat_id': chat.id}), 200
+
+
+### ACCESS CHAT MESSAGES
+@api.route('/get_messages/<int:chat_id>', methods=['GET'])
+@jwt_required()
+def access_msgs(chat_id):
+
+    messages = Message.query.filter_by(chat_id = chat_id).all()
+
+    if messages is None:
+        return jsonify({'msg': 'chat_id not found'})
+
+    return jsonify([message.serialize() for message in messages])
 
 
 ### GET THE QUESTION FROM A SELECTED LESSON
