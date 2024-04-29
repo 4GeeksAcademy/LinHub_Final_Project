@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 
 export const Chat = () => {
     const { store, actions } = useContext(Context);
@@ -10,15 +10,17 @@ export const Chat = () => {
     const [users, setUsers] = useState([]);
     const [chat, setChat] = useState([]);
     const { id } = useParams();
-    const socket = io("https://potential-bassoon-q7747jp5x6wvh64r9-3001.app.github.dev");
+    const socket = io();
 
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
-
     }, [message, chat]);
 
     useEffect(() => {
+        socket.on('connect', function () {
+            socket.emit('my event', { data: 'I\'m connected!' });
+        });
     }, [])
 
     const handleSend = () => {
