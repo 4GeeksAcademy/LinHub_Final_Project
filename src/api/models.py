@@ -237,4 +237,9 @@ class Option(db.Model):
     def __repr__(self):
         return f'<Option {self.option}'
 
+# class Progress(db.Model):
+#     __tablename__ = "progress"
+
+
+
 
