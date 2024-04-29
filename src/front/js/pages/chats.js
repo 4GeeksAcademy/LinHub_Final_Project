@@ -34,6 +34,19 @@ export const Chat = () => {
 
     return (
         <div className="p-2 d-flex border-10" style={{ height: '80vh' }}>
+            <div className="col-3 border-10">
+                <div className="d-flex justify-content-between">
+                    <h3>Usuarios</h3>
+                    <Link to="/chats" className="btn btn-primary">Volver</Link>
+                </div>
+                <ul className="list-group">
+                    {users.map((user, index) => (
+                        <li key={index} className="list-group-item">
+                            <Link to={`/chat/${user.id}`}>{user.nombre}</Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <div className="col-9 d-flex flex-column">
                 <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3" style={{ overflowY: 'auto' }}>
                     {chat.map((msg, index) => (
