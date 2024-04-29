@@ -27,14 +27,14 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
 })
 
-socketio = SocketIO(app)
-
 bucket = storage.bucket()
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api, supports_credentials= True)
+
+socketio = SocketIO(app)
 
 
 ##### INFO DEL USER ACTUAL #####
