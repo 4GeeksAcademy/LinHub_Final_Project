@@ -2,10 +2,15 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-import { FaFireFlameCurved } from "react-icons/fa6";
 import { PiUserCircleFill } from "react-icons/pi";
-import { FaHeartbeat } from "react-icons/fa";
 import LoggedNavbar from '../component/usercourse_components/LoggedNav'
+import { IoIosInformationCircleOutline } from "react-icons/io";
+
+import FeedbackMsg from '../component/usercourse_components/FeedbackMsg';
+import Lesson from '../component/usercourse_components/Lesson';
+import LivesAndStreak from '../component/usercourse_components/LivesAndStreak';
+import RightBarTitle from '../component/usercourse_components/RightBarTitle';
+import Friend from '../component/usercourse_components/Friend';
 
 export const UserCourse = () => {
 
@@ -27,7 +32,9 @@ export const UserCourse = () => {
         "state": "",
         "render": false,
         "msg": ""
-    })//AAAAAAAA
+    })
+
+    const [recommInfo, setRecommInfo] = useState(false)
 
 
     //--------- NAVIGATE ------------
@@ -184,103 +191,84 @@ export const UserCourse = () => {
         }
     }
 
-
     //-------- IMPORTANT LOGS ----------------
 
-    console.log("SOY LESSONS USER", lessons.user)
-    // console.log("SOY USER LESSONS DATA", lessons.data)
-    console.log("SOY FRIENDS", friends)
+    // console.log("SOY LESSONS USER", lessons.user)
+    console.log("SOY USER LESSONS DATA", lessons.data)
+    // console.log("SOY FRIENDS", friends)
 
     return (
-        <>
+        <div>
             <LoggedNavbar
                 userImage={lessons.user.image}
                 username={lessons.user.first_name + ' ' + lessons.user.last_name}
                 language={lessons.user.learning_language == 1 ? "English" : "Español"}
             />
             {feedbackMsg.render ?
-                <div className='absolute inset-x-0 top-8 left-1/2 text-white w-72 text-center p-2 rounded-xl'
-                    style={{
-                        background: feedbackMsg.state === "success" ? "#81bf4d" : "#ea6a6f",
-                        opacity: 1,
-                        transition: "opacity 0.3s",
-                        transform: "translateX(-50%)",
-                    }}
-                >
-                    {feedbackMsg.msg}
-                </div>
+                <FeedbackMsg msg={feedbackMsg.msg} state={feedbackMsg.state} opacity={1} transform={"translateX(-50%)"} transition={"opacity 0.3s"} />
                 :
-                <div className='absolute inset-x-0 top-8 left-1/2 text-white w-72 text-center p-2 rounded-xl'
-                    style={{
-                        opacity: 0,
-                        transition: "all 1s",
-                    }}
-                >
-                    {feedbackMsg.msg}
-                </div>
+                <FeedbackMsg msg={feedbackMsg.msg} state={feedbackMsg.state} opacity={0} transition={"all 0.3s"} />
             }
+
             <div className='usercourse-container'>
                 <div className='usercourse-container-left'>
-
                     {lessons.data &&
                         lessons.data.map((lesson, index) => {
                             return (
-                                <div className='usercourse-lesson' key={index}>
-                                    <div className='lesson-background'>
-                                        <p className='text-white text-9xl'>{index + 1}</p>
-                                    </div>
-                                    <div className='px-4 flex flex-col'>
-                                        <p className='text-xl'>{lesson.lesson_name}</p>
-                                        <p className='text-slate-400'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                    </div>
-                                    <div className='px-4 pb-2'>
-                                        <button
-                                            className='py-2 px-4 text-white bg-blue-500 rounded-xl'
-                                            onClick={() => navigate(`/exercise/${lesson.lesson_id}`)}
-                                        >
-                                            {lessons.user.learning_language === 1 ? "Entrar" : "Join"}
-                                        </button>
-                                    </div>
-                                </div>
+                                <Lesson
+                                    index={index}
+                                    name={lesson.lesson_name}
+                                    description={lesson.description ? lesson.description : ""}
+                                    id={lesson.lesson_id}
+                                    button={lessons.user.learning_language === 1 ? "Entrar" : "Join"}
+                                />
                             )
                         })
                     }
-
                 </div>
-                <div className='usercourse-container-right'>
+
+                <div className='relative usercourse-container-right'>
+
                     <div className='d-flex justify-around mb-4'>
-                        <div className='flex items-center'>
-                            <FaFireFlameCurved className='text-red-500 text-2xl' />
-                            <p className="text-xs ps-1">{lessons.user.streak}</p>
-                        </div>
-                        <div className='flex items-center'>
-                            <FaHeartbeat className='text-red-500 text-2xl' />
-                            <p className="text-xs ps-1">{lessons.user.lives}</p>
-                        </div>
+                        <LivesAndStreak
+                            type="fire"
+                            info={lessons.user.streak}
+                            description={lessons.user.native_language == 1 ?
+                                "Keep your streak going by login in every day and unlock special prizes, like badges and discounts."
+                                :
+                                "Mantén tu racha activa logeadote todos los días y desbloquea premios especiales, como insignias y descuentos."
+                            }
+                        />
+                        <LivesAndStreak
+                            type="heart"
+                            info={lessons.user.lives}
+                            description={lessons.user.native_language == 1 ?
+                                "Gain lives to continue playing. Lives recharge every hour, and you lose one when you give a wrong answer in lessons."
+                                :
+                                "Aumenta vidas para seguir jugando. Las vidas se recargan cada hora, y pierdes una cuando das una respuesta incorrecta en las lecciones."
+                            }
+                        />
                         {lessons.user.learning_language == 1 ?
                             <img className='rounded-lg h-10 w-12' src='https://cdn.britannica.com/33/4833-004-828A9A84/Flag-United-States-of-America.jpg' />
                             :
                             <img className='rounded-lg h-10 w-12' src='https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/640px-Flag_of_Spain.svg.png' />
                         }
                     </div>
+
+
                     <div className='mb-4 flex flex-col'>
-                        <p className='p-2 bg-amber-200 rounded-2xl w-100 text-center mb-2'>{lessons.user.native_language == 1 ? "Your Friends" : "Tus Amigos"}</p>
+                        <RightBarTitle title={lessons.user.native_language == 1 ? "Your Friends" : "Tus Amigos"} />
+
                         <div className='p-2 rounded-2xl w-100'>
                             {friends.friends && friends.friends.length > 0 ?
-                                friends.friends.map(friend => {
+                                friends.friends.map((friend, index) => {
                                     return (
-                                        <div className="flex justify-around items-center border-1 rounded-xl py-1 shadow-5">
-                                            <div className='flex items-center'>
-                                                {friend.image ? <img className='rounded-full w-12 h-12 object-cover' src={friend.image}></img> : <PiUserCircleFill className='text-5xl' />}
-                                                <p className='ms-1'>{friend.username}</p>
-                                            </div>
-                                            <button
-                                                className='bg-red-400 p-2 rounded-lg text-white text-xs h-10'
-                                                onClick={() => handleChat(friend.id)}
-                                            >
-                                                {lessons.user.native_language == 1 ? "Start Chat" : "Iniciar Chat"}
-                                            </button>
-                                        </div>
+                                        <Friend
+                                            friend={friend}
+                                            index={index}
+                                            handleChat={handleChat}
+                                            buttonInfo={lessons.user.native_language == 1 ? "Start Chat" : "Iniciar Chat"}
+                                        />
                                     )
                                 })
                                 :
@@ -297,9 +285,9 @@ export const UserCourse = () => {
                             {friends.pending &&
                                 friends.pending.length > 0 &&
                                 friends.pending.filter(e => e.sender.id !== lessons.user.id).length > 0 ?
-                                friends.pending.filter(e => e.sender.id !== lessons.user.id).map(friend => {
+                                friends.pending.filter(e => e.sender.id !== lessons.user.id).map((friend, index) => {
                                     return (
-                                        <div className="flex justify-around items-center border-1 rounded-xl py-1 shadow-5">
+                                        <div key={index} className="flex justify-around items-center border-1 rounded-xl py-1 shadow-5">
                                             <div className='flex items-center'>
                                                 {friend.sender.image ? <img className='rounded-full w-12 h-12 object-cover' src={friend.sender.image}></img> : <PiUserCircleFill className='text-5xl' />}
                                                 <p className='ms-1'>{friend.sender.username}</p>
@@ -316,8 +304,19 @@ export const UserCourse = () => {
                         </div>
                     </div>
 
-                    <div className='flex flex-col'>
-                        <p className='p-2 bg-amber-200 rounded-2xl w-100 text-center mb-2'>{lessons.user.native_language == 1 ? "Recommended users" : "Amigos Recomendados"}</p>
+                    <div className='realtive flex flex-col'>
+                        <p className='relative p-2 bg-amber-200 rounded-2xl w-100 text-center mb-2'>
+                            {lessons.user.native_language == 1 ? "Recommended users" : "Amigos Recomendados"}
+                            <IoIosInformationCircleOutline className='absolute right-2 top-1 text-xl' onMouseEnter={() => setRecommInfo(true)} onMouseLeave={() => setRecommInfo(false)} />
+                            {recommInfo &&
+                                <div className='absolute top-14 w-100 border-1 rounded-xl shadow-5 py-4 left-0 bg-white'>
+                                    {lessons.user.native_language == 1 ?
+                                        "It will only appear as recommended users people that are native in the language you are learning"
+                                        :
+                                        "Apareceran como recomendados unicamente personas que sean nativas en el idioma que esta aprendiendo"}
+                                </div>
+                            }
+                        </p>
                         <div className='p-2 rounded-2xl w-100'>
                             {friends.recommended_users && friends.recommended_users.length > 0 ?
                                 friends.recommended_users
@@ -347,6 +346,6 @@ export const UserCourse = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
