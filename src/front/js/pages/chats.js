@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 export const Chat = () => {
     const { store, actions } = useContext(Context);

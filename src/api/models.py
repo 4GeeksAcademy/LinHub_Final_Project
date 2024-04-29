@@ -80,16 +80,6 @@ class FriendshipRequest(db.Model):
             'accepted': self.accepted
         }
 
-# class Friend(db.Model):
-#     __tablename__ = 'friends'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     friend1_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-#     friend2_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-#     friend1 = db.relationship(User, foreign_keys=[friend1_id])
-#     friend2 = db.relationship(User, foreign_keys=[friend2_id])
-
 class Chat(db.Model):
     __tablename__ = 'chats'
 
@@ -204,6 +194,7 @@ class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     lesson_name = db.Column(db.String, nullable = False)
     description = db.Column(db.String, nullable= True)
+    image = db.Column(db.String, nullable=True)
     module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
     module = db.relationship(Module)
 
