@@ -1,113 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
-export const Chat = () => {
+export const Chat = (id) => {
+    const { store, actions } = useContext(Context);
     const [message, setMessage] = useState('');
-    const [users, setUsers] = useState([
-        {
-            "email": "joseman6575@gmail.com",
-            "first_name": "Jos\u00e9 Manuel",
-            "id": 1,
-            "image": null,
-            "last_name": "S\u00e1nchez Villegas",
-            "learning_language": 2,
-            "lives": 100,
-            "native_language": 1,
-            "streak": 0,
-            "username": "josema"
-        },
-        {
-            "email": "andy@gmail.com",
-            "first_name": "andres",
-            "id": 2,
-            "image": null,
-            "last_name": "gamboa",
-            "learning_language": 1,
-            "lives": 100,
-            "native_language": 2,
-            "streak": 0,
-            "username": "andy"
-        }
-    ]);
-    const [chat, setChat] = useState([
-        {
-            "msg": "hola",
-            "id_usuario_que_manda": 2,
-            "hora": "12:00"
-        },
-        {
-            "msg": "como estas",
-            "id_usuario_que_manda": 1,
-            "hora": "12:30"
-        },
-        {
-            "msg": "bien",
-            "id_usuario_que_manda": 2,
-            "hora": "1:00"
-        },
-        {
-            "msg": "y tu",
-            "id_usuario_que_manda": 2,
-            "hora": "1:10"
-        },
-        {
-            "msg": "tambien",
-            "id_usuario_que_manda": 1,
-            "hora": "1:15"
-        },
-        {
-            "msg": "adios",
-            "id_usuario_que_manda": 2,
-            "hora": "1:20"
-        },
-        {
-            "msg": "adios",
-            "id_usuario_que_manda": 1,
-            "hora": "1:25"
-        },
-        {
-            "msg": "hola",
-            "id_usuario_que_manda": 2,
-            "hora": "12:00"
-        },
-        {
-            "msg": "como estas",
-            "id_usuario_que_manda": 1,
-            "hora": "12:30"
-        },
-        {
-            "msg": "bien",
-            "id_usuario_que_manda": 2,
-            "hora": "1:00"
-        },
-        {
-            "msg": "y tu",
-            "id_usuario_que_manda": 2,
-            "hora": "1:10"
-        },
-        {
-            "msg": "tambien",
-            "id_usuario_que_manda": 1,
-            "hora": "1:15"
-        },
-        {
-            "msg": "adios",
-            "id_usuario_que_manda": 2,
-            "hora": "1:20"
-        },
-        {
-            "msg": "adios",
-            "id_usuario_que_manda": 1,
-            "hora": "1:25"
-        }
-    ]);
-
-    const user = users[0];
-
+    const [users, setUsers] = useState([]);
+    const [chat, setChat] = useState([]);
+    const { id } = useParams();
+    
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
-    }, [chat]);
+    }, [message, chat]);
 
     const handleSend = () => {
         if (message.trim() === '') return;
@@ -121,16 +27,6 @@ export const Chat = () => {
 
     return (
         <div className="p-2 d-flex border-10" style={{ height: '80vh' }}>
-            <div className="col-3 border-end border-2">
-                <h3>Amigos</h3>
-                <ul className="list-group">
-                    {users.map((user, index) => (
-                        <li key={index} className="list-group-item">
-                            <Link to={`/chat/${user.id}`}>{user.username}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
             <div className="col-9 d-flex flex-column">
                 <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3" style={{ overflowY: 'auto' }}>
                     {chat.map((msg, index) => (

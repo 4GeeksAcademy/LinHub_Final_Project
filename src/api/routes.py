@@ -16,7 +16,7 @@ import bcrypt
 import firebase_admin
 from firebase_admin import credentials, storage
 
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room, leave_room, send, emit, rooms, Namespace, disconnect, close_room
 
 
 app = Flask(__name__)
@@ -540,22 +540,65 @@ def upload_file():
         return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
 
 
-### HANDLE SEND MESSAGE
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
 
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+@socketio.on('join')
+def handle_join(data):
+    room = data['room']
+    join_room(room)
+    print(f'Client joined room: {room}')
+
+@socketio.on('leave')
+def handle_leave(data):
+    room = data['room']
+    leave_room(room)
+    print(f'Client left room: {room}')
+
+### HANDLE SEND MESSAGE
 @socketio.on('send_message')
 @jwt_required()
 def handle_message(data):
     # Obtain message data
-    user = get_jwt_identity 
-
-    sender_id = user.id
-    receiver_id = data.get('receiver_id')
-    content = data.get('content')
+    sender_id = data['sender_id']
+    receiver_id = data['receiver_id']
+    content = data['content']
 
     # Save message in db
-    nuevo_mensaje = Message(sender_id=sender_id, receiver_id=receiver_id, content=content)
-    db.session.add(nuevo_mensaje)
+    message = Message(sender_id=sender_id, receiver_id=receiver_id, content=content, timestamp=datetime.now())
+    db.session.add(message)
     db.session.commit()
 
     # Send message to all the clients connected
-    socketio.emit('received_message', data)
+    socketio.emit('new_message', data, broadcast=True)
+
+    return jsonify({'msg': 'Message sent'}), 200
+
+### HANDLE GET MESSAGES
+@socketio.on('get_messages')
+@jwt_required()
+def handle_get_messages(data):
+    # Obtain message data
+    sender_id = data['sender_id']
+    receiver_id = data['receiver_id']
+
+    # Get all messages between sender and receiver
+    messages = Message.query.filter(
+        (Message.sender_id == sender_id) & (Message.receiver_id == receiver_id) |
+        (Message.sender_id == receiver_id) & (Message.receiver_id == sender_id)
+    ).all()
+
+    # Serialize messages
+    messages = [message.serialize() for message in messages]
+
+    return jsonify(messages), 200
+
+app.register_blueprint(api)
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True, port=5000)

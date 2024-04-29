@@ -12,7 +12,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeLanguage: (language) => {
 				setStore({ currentIdiom: language })
 			},
-
 			createNewUser: async (userInfo) => {
 				try {
 					const res = await fetch(process.env.BACKEND_URL + '/api/register', {
@@ -30,7 +29,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-
 			loginUser: async (userInfo) => {
 				try {
 					const res = await fetch(process.env.BACKEND_URL + "/api/login", {
@@ -79,8 +77,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-
 			updateUser: async (token, user,) => {
 				try {
 
@@ -90,8 +86,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							username: user.username,
 							first_name: user.first_name,
 							password: user.password,
-							
-							
+
+
 						}),
 
 						headers: {
@@ -100,7 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						}
 					});
-						
+
 
 					const data = await res.json();
 					if (!res.ok) throw new Error("Invalid credentials");
@@ -111,10 +107,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-		
-
-
 			getModuleInfo: async (id, language) => {
 				try {
 					// console.log(id, language)
@@ -127,7 +119,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(err)
 				}
 			}
-
 		}
 	}
 };

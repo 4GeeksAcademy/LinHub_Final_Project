@@ -80,15 +80,43 @@ class FriendshipRequest(db.Model):
             'accepted': self.accepted
         }
 
-class Message(db.Model):
+class Chat(db.Model):
+    __tablename__ = 'chats'
+
     id = db.Column(db.Integer, primary_key=True)
+    user1_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user2_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    user1 = db.relationship(User, foreign_keys=[user1_id])
+    user2 = db.relationship(User, foreign_keys=[user2_id])
+
+    def serialize(self):
+        return{
+            'id': self.id,
+            'user1': self.user1.serialize(),
+            'user2': self.user2.serialize()
+        }
+
+class Message(db.Model):
+    __tablename__ = 'messages'
+
+    id = db.Column(db.Integer, primary_key=True)
+    chat_id = db.Column(db.Integer, db.ForeignKey('chats.id'), nullable=False)
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    content = db.Column(db.String, nullable = False)
+    message = db.Column(db.String(1000), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now())
 
-    sender = db.relationship(User, foreign_keys=[sender_id])
-    receiver = db.relationship(User, foreign_keys=[receiver_id])
+    chat = db.relationship(Chat)
+    sender = db.relationship(User)
+
+    def serialize(self):
+        return{
+            'id': self.id,
+            'chat': self.chat.serialize(),
+            'sender': self.sender.serialize(),
+            'message': self.message,
+            'timestamp': self.timestamp
+        }
 
 class Language(db.Model):
     __tablename__ = "languages"
