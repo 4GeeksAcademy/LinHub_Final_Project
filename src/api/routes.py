@@ -16,12 +16,6 @@ import bcrypt
 import firebase_admin
 from firebase_admin import credentials, storage
 
-from flask_socketio import SocketIO, join_room, leave_room, send, emit, rooms, Namespace, disconnect, close_room
-
-
-app = Flask(__name__)
-CORS(app)
-
 cred = credentials.Certificate("./google-services.json")
 firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
@@ -34,7 +28,6 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api, supports_credentials= True)
 
-socketio = SocketIO(app)
 
 
 ##### INFO DEL USER ACTUAL #####
@@ -583,46 +576,3 @@ def upload_file():
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "Error Updating user", "error": str(e)}), 500
-
-
-@socketio.on('connect')
-def handle_connect():
-    print('Client connected')
-
-### HANDLE SEND MESSAGE
-@socketio.on('send_message')
-@jwt_required()
-def handle_message(data):
-    # Obtain message data
-    sender_id = data['sender_id']
-    receiver_id = data['receiver_id']
-    content = data['content']
-
-    # Save message in db
-    message = Message(sender_id=sender_id, receiver_id=receiver_id, content=content, timestamp=datetime.now())
-    db.session.add(message)
-    db.session.commit()
-
-    # Send message to all the clients connected
-    socketio.emit('new_message', data, broadcast=True)
-
-    return jsonify({'msg': 'Message sent'}), 200
-
-### HANDLE GET MESSAGES
-@socketio.on('get_messages')
-@jwt_required()
-def handle_get_messages(data):
-    # Obtain message data
-    sender_id = data['sender_id']
-    receiver_id = data['receiver_id']
-
-    # Get all messages between sender and receiver
-    messages = Message.query.filter(
-        (Message.sender_id == sender_id) & (Message.receiver_id == receiver_id) |
-        (Message.sender_id == receiver_id) & (Message.receiver_id == sender_id)
-    ).all()
-
-    # Serialize messages
-    messages = [message.serialize() for message in messages]
-
-    return jsonify(messages), 200

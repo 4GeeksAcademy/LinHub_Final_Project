@@ -11,12 +11,16 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from flask_socketio import SocketIO, join_room, leave_room, send, emit, rooms, Namespace, disconnect, close_room
+
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # JWT manager
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
@@ -70,9 +74,9 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
-
-
-
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
