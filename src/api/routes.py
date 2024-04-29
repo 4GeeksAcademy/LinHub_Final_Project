@@ -589,22 +589,6 @@ def upload_file():
 def handle_connect():
     print('Client connected')
 
-@socketio.on('disconnect')
-def handle_disconnect():
-    print('Client disconnected')
-
-@socketio.on('join')
-def handle_join(data):
-    room = data['room']
-    join_room(room)
-    print(f'Client joined room: {room}')
-
-@socketio.on('leave')
-def handle_leave(data):
-    room = data['room']
-    leave_room(room)
-    print(f'Client left room: {room}')
-
 ### HANDLE SEND MESSAGE
 @socketio.on('send_message')
 @jwt_required()

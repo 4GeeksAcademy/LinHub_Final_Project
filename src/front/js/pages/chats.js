@@ -10,7 +10,7 @@ export const Chat = () => {
     const [users, setUsers] = useState([]);
     const [chat, setChat] = useState([]);
     const { id } = useParams();
-    const socket = io(process.env.BACKEND_URL);
+    const socket = io("https://potential-bassoon-q7747jp5x6wvh64r9-3001.app.github.dev");
 
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
