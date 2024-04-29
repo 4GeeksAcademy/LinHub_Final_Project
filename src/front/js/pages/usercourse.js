@@ -179,7 +179,6 @@ export const UserCourse = () => {
             const data = await res.json()
             navigate(`/chat/${data.chat_id}`)
 
-
         } catch (error) {
             console.log(error)
         }
@@ -272,12 +271,12 @@ export const UserCourse = () => {
                                     return (
                                         <div className="flex justify-around items-center border-1 rounded-xl py-1 shadow-5">
                                             <div className='flex items-center'>
-                                                {friend.sender.image ? <img className='rounded-full w-12 h-12 object-cover' src={friend.sender.image}></img> : <PiUserCircleFill className='text-5xl' />}
-                                                <p className='ms-1'>{friend.sender.username}</p>
+                                                {friend.image ? <img className='rounded-full w-12 h-12 object-cover' src={friend.image}></img> : <PiUserCircleFill className='text-5xl' />}
+                                                <p className='ms-1'>{friend.username}</p>
                                             </div>
                                             <button
                                                 className='bg-red-400 p-2 rounded-lg text-white text-xs h-10'
-                                                onClick={() => handleChat(friend.sender.id)}
+                                                onClick={() => handleChat(friend.id)}
                                             >
                                                 {lessons.user.native_language == 1 ? "Start Chat" : "Iniciar Chat"}
                                             </button>

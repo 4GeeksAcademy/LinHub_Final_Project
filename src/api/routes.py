@@ -275,7 +275,10 @@ def access_chat(friend_id):
     if user is None:
         return jsonify({'msg': 'user not found'}), 404
 
-    chat = Chat.query.filter_by(user1_id = user.id, user2_id = friend_id).one_or_none()
+    chat = Chat.query.filter(
+        ((Chat.user1_id == user.id) & (Chat.user2_id == friend_id)) |
+        ((Chat.user1_id == friend_id) & (Chat.user2_id == user.id))
+    ).one_or_none()
 
     if chat is None:
         return jsonify({'msg': 'chat not found'})
@@ -641,8 +644,3 @@ def handle_get_messages(data):
     messages = [message.serialize() for message in messages]
 
     return jsonify(messages), 200
-
-app.register_blueprint(api)
-
-if __name__ == '__main__':
-    socketio.run(app, debug=True, port=5000)

@@ -13,6 +13,7 @@ export const Chat = () => {
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
+        console.log('chat', id);
     }, [message, chat]);
 
     // useEffect(() => {
