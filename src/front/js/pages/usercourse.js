@@ -112,6 +112,7 @@ export const UserCourse = () => {
             setTimeout(() => {
                 setFeedBackMsg({ state: "", render: false, msg: "Request Sent" });
             }, 3000);
+            setSendRequest(!sendRequest)
 
         } catch (error) {
             setFeedBackMsg({
@@ -144,6 +145,7 @@ export const UserCourse = () => {
                 "render": true,
                 "msg": "Request Accepted"
             })
+            setSendRequest(!sendRequest)
 
             setTimeout(() => {
                 setFeedBackMsg({ state: "", render: false, msg: "Request Accepted" });
@@ -327,7 +329,7 @@ export const UserCourse = () => {
                                                     {friend.image ? <img className='rounded-full w-12 h-12 object-cover' src={friend.image}></img> : <PiUserCircleFill className='text-5xl' />}
                                                     <p className='ms-1'>{friend.username}</p>
                                                 </div>
-                                                <button onClick={() => sendFriendRequest(friend.id)} id='request' className='bg-red-400 p-2 rounded-lg text-white text-xs h-10'>
+                                                <button onClick={() => sendFriendRequest(friend.id)} className='bg-red-400 p-2 rounded-lg text-white text-xs h-10'>
                                                     {lessons.user.native_language == 1 ?
                                                         "Send Request"
                                                         :
