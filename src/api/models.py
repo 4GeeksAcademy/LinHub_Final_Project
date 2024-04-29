@@ -86,6 +86,7 @@ class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user1_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user2_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    Messages = db.relationship("Message")
 
     user1 = db.relationship(User, foreign_keys=[user1_id])
     user2 = db.relationship(User, foreign_keys=[user2_id])
@@ -106,8 +107,8 @@ class Message(db.Model):
     message = db.Column(db.String(1000), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now())
 
-    chat = db.relationship(Chat)
-    sender = db.relationship(User)
+    chat = db.relationship(Chat, foreign_keys=[chat_id])
+    sender = db.relationship(User, foreign_keys=[sender_id])
 
     def serialize(self):
         return{
