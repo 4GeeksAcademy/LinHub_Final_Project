@@ -161,10 +161,16 @@ def get_user_friends_and_requests():
     native_language = user.native_language_id
 
     # Obtener todas las solicitudes aceptadas y pendientes donde el usuario es remitente o receptor
+
     accepted_requests = FriendshipRequest.query.filter(
         (FriendshipRequest.sender_id == user.id) | (FriendshipRequest.receiver_id == user.id),
         FriendshipRequest.accepted == True
     ).all()
+
+    friends = [
+        request.sender.serialize() if request.sender_id != user.id else request.receiver.serialize()
+        for request in accepted_requests
+    ]
 
     pending_requests = FriendshipRequest.query.filter(
         (FriendshipRequest.sender_id == user.id) | (FriendshipRequest.receiver_id == user.id),
@@ -172,14 +178,18 @@ def get_user_friends_and_requests():
     ).all()
 
     # Obtener usuarios que quieran aprender el idioma nativo del usuario actual
-    recommended_users = db.session.query(User, Language.language_name)\
-    .join(Language, User.learning_language_id == Language.id)\
-    .filter(User.native_language_id == native_language).limit(3).all()
+    recommended_users = User.query.filter_by(learning_language_id=native_language)\
+    .filter(
+        ~User.id.in_([request.sender_id for request in accepted_requests]) &
+        ~User.id.in_([request.receiver_id for request in accepted_requests]) &
+        ~User.id.in_([request.sender_id for request in pending_requests]) &
+        ~User.id.in_([request.receiver_id for request in pending_requests])
+    ).limit(3).all()
 
 
     # Serializar resultados
     accepted_and_pending = {
-        "friends": [request.serialize() for request in accepted_requests],
+        "friends": friends,
         "pending": [request.serialize() for request in pending_requests],
         "recommended_users": [user.serialize() for user in recommended_users]
     }
