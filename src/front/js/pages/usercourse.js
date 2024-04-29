@@ -162,6 +162,27 @@ export const UserCourse = () => {
         }
     }
 
+    const handleChat = async (sender_id) => {
+        try {
+            const res = await fetch(process.env.BACKEND_URL + `/api/get_chat/${sender_id}`, {
+                method: "GET",
+
+                headers: {
+                    "Access-Control-Allow-Credentials": true,
+                    "Authorization": 'Bearer ' + store.userToken.token
+                }
+            });
+
+            if (!res.ok) throw Error;
+            const data = await res.json()
+            navigate(`/chat/${data.chat_id}`)
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     //-------- IMPORTANT LOGS ----------------
 
@@ -252,7 +273,12 @@ export const UserCourse = () => {
                                                 {friend.sender.image ? <img className='rounded-full w-12 h-12 object-cover' src={friend.sender.image}></img> : <PiUserCircleFill className='text-5xl' />}
                                                 <p className='ms-1'>{friend.sender.username}</p>
                                             </div>
-                                            <button className='bg-red-400 p-2 rounded-lg text-white text-xs h-10'><Link to={"/chat"}>{lessons.user.native_language == 1 ? "Start Chat" : "Iniciar Chat"}</Link></button>
+                                            <button
+                                                className='bg-red-400 p-2 rounded-lg text-white text-xs h-10'
+                                                onClick={() => handleChat(friend.sender.id)}
+                                            >
+                                                {lessons.user.native_language == 1 ? "Start Chat" : "Iniciar Chat"}
+                                            </button>
                                         </div>
                                     )
                                 })
@@ -267,8 +293,10 @@ export const UserCourse = () => {
                     <div className='mb-4 flex flex-col'>
                         <p className='p-2 bg-amber-200 rounded-2xl w-100 text-center mb-2'>{lessons.user.native_language == 1 ? "Requests" : "Solicitudes"}</p>
                         <div className='p-2 rounded-2xl w-100'>
-                            {friends.pending && friends.pending.length > 0 ?
-                                friends.pending.map(friend => {
+                            {friends.pending &&
+                                friends.pending.length > 0 &&
+                                friends.pending.filter(e => e.sender.id !== lessons.user.id).length > 0 ?
+                                friends.pending.filter(e => e.sender.id !== lessons.user.id).map(friend => {
                                     return (
                                         <div className="flex justify-around items-center border-1 rounded-xl py-1 shadow-5">
                                             <div className='flex items-center'>
