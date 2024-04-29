@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import io from 'socket.io-client';
 
 export const Chat = () => {
     const { store, actions } = useContext(Context);
@@ -9,19 +10,16 @@ export const Chat = () => {
     const [users, setUsers] = useState([]);
     const [chat, setChat] = useState([]);
     const { id } = useParams();
+    const socket = io(process.env.BACKEND_URL);
 
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
-        console.log('chat', id);
+
     }, [message, chat]);
 
-    // useEffect(() => {
-    //     const getChatMessages = async () =>{
-    //         const res = await fetch(process.env.BACKEND_URL + ``)
-    //     }
-    //     getChatMessages()
-    // }, [])
+    useEffect(() => {
+    }, [])
 
     const handleSend = () => {
         if (message.trim() === '') return;

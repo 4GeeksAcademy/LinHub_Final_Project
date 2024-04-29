@@ -22,7 +22,6 @@ from flask_socketio import SocketIO, join_room, leave_room, send, emit, rooms, N
 app = Flask(__name__)
 CORS(app)
 
-
 cred = credentials.Certificate("./google-services.json")
 firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
@@ -31,7 +30,6 @@ firebase_admin.initialize_app(cred, {
 socketio = SocketIO(app)
 
 bucket = storage.bucket()
-
 
 api = Blueprint('api', __name__)
 
