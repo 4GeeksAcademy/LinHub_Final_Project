@@ -74,9 +74,17 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+# SocketIO
+
 @socketio.on('connect')
 def handle_connect():
     print('Client connected')
+    emit('connected', {'data': 'Connected'})
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+    emit('disconnected', {'data': 'Disconnected'})
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
