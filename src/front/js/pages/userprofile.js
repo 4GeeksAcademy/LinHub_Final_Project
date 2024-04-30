@@ -96,7 +96,7 @@ export const UserProfile = () => {
         <LoggedNavbar
             userImage={store.userToken.identity.image}
             username={store.userToken.identity.first_name + ' ' + store.userToken.identity.last_name}
-            language={store.userToken.identity.language == 1 ? "English" : "Español"}
+            language={store.userToken.identity.native_language == 1 ? "English" : "Español"}
         />
        {showAlert && (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
