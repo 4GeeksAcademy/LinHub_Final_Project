@@ -18,6 +18,9 @@ export const Chat = () => {
     }, [message, chat]);
 
     useEffect(() => {
+        socket.on('connect', () => {
+            console.log('Conectado al servidor');
+        });
     }, [])
 
     const handleSend = () => {
@@ -62,4 +65,7 @@ export const Chat = () => {
             </div>
         </div>
     );
+    socket.on('connect', () => {
+            console.log('Conectado al servidor');
+        });
 }

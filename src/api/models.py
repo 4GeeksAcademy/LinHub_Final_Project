@@ -196,7 +196,7 @@ class Lesson(db.Model):
     description = db.Column(db.String, nullable= True)
     image = db.Column(db.String, nullable=True)
     module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
-    module = db.relationship(Module)
+    module = db.relationship(Module, overlaps="lessons")
 
     def __repr__(self):
         return f'<Lesson {self.lesson_name}'
