@@ -98,7 +98,7 @@ export function Exercise() {
                 language={store.userToken.identity.language == 1 ? "English" : "Español"}
             />
             {
-                ShowLin ? <div className='flex justify-center items-center'>
+                ShowLin ? <div className='flex justify-center items-center bg-violet-500'>
                     <svg className='body' width="268" height="233" viewBox="0 0 268 233" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'rotate(60deg)' }}>
                         <path id="wing" d="M259.17 61.6942C258.446 86.2292 209.058 103.408 184.455 108.931L176.201 69.729C175.513 66.4621 247.26 40.0931 247.26 40.0931C251.76 38.1596 259.893 37.1592 259.17 61.6942Z" fill="#B02DDE" stroke="#B02DDE" />
                         <path id="wing" d="M3.31868 88.4504C8.13784 112.59 59.8098 122.558 85.0435 124.525L86.6413 84.6198C86.7745 81.2943 11.473 65.4177 11.473 65.4177C6.70254 64.1457 -1.50047 64.3109 3.31868 88.4504Z" fill="#B02DDE" stroke="#B02DDE" />
@@ -124,8 +124,8 @@ export function Exercise() {
                     </div>
                 </div> :
                     <div className="flex justify-around items-center my-3" >
-                        <div id='colorChange' className="w-1/2 h-auto outlined border-2 p-3 rounded-3xl" style={{ borderColor: 'purple' }}>
-                            <Stepper className='flex justify-between' activeStep={activeStep}>
+                        <div id='colorChange' className="w-1/2 h-auto outlined border-2 p-3 rounded-3xl bg-violet-500">
+                            <Stepper className='flex justify-between bg-violet-500' activeStep={activeStep}>
                                 <MobileStepper
                                     className="w-100"
                                     color='purple'
@@ -135,18 +135,18 @@ export function Exercise() {
                                     activeStep={activeStep}
                                     sx={{ maxWidth: '100%', flexGrow: 1 }}
                                     nextButton={
-                                        <Button style={{ color: 'purple' }} size="small" onClick={handleNext} disabled={activeStep === Object.keys(steps).length}>
+                                        <Button className='bg-violet-500' size="small" onClick={handleNext} disabled={activeStep === Object.keys(steps).length}>
                                             Next
                                             {theme.direction === 'rtl' ? (
-                                                <KeyboardArrowLeft style={{ color: 'purple' }} />
+                                                <KeyboardArrowLeft />
                                             ) : (
-                                                <KeyboardArrowRight style={{ color: 'purple' }} />
+                                                <KeyboardArrowRight />
                                             )}
                                         </Button>
                                     }
                                 />
                             </Stepper>
-                            <hr style={{ color: 'purple' }} />
+                            <hr />
                             {activeStep === Object.keys(steps).length ? (
                                 <React.Fragment>
                                     <Typography sx={{ mt: 2, mb: 1 }}>
@@ -167,7 +167,7 @@ export function Exercise() {
                                 <React.Fragment>
                                     <div className='flex justify-start' sx={{ mt: 2, mb: 1, color: 'white' }}><h3 className='bg-indigo-500 m-2 p-2 rounded-t-full rounded-r-full'>{steps[activeStep]['question']}</h3></div>
                                     <div className='flex justify-end' sx={{ mt: 2, mb: 1, color: 'white' }}><h3 className='bg-indigo-500 m-2 p-2 rounded-t-full rounded-l-full'>{response}</h3></div>
-                                    <hr style={{ color: 'purple' }} />
+                                    <hr />
                                     <div className="flex flex-wrap justify-center flex-column">
                                         <div className="flex justify-around flex-col mt-4 flex-wrap">
                                             {steps[activeStep]['options'].map(option => (
@@ -177,7 +177,7 @@ export function Exercise() {
                                                     variant={selectedOption === option.id ? "contained" : "outlined"}
                                                     color="primary"
                                                     onClick={() => handleOptionSelect(option)}
-                                                    style={{ borderColor: 'purple', color: 'purple' }}
+                                                    style={{ borderColor: 'white', color: 'white' }}
                                                 >
                                                     {option.option.substring(0, 4) === "http" ? <img src={option.option} alt="option" style={{ width: '100px' }} /> : option.option}
                                                 </Button>
