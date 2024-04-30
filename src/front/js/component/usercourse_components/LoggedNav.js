@@ -38,7 +38,7 @@ const Navbar = ({ userImage, language, username }) => {
                             <hr className='mx-4' style={{ height: '3px', background: '#e2e8f0' }}></hr>
 
                             <Link to="/userprofile">
-                                <p className='cursor-pointer px-4 py-2 text-slate-700 text-md'>My Profile</p>
+                                <p className='cursor-pointer px-4 py-2 text-slate-700 text-md'>{language == "English" ? "Mi Perfil" : "My Profile"}</p>
                             </Link>
 
                             <hr className='mx-4' style={{ height: '3px', background: '#e2e8f0' }}></hr>
