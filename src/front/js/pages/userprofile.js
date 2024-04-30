@@ -102,10 +102,10 @@ export const UserProfile = () => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-6 rounded-lg shadow-md">
             <p className="font-bold text-lg text-green-700 mb-2">
-                {store.userToken.identity.language === 1 ? "Perfil modificado" : "Modified Profile"  } 
+                {store.userToken.identity.native_language === 2 ? "Perfil modificado" : "Modified Profile"} 
             </p>
             <p className="text-sm text-gray-700">
-                {store.userToken.identity.language === 1 ? "El perfil ha sido modificado exitosamente" : "Profile has been successfully modified" }
+                {store.userToken.identity.native_language === 2 ? "El perfil ha sido modificado exitosamente" : "Profile has been successfully modified" }
             </p>
         </div>
     </div>
@@ -117,7 +117,7 @@ export const UserProfile = () => {
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
                         <h2 class="font-semibold leading-7 text-gray-900 text-2xl">
-                            {store.userToken.identity.language === 1 ? "Perfil" : "Profile" } 
+                            {store.userToken.identity.native_language === 2 ? "Perfil" : "Profile" } 
 
                         </h2>
                         <div class="mt-2 flex justify-center items-center gap-x-5 ">
@@ -140,7 +140,7 @@ export const UserProfile = () => {
                                 type="button"
                                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
-                                {store.userToken.identity.language === 1 ? "Cambiar" : "Change" } 
+                                {store.userToken.identity.native_language === 2 ? "Cambiar" : "Change" } 
                             </button>
                             {/* Input para seleccionar un archivo */}
                             <input
@@ -156,7 +156,7 @@ export const UserProfile = () => {
                         <div class="mt-1">
                             <div class="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                                    {store.userToken.identity.language === 1 ? "Nombre de Usuario" : "User name" } 
+                                    {store.userToken.identity.native_language === 2 ? "Nombre de Usuario" : "User name" } 
                                 </label>
                                 <div className="">
                                     <input
@@ -173,7 +173,7 @@ export const UserProfile = () => {
                             <div class="mt-1">
                                 <div class="sm:col-span-3">
                                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                        {store.userToken.identity.language === 1 ? "Nombre" : "First Name" } 
+                                        {store.userToken.identity.native_language === 2 ? "Nombre" : "First Name" } 
                                     </label>
                                     <div className="">
                                         <input
@@ -193,7 +193,7 @@ export const UserProfile = () => {
                                 <div class="sm:col-span-3">
 
                                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                        {store.userToken.identity.language === 1 ? "Correo" : "Email" } 
+                                        {store.userToken.identity.native_language === 2 ? "Correo" : "Email" } 
                                     </label>
                                     <div className="">
                                         <input disabled
@@ -205,12 +205,12 @@ export const UserProfile = () => {
 
                                 <div class="mt-6 flex items-center justify-end gap-x-6">
                                     <button onClick={handleCancel} type="button" class="text-sm font-semibold leading-6 text-gray-900">
-                                        {store.userToken.identity.language === 1 ? "Cancelar" : "Cancel" } 
+                                        {store.userToken.identity.native_language === 2 ? "Cancelar" : "Cancel" } 
 
                                     </button>
                                     <button onClick={handleSave} type="button" class="rounded-md bg-purple-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
 
-                                        {store.userToken.identity.language === 1 ? "Guardar" : "Save" }
+                                        {store.userToken.identity.native_language === 2 ? "Guardar" : "Save" }
 
 
                                     </button>
