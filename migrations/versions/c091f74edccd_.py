@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: bbd8e8cf5bc2
+Revision ID: c091f74edccd
 Revises: 
-Create Date: 2024-04-30 02:27:08.722111
+Create Date: 2024-05-01 02:54:49.859386
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bbd8e8cf5bc2'
+revision = 'c091f74edccd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -63,6 +63,7 @@ def upgrade():
     )
     op.create_table('courses',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('progress', sa.String(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('available_course_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['available_course_id'], ['available_courses.id'], ),
@@ -90,6 +91,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('lesson_name', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=True),
+    sa.Column('progress_required', sa.Integer(), nullable=True),
     sa.Column('image', sa.String(), nullable=True),
     sa.Column('module_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['module_id'], ['modules.id'], ),

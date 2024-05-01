@@ -194,7 +194,8 @@ export const UserCourse = () => {
     //-------- IMPORTANT LOGS ----------------
 
     // console.log("SOY LESSONS USER", lessons.user)
-    console.log("SOY USER LESSONS DATA", lessons.data)
+    // console.log("SOY LESSONS PROGRESS", lessons.progress)
+    // console.log("SOY USER LESSONS DATA", lessons.data)
     // console.log("SOY FRIENDS", friends)
 
     return (
@@ -221,6 +222,8 @@ export const UserCourse = () => {
                                     description={lesson.description ? lesson.description : ""}
                                     id={lesson.lesson_id}
                                     button={lessons.user.learning_language === 1 ? "Entrar" : "Join"}
+                                    userProgress={lessons.progress}
+                                    progressRequired={lesson.progress}
                                 />
                             )
                         })

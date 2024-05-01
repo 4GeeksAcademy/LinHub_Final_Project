@@ -57,20 +57,20 @@ def setup_commands(app):
         print("Creating lessons")
 
         en_lessons = [
-            {'title': "Start a conversation!", 'desc': "Start a conversation with someone and practice your conversations skills"},
-            {'title': "Introduce yourself!", 'desc': "Summon up your courage and take the first step towards what could be a beautiful learning relationship."},
-            {'title': "Talk about your hobbies!", 'desc': "Having similar hobbies with another person simply leads to the perfect combination, share yours a bit!"},
-            {'title': "Go out eating", 'desc': "I'm starting to get hungry, where do you think we should eat?"},
-            {'title': "Ask someone out!", 'desc': "I think we know each other well enough, I'm waiting for you to invite me out..."},
-            {'title': "Final Lesson", 'desc': "It's time to take the final step to talk to someone."},
+            {'title': "Start a conversation!", 'desc': "Start a conversation with someone and practice your conversations skills", 'progress': 0},
+            {'title': "Introduce yourself!", 'desc': "Take the first step towards what could be a beautiful learning relationship.", 'progress': 2},
+            {'title': "Talk about your hobbies!", 'desc': "Hobbies are part of us, what if you talk about them!", 'progress': 4},
+            {'title': "Go out eating", 'desc': "I'm starting to get hungry, where do you think we should eat?", 'progress': 6},
+            {'title': "Ask someone out!", 'desc': "I think we know each other well enough, I'm waiting for you to invite me out...", 'progress': 8},
+            {'title': "Final Lesson", 'desc': "It's time to take the final step to talk to someone.", 'progress': 10},
         ]
         es_lessons = [
-            {'title': "Empieza una conversacion!", 'desc': "Comienza una conversación con alguien y practica tus habilidades de conversación."},
-            {'title': "Presentate!", 'desc': "Armate de valor y da el primer paso en lo que podria ser una linda relacion de aprenizaje"},
-            {'title': "Habla de tus hobbies", 'desc': "Tener hobbies similares con otra persona lleva simplemente a la combinacion perfecta, comparte un poco los tuyos!"},
-            {'title': "Sal a comer algo!", 'desc': "Estoy empezando a tener hambre, donde crees que deberiamos comer?"},
-            {'title': "Invita a alguien a salir!", 'desc': "Creo que ya nos conocemos lo suficiente, estoy esperando a que me invites a salir..."},
-            {'title': "Leccion Final", 'desc': "Es tiempo de dar el ultimo paso para hablar con alguien"},
+            {'title': "Empieza una conversacion!", 'desc': "Comienza una conversación con alguien y practica tus habilidades de conversación.", 'progress': 0},
+            {'title': "Presentate!", 'desc': "Da el primer paso en lo que podria ser una linda relacion de aprenizaje", 'progress': 2},
+            {'title': "Habla de tus hobbies", 'desc': "Los hobbies son parte de nosotros, que tal si hablas de ellos!", 'progress': 4},
+            {'title': "Sal a comer algo!", 'desc': "Estoy empezando a tener hambre, donde crees que deberiamos comer?", 'progress': 6},
+            {'title': "Invita a alguien a salir!", 'desc': "Creo que ya nos conocemos lo suficiente, estoy esperando a que me invites a salir...", 'progress': 8},
+            {'title': "Leccion Final", 'desc': "Es tiempo de dar el ultimo paso para hablar con alguien", 'progress': 10},
         ]
 
         modules = db.session.query(Module).all()
@@ -81,6 +81,7 @@ def setup_commands(app):
                     new_lesson = Lesson()
                     new_lesson.lesson_name = lesson["title"]
                     new_lesson.description = lesson["desc"]
+                    new_lesson.progress_required = lesson['progress']
                     new_lesson.module_id = module.id
                     db.session.add(new_lesson)
                     db.session.commit()
@@ -89,6 +90,7 @@ def setup_commands(app):
                     new_lesson = Lesson()
                     new_lesson.lesson_name = lesson["title"]
                     new_lesson.description = lesson["desc"]
+                    new_lesson.progress_required = lesson['progress']
                     new_lesson.module_id = module.id
                     db.session.add(new_lesson)
                     db.session.commit()
