@@ -155,6 +155,7 @@ class Course(db.Model):
     __tablename__ = "courses"
 
     id = db.Column(db.Integer, primary_key = True)
+    progress = db.Column(db.String, default="")
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     available_course_id = db.Column(db.Integer, db.ForeignKey('available_courses.id'))
     available_course = db.relationship(AvailableCourse)
@@ -194,6 +195,7 @@ class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     lesson_name = db.Column(db.String, nullable = False)
     description = db.Column(db.String, nullable= True)
+    progress_required = db.Column(db.Integer,nullable=True)
     image = db.Column(db.String, nullable=True)
     module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
     module = db.relationship(Module, overlaps="lessons")

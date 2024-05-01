@@ -369,3 +369,28 @@
 /* .user-logged-drop{
     opacity: ;
 } */
+
+@media screen and (max-width:1550px) {
+    .usercourse-container {
+        padding: 20px 100px;
+    }
+}
+
+@media screen and (max-width:961px) {
+    .usercourse-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px
+    }
+
+    .usercourse-container-left {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+
+    .usercourse-lesson:nth-child(2n) {
+        top: 0px
+    }
+}

@@ -91,14 +91,8 @@ def get_lessons_by_lang():
     available_course = db.session.query(AvailableCourse, Language.language_name, AvailableCourse.id, AvailableCourse.name)\
     .join(Language, AvailableCourse.language_id == Language.id)\
     .filter(AvailableCourse.id == course.available_course_id).one_or_none()
-    
-    course = {
-        'language_name': available_course.language_name,
-        'id': available_course.id,
-        'name': available_course.name
-    }
 
-    lessons = db.session.query(Module, Lesson.id, Lesson.lesson_name, Lesson.description)\
+    lessons = db.session.query(Module, Lesson.id, Lesson.lesson_name, Lesson.description, Lesson.progress_required)\
     .join(Lesson, Module.id == Lesson.module_id)\
     .filter(Module.available_course_id == available_course.id).all()
     
@@ -108,7 +102,8 @@ def get_lessons_by_lang():
         lesson_dict = {
             'lesson_id': lesson.id,
             'lesson_name': lesson.lesson_name,
-            'description': lesson.description
+            'description': lesson.description,
+            'progress': lesson.progress_required
         }
         courses_lessons.append(lesson_dict)
 
@@ -129,9 +124,12 @@ def get_lessons_by_lang():
             user.lives = user.lives + horas_transcurridas
             db.session.commit()
 
+    
+
     returned_object = {
         'user': user.serialize(),
-        'data': courses_lessons
+        'data': courses_lessons,
+        'progress': course.progress
     }
 
     return jsonify(returned_object)
@@ -339,7 +337,17 @@ def correct_option(option_id):
         return jsonify({'msg': 'wrong answer'}), 400
     
     if option.correct == True:
-        return jsonify({'msg': 'correct answer'}), 200
+        course = Course.query.filter_by(user_id = user.id).one_or_none()
+
+        if course is None:
+            return jsonify({'msg':'could not find the module'})
+        
+        if str(option_id) not in course.progress.split(','):
+            course.progress += f"{option_id},"
+            db.session.commit()
+            return jsonify({'msg': 'correct answer, progress updated'}), 200
+        else:
+            return jsonify({'msg': 'correct answer, question already answered before'}), 200        
 
 
 
