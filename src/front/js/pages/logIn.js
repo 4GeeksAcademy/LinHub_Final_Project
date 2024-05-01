@@ -54,7 +54,7 @@ export const LogIn = () => {
 
 
                     <form className="border-b border-purple-900 flex flex-column justify-center items-center text-wrap" id="loginform">
-                        <p className="text-3xl text-purple-900">Ingresa a tu cuenta</p>
+                        <p className="text-3xl text-purple-900">{store.currentIdiom === "Español" ? "Ingresa a tu cuenta" : "Log in your acount"}</p>
 
 
                         <div className="border-y border-purple-900 mt-3 mb-4 w-full">
@@ -91,20 +91,21 @@ export const LogIn = () => {
 
                         <div className="text-wrap text-xs text-center" style={{ maxWidth: "300px" }}>
                             <p>
-                                Al continuar, aceptas nuestros  <strong> Términos </strong> y nuestra
+                                {store.currentIdiom === "Español" ? "Al continuar, aceptas nuestros" : "By continuing, you agree to our"}  <strong>  {store.currentIdiom === "Español" ? "Terminos" : "Terms"} </strong> {store.currentIdiom === "Español" ? "y nuestra" : "and our"}
                             </p>
                             <p className="">
-                                <strong>Política de privacidad.</strong>
+                                <strong>{store.currentIdiom === "Español" ? "Politica de privacidad" : "Privacy policy."}</strong>
                             </p>
                         </div>
 
                     </form>
                     <div className="pie-form flex justify-center ">
                         {/* <Link className="mt-4 text-purple-900" to="">{store.currentIdiom === "Español" ? '¿Perdiste tu contraseña?' : 'Lost your Password?'}</Link><br /> */}
-                        <Link className="mt-2 text-purple-900" to="/signup">{store.currentIdiom === "Español" ? '¿No tienes Cuenta? Registrate' : 'Need an account Register'}</Link>
+                        <Link className="mt-2 text-purple-900" to="/signup">{store.currentIdiom === "Español" ? '¿No tienes Cuenta? Registrate' : '¿Need an account? Register'}</Link>
                     </div>
 
                 </div>
+                
 
                 <div className="flex justify-between items-center">
                     <Link to="/">{store.currentIdiom === "Español" ? "Volver" : "Go Back"}</Link>
