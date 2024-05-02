@@ -30,6 +30,14 @@ export const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+   
+    if (userInfo.native_language === userInfo.learning_language) {
+      alert(store.currentIdiom !== "Español" ?
+        "The native language and the learning language must be different" :
+        "El idioma nativo y el idioma de aprendizaje deben ser diferentes");
+      return; 
+    }
+
     const registered = await actions.createNewUser(userInfo)
     if (registered) navigate('/login')
     else undefined
