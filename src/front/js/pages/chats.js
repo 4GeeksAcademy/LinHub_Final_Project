@@ -62,7 +62,7 @@ export const Chat = () => {
 
     return (
         <div className="p-2 flex border-8" style={{ height: '80vh' }}>
-            <div className="col-3 border-10">
+            <div className="border-10 w-3/12">
                 <div className="flex justify-between">
                     <h3>Usuarios</h3>
                     <Link to="/chats" className="p-2 bg-blue-500 text-white">Volver</Link>
@@ -75,8 +75,8 @@ export const Chat = () => {
                     ))}
                 </ul>
             </div>
-            <div className="col-9 flex flex-col">
-                <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3" style={{ overflowY: 'auto' }}>
+            <div className="flex flex-col w-9/12">
+                <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3 h-full" style={{ overflowY: 'auto' }}>
                     {chat.map((msg, index) => (
                         <div key={index} className={`grid rounded-t-3xl ${msg.sender_id === userId ? 'rounded-r-3xl' : 'rounded-l-3xl'}`}>
                             <div className={`m-2 p-2 rounded-t-3xl ${msg.sender_id === userId ? 'rounded-l-3xl bg-green-200 justify-self-end' : 'rounded-r-3xl bg-blue-200 justify-self-start'}`}>
@@ -86,7 +86,7 @@ export const Chat = () => {
                     ))}
                 </div>
                 <div className="d-flex">
-                    <input type="text" className='w-100' value={message} onChange={(e) => setMessage(e.target.value)} />
+                    <input type="text" className='w-full' value={message} onChange={(e) => setMessage(e.target.value)} />
                     <button className="p-2 bg-blue-500 text-white" onClick={handleSend}>Enviar</button>
                 </div>
             </div>
