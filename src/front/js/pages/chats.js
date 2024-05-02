@@ -4,68 +4,92 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import io from 'socket.io-client';
 
+const socket = io(process.env.BACKEND_URL);
+
 export const Chat = () => {
     const { store, actions } = useContext(Context);
     const [message, setMessage] = useState('');
-    const [users, setUsers] = useState([]);
+    const [friends, setFriends] = useState([]);
     const [chat, setChat] = useState([]);
     const { id } = useParams();
-    const socket = io();
+    const navigate = useNavigate();
+    const userId = store.userToken.identity.id;
+
 
     useEffect(() => {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
     }, [message, chat]);
 
-    useEffect(() => {
-        socket.on('connect', () => {
-            console.log('Conectado al servidor');
-        });
-    }, [])
+    console.log('chat', chat);
 
-    const handleSend = () => {
-        if (message.trim() === '') return;
-        setChat([...chat, {
-            "msg": message,
-            "id_usuario_que_manda": user.id,
-            "hora": new Date().toLocaleTimeString()
-        }]);
-        setMessage('');
+    useEffect(() => {
+        socket.emit('join', { sender_id: userId, room: id });
+        const getMessages = async () => {
+            try {
+                const res = await fetch(`${process.env.BACKEND_URL}/api/get_messages/${id}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + store.userToken.token,
+                        }
+                    }
+                );
+                const data = await res.json();
+                setChat(data);
+            } catch (error) {
+                console.error("Error fetching messages", error);
+            }
+        }
+        getMessages();
+    }, []);
+
+    useEffect(() => {
+        socket.on('message', function (data) {
+            setChat([...chat, data]);
+        });
+    });
+
+    const handleSend = async () => {
+        try {
+            socket.emit('message', { sender_id: userId, room: id, message: message });
+            setMessage('');
+        } catch (error) {
+            console.error("Error sending message", error);
+        }
     }
 
     return (
-        <div className="p-2 d-flex border-10" style={{ height: '80vh' }}>
+        <div className="p-2 flex border-8" style={{ height: '80vh' }}>
             <div className="col-3 border-10">
-                <div className="d-flex justify-content-between">
+                <div className="flex justify-between">
                     <h3>Usuarios</h3>
-                    <Link to="/chats" className="btn btn-primary">Volver</Link>
+                    <Link to="/chats" className="p-2 bg-blue-500 text-white">Volver</Link>
                 </div>
                 <ul className="list-group">
-                    {users.map((user, index) => (
+                    {friends.map((user, index) => (
                         <li key={index} className="list-group-item">
-                            <Link to={`/chat/${user.id}`}>{user.nombre}</Link>
+                            <Link to={`/chat/${userId}`}>{user.nombre}</Link>
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className="col-9 d-flex flex-column">
+            <div className="col-9 flex flex-col">
                 <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3" style={{ overflowY: 'auto' }}>
                     {chat.map((msg, index) => (
-                        <div key={index} className={`d-flex rounded-t-3xl ${msg.id_usuario_que_manda === user.id ? 'justify-content-end rounded-r-3xl ' : 'justify-content-start rounded-l-3xl'}`}>
-                            <div className={`m-2 p-2 rounded-t-3xl justify-content-start ${msg.id_usuario_que_manda === user.id ? 'rounded-l-3xl bg-green-200' : 'rounded-r-3xl bg-blue-200'}`}>
-                                {msg.msg}
+                        <div key={index} className={`grid rounded-t-3xl ${msg.sender_id === userId ? 'rounded-r-3xl' : 'rounded-l-3xl'}`}>
+                            <div className={`m-2 p-2 rounded-t-3xl ${msg.sender_id === userId ? 'rounded-l-3xl bg-green-200 justify-self-end' : 'rounded-r-3xl bg-blue-200 justify-self-start'}`}>
+                                {msg.message}
                             </div>
                         </div>
                     ))}
                 </div>
                 <div className="d-flex">
-                    <input type="text" className="form-control" value={message} onChange={(e) => setMessage(e.target.value)} />
-                    <button className="btn btn-primary" onClick={handleSend}>Enviar</button>
+                    <input type="text" className='w-100' value={message} onChange={(e) => setMessage(e.target.value)} />
+                    <button className="p-2 bg-blue-500 text-white" onClick={handleSend}>Enviar</button>
                 </div>
             </div>
         </div>
     );
-    socket.on('connect', () => {
-            console.log('Conectado al servidor');
-        });
 }
