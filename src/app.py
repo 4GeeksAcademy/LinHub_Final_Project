@@ -12,6 +12,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO, join_room, leave_room, send, emit, rooms, Namespace, disconnect, close_room
+from api.models import db, Message
 
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -74,16 +75,37 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
-@socketio.on('connect')
-def handle_connect():
-    print('client connected')
+@socketio.on('join')
+def on_join(data):
+    sender_id = data['sender_id']
+    room = data['room']
+    join_room(room)
+    emit('joined', {'sender_id': sender_id, 'room': room}, to=room)
+    print(f"User {sender_id} joined room {room}")
 
-@socketio.on('disconnect')
-def handle_disconnect():
-    print('client disconnected')
-    
+@socketio.on('leave')
+def on_leave(data):
+    sender_id = data['sender_id']
+    room = data['room']
+    leave_room(room)
+    emit('left', {'sender_id': sender_id, 'room': room}, to=room)
+
+@socketio.on('message')
+def handle_message(data):
+    sender_id = data['sender_id']
+    message = data['message']
+    room = data['room']
+    if room in rooms():
+        emit('message', {'sender_id': sender_id, 'message': message}, to=room)
+        new_message = Message(sender_id=sender_id, message=message, chat_id=room)
+        db.session.add(new_message)
+        db.session.commit()
+        print(new_message.serialize())
+    else:
+        emit('error', {'message': 'Room not found'}, to=request.sid)
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=3001)
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
