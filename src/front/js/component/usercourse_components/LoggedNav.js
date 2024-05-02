@@ -43,7 +43,7 @@ const Navbar = ({ userImage, language, username }) => {
 
                             <hr className='mx-4' style={{ height: '3px', background: '#e2e8f0' }}></hr>
 
-                            <div onClick={() => actions.logOut()} className='d-flex px-4 py-2 items-center cursor-pointer'>
+                            <div onClick={() => actions.logOut()} className='flex px-4 py-2 items-center cursor-pointer'>
                                 <MdOutlineLogout className='text-3xl text-purple-500' />
                                 <p className='ps-2 text-purple-500'>Logout</p>
                             </div>

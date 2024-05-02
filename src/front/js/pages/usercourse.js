@@ -232,7 +232,7 @@ export const UserCourse = () => {
 
                 <div className='relative usercourse-container-right'>
 
-                    <div className='d-flex justify-around mb-4'>
+                    <div className='flex justify-around mb-4'>
                         <LivesAndStreak
                             type="fire"
                             info={lessons.user.streak}

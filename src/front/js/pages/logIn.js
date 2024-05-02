@@ -53,7 +53,7 @@ export const LogIn = () => {
                 <div id="login" className="border-4 rounded border-gray-200 drop-shadow-md p-5 ">
 
 
-                    <form className="border-b border-purple-900 flex flex-column justify-center items-center text-wrap" id="loginform">
+                    <form className="border-b border-purple-900 flex flex-col justify-center items-center text-wrap" id="loginform">
                         <p className="text-3xl text-purple-900">{store.currentIdiom === "Español" ? "Ingresa a tu cuenta" : "Log in your acount"}</p>
 
 
@@ -105,7 +105,7 @@ export const LogIn = () => {
                     </div>
 
                 </div>
-                
+
 
                 <div className="flex justify-between items-center">
                     <Link to="/">{store.currentIdiom === "Español" ? "Volver" : "Go Back"}</Link>
