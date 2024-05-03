@@ -30,6 +30,9 @@ export const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(userInfo)
+    console.log(userInfo.username)
+    
    
     if (userInfo.native_language === userInfo.learning_language) {
       alert(store.currentIdiom !== "Español" ?
@@ -37,8 +40,28 @@ export const SignUp = () => {
         "El idioma nativo y el idioma de aprendizaje deben ser diferentes");
       return; 
     }
+    var registered = null
+    try{registered = await actions.createNewUser(userInfo) } 
+    catch (error) {
+     
+      console.log(error.message)
+    	if (error.message == "Email already exists"){
+       
+        alert(store.currentIdiom !== "Español" ?
+        "Email already exists" :
+        "Correo electronico ya existe");
+        return;
+      }
+      if (error.message == "Username already exists"){
+       
+        alert(store.currentIdiom !== "Español" ?
+        "Username already exists" :
+        "Nombre de usuario ya existe");
+        return;
+      }
+    return false; 
+  }
 
-    const registered = await actions.createNewUser(userInfo)
     if (registered) navigate('/login')
     else undefined
   };
