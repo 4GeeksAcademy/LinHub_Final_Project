@@ -134,7 +134,26 @@ def get_lessons_by_lang():
 
     return jsonify(returned_object)
 
+@api.route('/get_friends', methods=['GET'])
+@jwt_required()
+def get_friends():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).one_or_none()
 
+    if user is None:
+        return jsonify({'msg': 'user not found'}), 404
+
+    friends = FriendshipRequest.query.filter(
+        (FriendshipRequest.sender_id == user.id) | (FriendshipRequest.receiver_id == user.id),
+        FriendshipRequest.accepted == True
+    ).all()
+
+    friends = [
+        request.sender.serialize() if request.sender_id != user.id else request.receiver.serialize()
+        for request in friends
+    ]
+
+    return jsonify(friends), 200
 
 ### RECEIVED AND FRIEND REQUESTS FOR A USER ###
 @api.route('/friends_and_requests', methods=['GET'])
@@ -269,11 +288,15 @@ def access_chat(friend_id):
         ((Chat.user1_id == friend_id) & (Chat.user2_id == user.id))
     ).one_or_none()
 
+    if chat.user1_id == user.id:
+        friend = chat.user2.serialize()
+    else:
+        friend = chat.user1.serialize()
+
     if chat is None:
         return jsonify({'msg': 'chat not found'})
 
-    return jsonify({'chat_id': chat.id}), 200
-
+    return jsonify({'chat_id': chat.id, 'user': friend}), 200
 
 ### ACCESS CHAT MESSAGES
 @api.route('/get_messages/<int:chat_id>', methods=['GET'])

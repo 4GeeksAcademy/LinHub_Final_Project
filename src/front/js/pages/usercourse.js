@@ -184,8 +184,8 @@ export const UserCourse = () => {
 
             if (!res.ok) throw Error;
             const data = await res.json()
+            store.currentFriend = data.user
             navigate(`/chat/${data.chat_id}`)
-
         } catch (error) {
             console.log(error)
         }
