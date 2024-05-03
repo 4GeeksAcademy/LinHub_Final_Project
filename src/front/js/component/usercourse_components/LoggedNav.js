@@ -30,9 +30,9 @@ const Navbar = ({ userImage, language, username }) => {
 
                             <hr style={{ height: '3px', background: '#e2e8f0' }}></hr>
 
-                            <div className='d-flex py-2' style={{ padding: '1rem' }}>
+                            <div className='flex py-2' style={{ padding: '1rem' }}>
                                 {userImage ? <img className='rounded-full w-16 h-16 object-cover' src={userImage}></img> : <PiUserCircleFill className='text-7xl' />}
-                                <p className='fs-4 p-2'>{username ? username : "username"}</p>
+                                <p className='text-2xl p-2'>{username ? username : "username"}</p>
                             </div>
 
                             <hr className='mx-4' style={{ height: '3px', background: '#e2e8f0' }}></hr>

@@ -366,6 +366,62 @@
     transition: all 0.4s;
 }
 
+/* EXERCISE SECITON */
+.exercise-lin {
+    position: absolute;
+    display: flex;
+    left: 10%;
+    top: calc(50% - 201px);
+}
+
+
+.exercise-smartphone {
+    position: relative;
+    width: 330px;
+    height: 610px;
+    background-color: #000;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: black;
+}
+
+.progress {
+    border-radius: 20px;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.screen {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 50px 50px 3fr;
+    padding-top: 40px;
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    background-color: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.camera-side {
+    height: 30px;
+    width: 120px;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 60px);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: black;
+}
+
 /* .user-logged-drop{
     opacity: ;
 } */
