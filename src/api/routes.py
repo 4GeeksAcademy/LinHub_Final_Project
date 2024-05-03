@@ -401,6 +401,16 @@ def create_user():
     
     if not native_language:
         return jsonify({'msg': 'native language required'}), 400
+
+    existing_email = User.query.filter_by(email=email).first()
+    existing_username = User.query.filter_by(username=username).first()
+
+    if existing_email:
+        return jsonify({'msg': 'Email already exists'}), 409
+    
+    if existing_username:
+         return jsonify({'msg': 'Username already exists'}), 409
+    
     
     password_in_bytes = bytes(password, 'utf-8')
 
