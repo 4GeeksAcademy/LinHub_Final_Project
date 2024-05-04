@@ -102,11 +102,11 @@ export const SignUp = () => {
   console.log(availableLanguages)
   return (<>
     <Navbar />
-    <div className='flex flex-col justify-around items-center'>
-      <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        <div className=" flex flex-row justify-center my-4">
+    <div className='flex flex-col justify-around items-center '>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center p-4 ">
+        <div className=" flex flex-row justify-center my-2 ">
           <div id="text-form-title" className="text-3xl text-violet-500 ">
-            <div className="mt-12">
+            <div className="flex flex-col justify-around items-center mt-12">
               {store.currentIdiom !== "Español" ? (
                 <>
                   <h1>Ready to learn your dream language?</h1>
