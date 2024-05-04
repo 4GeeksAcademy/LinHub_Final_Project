@@ -106,30 +106,33 @@ export const Chat = () => {
     }
 
     return (
-        <div className="p-2 flex border-8" style={{ height: '80vh' }}>
-            <div className="border-10 w-3/12">
-                <div className="flex justify-between">
-                    <h3>Usuarios</h3>
-                    <Link to="/usercourse" className="p-2 bg-blue-500 text-white">Volver</Link>
+        <div className="p-2 flex border-8" style={{ height: '100vh' }}>
+            <div className="border-10 w-3/12 hidden sm:block">
+                <div className="flex justify-center items-center py-3">
+                    <strong>Amigos</strong>
                 </div>
                 <ul className="list-group">
                     {friends.map((user, index) => (
                         <li key={index} className="list-group-item my-3">
                             <button className='flex items-center' onClick={handleChat(user.id)}>
-                                {user.image ? <img className="rounded-full w-12 h-12 object-cover" src={user.image} /> : <PiUserCircleFill className='text-5xl' />}
+                                {user.image ? <img className="rounded-full w-9 h-9 object-cover" src={user.image} /> : <PiUserCircleFill className='text-5xl' />}
                                 {user.username}
                             </button>
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className="flex flex-col w-9/12">
-                <h3 className='flex items-center m-3'> {friend.image ? <img className="rounded-full w-12 h-12 object-cover" src={friend.image} /> : <PiUserCircleFill className='text-5xl' />}
-                    {friend.username}</h3>
-                <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3 h-full" style={{ overflowY: 'auto' }}>
+            <div className="flex flex-col w-full sm:w-9/12">
+                <div className='flex items-center justify-between p-2'>
+                    <h3 className='flex items-center m-3'> {friend.image ? <img className="rounded-full w-12 h-12 object-cover" src={friend.image} /> : <PiUserCircleFill className='text-5xl' />}{friend.username}</h3>
+                    <Link to="/usercourse" className="p-2 bg-blue-500 text-white justify-self-end h-fit rounded-full">Volver</Link>
+                </div>
+
+
+                <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3 h-full overflow-y-auto">
                     {chat.map((msg, index) => (
                         <div key={index} className={`grid rounded-t-3xl ${msg.sender_id === userId ? 'rounded-r-3xl' : 'rounded-l-3xl'}`}>
-                            <div className={`m-2 p-2 rounded-t-3xl ${msg.sender_id === userId ? 'rounded-l-3xl bg-green-200 justify-self-end' : 'rounded-r-3xl bg-blue-200 justify-self-start'}`}>
+                            <div className={`m-2 p-2 rounded-t-3xl ${msg.sender_id === userId ? 'rounded-l-3xl bg-green-200 justify-self-end' : 'rounded-r-3xl bg-blue-200 justify-self-start'}`} style={{ maxWidth: '50%' }}>
                                 {msg.message}
                             </div>
                         </div>
