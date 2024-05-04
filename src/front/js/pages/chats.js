@@ -11,6 +11,7 @@ export const Chat = () => {
     const { store, actions } = useContext(Context);
     const [message, setMessage] = useState('');
     const [friends, setFriends] = useState([]);
+    const [friend, setFriend] = useState({});
     const [chat, setChat] = useState([]);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -45,6 +46,8 @@ export const Chat = () => {
             }
         }
         getMessages();
+        setFriend(store.currentFriend);
+        console.log(store.currentFriend);
     }, [id]);
 
     useEffect(() => {
@@ -111,7 +114,7 @@ export const Chat = () => {
                 </div>
                 <ul className="list-group">
                     {friends.map((user, index) => (
-                        <li key={index} className="list-group-item">
+                        <li key={index} className="list-group-item my-3">
                             <button className='flex items-center' onClick={handleChat(user.id)}>
                                 {user.image ? <img className="rounded-full w-12 h-12 object-cover" src={user.image} /> : <PiUserCircleFill className='text-5xl' />}
                                 {user.username}
@@ -121,8 +124,8 @@ export const Chat = () => {
                 </ul>
             </div>
             <div className="flex flex-col w-9/12">
-                <h3 className='flex items-center'> {store.currentFriend.image ? <img className="rounded-full w-12 h-12 object-cover" src={store.currentFriend.image} /> : <PiUserCircleFill className='text-5xl' />}
-                    {store.currentFriend.username}</h3>
+                <h3 className='flex items-center m-3'> {friend.image ? <img className="rounded-full w-12 h-12 object-cover" src={friend.image} /> : <PiUserCircleFill className='text-5xl' />}
+                    {friend.username}</h3>
                 <div id="chat-box" className="flex-grow-1 border-bottom border-2 p-3 h-full" style={{ overflowY: 'auto' }}>
                     {chat.map((msg, index) => (
                         <div key={index} className={`grid rounded-t-3xl ${msg.sender_id === userId ? 'rounded-r-3xl' : 'rounded-l-3xl'}`}>
