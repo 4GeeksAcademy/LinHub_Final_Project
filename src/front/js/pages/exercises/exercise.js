@@ -135,7 +135,7 @@ export function Exercise() {
                                     style={{ flexGrow: '2' }}
                                     color='purple'
                                     variant="progress"
-                                    steps={Object.keys(steps).length}
+                                    steps={Object.keys(steps).length + 1}
                                     position="static"
                                     activeStep={activeStep}
                                     sx={{ maxWidth: '100%', flexGrow: 1 }}
