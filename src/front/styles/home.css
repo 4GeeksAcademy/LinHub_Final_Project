@@ -130,12 +130,18 @@
     opacity: 1;
     transition: all 0.3s;
 }
+/*css del profile*/
+#form2 {
+    width: 550px;
+
+}
 
 /*CSS del Register */
 #form1 {
     width: 550px;
 
 }
+
 .max-w-screen-sm {
     max-width: 100%;
 }

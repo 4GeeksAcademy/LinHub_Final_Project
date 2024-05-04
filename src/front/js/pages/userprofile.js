@@ -112,8 +112,7 @@ export const UserProfile = () => {
 )}
 
 
-        <div className='mt-20 rounded-lg mx-auto max-w-screen-sm px-4 sm:px-4 sm:px-4 py-4 shadow-3'>
-            <form>
+            <form id= "form2" className="flex flex-col p-4 mx-auto max-w-screen-sm h-screen shadow-3 mt-2 rounded-lg">
                 <div class="space-y-40 mt-3">
                     <div class="border-b border-gray-900/10 pb-20">
                         <h2 class="font-semibold leading-7 text-gray-900 text-2xl">
@@ -154,7 +153,7 @@ export const UserProfile = () => {
 
                         </div>
                         <div class="mt-1">
-                            <div class="sm:col-span-3">
+                            <div class="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                                     {store.userToken.identity.native_language === 2 ? "Nombre de Usuario" : "User name" } 
                                 </label>
@@ -220,6 +219,6 @@ export const UserProfile = () => {
                     </div>
                 </div>
             </form>
-        </div>
+        
     </>)
 }
