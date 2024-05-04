@@ -564,7 +564,10 @@ def update_user():
             user.first_name= first_name
         if password != None:    
             user.password= password
-        if username != None:    
+        if username != None:  
+            existing_user = User.query.filter_by(username=username).first()
+            if existing_user is not None and existing_user.id != user.id:
+                return jsonify({"msg": "Username already exists"}), 400
             user.username= username
      
         db.session.add(user)

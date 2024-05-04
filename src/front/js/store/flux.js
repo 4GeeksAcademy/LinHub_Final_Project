@@ -111,13 +111,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 
 
+					if (res.status === 409) {
+						console.error("El usuario ya existe");
+						//return false; 
+					}
 					const data = await res.json();
-					if (!res.ok) throw new Error("Invalid credentials");
-
-					return data;
+					if (!res.ok){
+						throw new Error(data.msg)
+					}  
+					return true; 
 				} catch (error) {
-					console.error("Error logging in:", error);
-					return false;
+					console.log(error.message)
+					if (error.message == "Username already exists" || error.message == "Email already exists"){
+						throw new Error(error.message); 
+					}
+					console.log(error.message)
+					console.error("Error al crear un nuevo usuario:", error);
+					return false; 
 				}
 			},
 			getModuleInfo: async (id, language) => {
