@@ -154,7 +154,7 @@ export const UserProfile = () => {
 
                         </div>
                         <div class="mt-1">
-                            <div class="sm:col-span-4">
+                            <div class="sm:col-span-3">
                                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                                     {store.userToken.identity.native_language === 2 ? "Nombre de Usuario" : "User name" } 
                                 </label>

@@ -102,8 +102,8 @@ export const SignUp = () => {
   console.log(availableLanguages)
   return (<>
     <Navbar />
-    <div className='flex flex-col justify-around items-center '>
-      <form onSubmit={handleSubmit} className="flex flex-col items-center p-4 ">
+    <div className='flex flex-col justify-around items-center mx-auto max-w-screen-sm h-screen'>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center p-4 mx-auto max-w-screen-sm h-screen">
         <div className=" flex flex-row justify-center my-2 ">
           <div id="text-form-title" className="text-3xl text-violet-500 ">
             <div className="flex flex-col justify-around items-center mt-12">
@@ -123,7 +123,7 @@ export const SignUp = () => {
           <img id="pingui-form" className="" src="https://raw.githubusercontent.com/4GeeksAcademy/LinHub_Final_Project/main/src/front/img/section_two.svg" alt="LinHub Penguin (Logo)" margin-left="800px" width="150px" />
 
         </div>
-        <div id="form1" className="border border-gray-900/10 pb-15 p-4 rounded-lg shadow-2">
+        <div id="form1" className="border border-gray-900/10 pb-15 p-4 mx-auto max-w-screen-sm rounded-lg shadow-2">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             {store.currentIdiom !== "Español" ? (
               <>Personal Information</>
@@ -140,7 +140,7 @@ export const SignUp = () => {
           </p>
 
           <div className="mt-2">
-            <div className="">
+            <div className="sm:col-span-3">
               <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                 {store.currentIdiom !== "Español" ? (
                   <>First name</>
@@ -170,7 +170,7 @@ export const SignUp = () => {
                   <>Apellido</>
                 )}
               </label>
-              <div className="">
+              <div className="sm:col-span-3">
                 <input
                   type="text"
                   name="last_name"
@@ -188,7 +188,7 @@ export const SignUp = () => {
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                 User name
               </label>
-              <div className="">
+              <div className="sm:col-span-3">
                 <input
                   type="text"
                   name="username"
@@ -210,7 +210,7 @@ export const SignUp = () => {
                   <>Dirección de correo electrónico</>
                 )}
               </label>
-              <div className="">
+              <div className="sm:col-span-3">
                 <input
                   id="email"
                   name="email"

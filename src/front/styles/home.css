@@ -136,7 +136,13 @@
     width: 550px;
 
 }
+.max-w-screen-sm {
+    max-width: 100%;
+}
 
+.h-screen {
+    height: 80%;
+}
 
 #pingui-form {
     width: 150px;
