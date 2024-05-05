@@ -47,7 +47,6 @@ export const Chat = () => {
         }
         getMessages();
         setFriend(store.currentFriend);
-        console.log(store.currentFriend);
     }, [id]);
 
     useEffect(() => {
@@ -75,9 +74,14 @@ export const Chat = () => {
         socket.on('message', function (data) {
             setChat([...chat, data]);
         });
+
+        return () => socket.off('message');
     });
 
     const handleSend = async () => {
+        if (!message) {
+            return;
+        }
         try {
             socket.emit('message', { sender_id: userId, room: id, message: message });
             setMessage('');

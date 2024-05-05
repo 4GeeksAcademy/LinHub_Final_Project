@@ -130,6 +130,7 @@
     opacity: 1;
     transition: all 0.3s;
 }
+
 /*css del profile*/
 #form2 {
     width: 550px;
@@ -441,7 +442,7 @@
 
 @media screen and (max-width:1550px) {
     .usercourse-container {
-        padding: 20px 100px;
+        padding: 20px 40px;
     }
 }
 

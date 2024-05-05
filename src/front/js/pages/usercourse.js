@@ -211,7 +211,7 @@ export const UserCourse = () => {
                 <FeedbackMsg msg={feedbackMsg.msg} state={feedbackMsg.state} opacity={0} transition={"all 0.3s"} />
             }
 
-            <div className='usercourse-container'>
+            <div className='usercourse-container p-0'>
                 <div className='usercourse-container-left'>
                     {lessons.data &&
                         lessons.data.map((lesson, index) => {

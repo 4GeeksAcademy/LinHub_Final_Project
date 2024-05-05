@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import { Home } from "./pages/home";
 import { LogIn } from "./pages/logIn";
@@ -14,6 +16,12 @@ import { Chat } from "./pages/chats";
 
 import injectContext from "./store/appContext";
 
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -24,20 +32,23 @@ const Layout = () => {
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<LogIn />} path="/login" />
-                        <Route element={<SignUp />} path="/signup" />
-                        <Route element={<UserCourse />} path="/usercourse" />
-                        <Route element={<Exercise />} path="/exercise/:id" />
-                        <Route element={<UserProfile />} path="/userprofile" />
-                        <Route element={<UploadFile />} path="/uploadfile" />
-                        <Route element={<Chat />} path="/chat/:id" />
-                    </Routes>
-                </ScrollToTop>
-            </BrowserRouter>
+            <ThemeProvider theme={darkTheme}>
+                <CssBaseline />
+                <BrowserRouter basename={basename}>
+                    <ScrollToTop>
+                        <Routes>
+                            <Route element={<Home />} path="/" />
+                            <Route element={<LogIn />} path="/login" />
+                            <Route element={<SignUp />} path="/signup" />
+                            <Route element={<UserCourse />} path="/usercourse" />
+                            <Route element={<Exercise />} path="/exercise/:id" />
+                            <Route element={<UserProfile />} path="/userprofile" />
+                            <Route element={<UploadFile />} path="/uploadfile" />
+                            <Route element={<Chat />} path="/chat/:id" />
+                        </Routes>
+                    </ScrollToTop>
+                </BrowserRouter>
+            </ThemeProvider>
         </div>
     );
 };
