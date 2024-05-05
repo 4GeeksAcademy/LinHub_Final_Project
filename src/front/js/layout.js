@@ -16,11 +16,16 @@ import { Chat } from "./pages/chats";
 
 import injectContext from "./store/appContext";
 
+
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
+        text: {
+            primary: '#ffffff',
+        },
     },
 });
+;
 
 //create your first component
 const Layout = () => {
