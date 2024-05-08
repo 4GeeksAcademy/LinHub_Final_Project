@@ -1,8 +1,9 @@
 import React from 'react'
 import { useContext } from 'react'
 import { Context } from '../../store/appContext'
-import modelPersonOne from '/workspaces/LinHub_Final_Project/src/front/img/model_person_one.jpg'
-import modelPersonTwo from '/workspaces/LinHub_Final_Project/src/front/img/model_person_two.jpg'
+import modelPersonOne from '../../../img/model_person_one.jpg'
+import modelPersonTwo from '../../../img/model_person_two.jpg'
+
 
 const UserCard = ({ username, nativeIdiom, learnIdiom, countryFrom, profilePic }) => {
 
