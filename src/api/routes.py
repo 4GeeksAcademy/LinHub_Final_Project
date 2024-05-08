@@ -16,7 +16,7 @@ import bcrypt
 import firebase_admin
 from firebase_admin import credentials, storage
 
-cred = credentials.Certificate("./google-services.json")
+cred = credentials.Certificate("./google-services.json" or "/etc/secrets/google-services.json")
 firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
 })
