@@ -11,6 +11,7 @@ services:
       plan: free # optional; defaults to starter
       numInstances: 1
       envVars:
+        GOOGLE_SERVICES: "@google-services"
           - key: BASENAME # Imported from Heroku app
             value: /
           - key: FLASK_APP # Imported from Heroku app
