@@ -211,27 +211,8 @@ export const UserCourse = () => {
                 <FeedbackMsg msg={feedbackMsg.msg} state={feedbackMsg.state} opacity={0} transition={"all 0.3s"} />
             }
 
-            <div className='usercourse-container p-0'>
-                <div className='usercourse-container-left'>
-                    {lessons.data &&
-                        lessons.data.map((lesson, index) => {
-                            return (
-                                <Lesson
-                                    index={index}
-                                    name={lesson.lesson_name}
-                                    description={lesson.description ? lesson.description : ""}
-                                    id={lesson.lesson_id}
-                                    button={lessons.user.learning_language === 1 ? "Entrar" : "Join"}
-                                    userProgress={lessons.progress}
-                                    progressRequired={lesson.progress}
-                                />
-                            )
-                        })
-                    }
-                </div>
-
+            <div className='sm:flex justify-center sm:flex-row-reverse'>
                 <div className='relative usercourse-container-right'>
-
                     <div className='flex justify-around mb-4'>
                         <LivesAndStreak
                             type="fire"
@@ -347,6 +328,23 @@ export const UserCourse = () => {
                             }
                         </div>
                     </div>
+                </div>
+                <div className='usercourse-container-left'>
+                    {lessons.data &&
+                        lessons.data.map((lesson, index) => {
+                            return (
+                                <Lesson
+                                    index={index}
+                                    name={lesson.lesson_name}
+                                    description={lesson.description ? lesson.description : ""}
+                                    id={lesson.lesson_id}
+                                    button={lessons.user.learning_language === 1 ? "Entrar" : "Join"}
+                                    userProgress={lessons.progress}
+                                    progressRequired={lesson.progress}
+                                />
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>

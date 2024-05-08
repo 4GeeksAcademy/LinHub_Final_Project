@@ -1,6 +1,6 @@
 @font-face {
     font-family: TF Saeada;
-    src: url(/workspaces/LinHub_Final_Project/src/front/fonts/LTSaeada-Regular.otf);
+    src: url(../fonts/LTSaeada-Regular.otf);
     font-style: normal;
     font-weight: normal;
 }
@@ -299,13 +299,6 @@
 
 /*USERCOURSE STYLES*/
 
-.usercourse-container {
-    padding: 20px 300px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px
-}
-
 .usercourse-container-left {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -439,28 +432,3 @@
 /* .user-logged-drop{
     opacity: ;
 } */
-
-@media screen and (max-width:1550px) {
-    .usercourse-container {
-        padding: 20px 40px;
-    }
-}
-
-@media screen and (max-width:961px) {
-    .usercourse-container {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 20px
-    }
-
-    .usercourse-container-left {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-
-    .usercourse-lesson:nth-child(2n) {
-        top: 0px
-    }
-}
