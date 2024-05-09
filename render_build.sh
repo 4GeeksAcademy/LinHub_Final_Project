@@ -9,7 +9,7 @@ pipenv install
 
 pipenv run upgrade
 
-mkdir -p src/front
+mkdir -p src/front/google_services
 
 echo $GOOGLE_SERVICES > /src/front/google_services/google-services.json
 
