@@ -9,7 +9,7 @@ pipenv install
 
 pipenv run upgrade
 
-pipenv run shell
+pipenv shell
 
 flask insert-languages
 flask insert-av_courses
