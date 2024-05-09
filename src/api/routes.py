@@ -8,6 +8,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+import os
 
 from datetime import datetime
 import math
@@ -16,10 +17,14 @@ import bcrypt
 import firebase_admin
 from firebase_admin import credentials, storage
 
-cred = credentials.Certificate('././src/front/google_services/google-services.json')
+google_services = "././src/front/google_services/google-services.json" if os.getenv("FLASK_DEBUG") == "1" else "/etc/secrets/google-services.json"
+
+cred = credentials.Certificate(google_services)
+
 firebase_admin.initialize_app(cred, {
     'storageBucket': "linhub-68184.appspot.com"
 })
+
 
 bucket = storage.bucket()
 
