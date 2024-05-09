@@ -11,7 +11,7 @@ pipenv run upgrade
 
 mkdir -p src/front
 
-echo $GOOGLE_SERVICES > src/front/google-services.json
+echo $GOOGLE_SERVICES > /src/front/google_services/google-services.json
 
 # pipenv run shell
 
