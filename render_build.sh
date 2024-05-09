@@ -9,6 +9,11 @@ pipenv install
 
 pipenv run upgrade
 
-# pipenv run shell
+pipenv run shell
 
-# flask insert-languages
+flask insert-languages
+flask insert-av_courses
+flask insert-modules
+flask insert-lessons
+flask insert-questions
+flask insert-options
