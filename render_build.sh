@@ -7,7 +7,6 @@ npm run build
 
 pipenv install
 
-pipenv run migrate
 pipenv run upgrade
 
 # Obtener la URL del backend desde la variable de entorno
