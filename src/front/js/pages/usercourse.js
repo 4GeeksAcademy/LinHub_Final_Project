@@ -329,11 +329,12 @@ export const UserCourse = () => {
                         </div>
                     </div>
                 </div>
-                <div className='usercourse-container-left'>
+                <div className='grid sm:grid-cols-2 sm:gap-5'>
                     {lessons.data &&
                         lessons.data.map((lesson, index) => {
                             return (
                                 <Lesson
+                                    key={index}
                                     index={index}
                                     name={lesson.lesson_name}
                                     description={lesson.description ? lesson.description : ""}

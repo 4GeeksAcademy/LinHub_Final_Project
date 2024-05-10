@@ -216,31 +216,12 @@
     }
 }
 
-/* Animación para el guiño */
-@keyframes wink {
-
-    0%,
-    100% {
-        transform: translate(6px);
-    }
-
-    50% {
-        transform: translate(2px)
-    }
-}
 
 /* Aplicando la animación al ala */
 #wing {
     animation: flap 2s infinite;
     transform-origin: 65% 65%;
     /* Ajustar a la posición correcta del ala */
-}
-
-/* Aplicando la animación al ojo */
-#eye {
-    animation: wink 2s infinite;
-    transform-origin: 50% 50%;
-    /* Ajustar a la posición correcta del ojo */
 }
 
 .body {
@@ -261,11 +242,11 @@
 }
 
 .pata {
-    animation: moverpatas 2s infinite;
+    animation: jumping 2s infinite;
     transform-origin: 50%;
 }
 
-@keyframes moverpatas {
+@keyframes jumping {
 
     0%,
     100% {
@@ -299,12 +280,6 @@
 
 /*USERCOURSE STYLES*/
 
-.usercourse-container-left {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
 .usercourse-container-right {
     display: flex;
     flex-direction: column;
@@ -321,10 +296,13 @@
     border-radius: 20px;
     margin: 0 auto;
     transition: all 0.4s;
+    margin-top: 8%;
 }
 
-.usercourse-lesson:nth-child(2n) {
-    top: 60px
+@media screen and (min-width: 576px) {
+    .usercourse-lesson:nth-child(2n) {
+        top: 60px;
+    }
 }
 
 .lesson-background:nth-child(1) {
