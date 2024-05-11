@@ -6,7 +6,7 @@ const SectionShowTwo = () => {
     const { store, actions } = useContext(Context);
     return (
         <>
-            <div className='flex flex-row justify-center items-center py-4'>
+            <div className='flex flex-col sm:flex-row justify-center items-center py-4'>
                 <div className='relative'>
                     <div className='absolute left-1/2 top-16 -translate-x-1/2 h-4 w-[80%] rounded-xl bg-gray-300' >
                         <div id='progress' className='h-full bg-purple-500 rounded-[inherit]' style={{ width: '0' }}></div>

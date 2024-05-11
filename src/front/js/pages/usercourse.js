@@ -288,7 +288,7 @@ export const UserCourse = () => {
                         </div>
                     </div>
 
-                    <div className='realtive flex flex-col'>
+                    <div className='flex flex-col'>
                         <p className='relative p-2 bg-amber-200 rounded-2xl w-100 text-center mb-2'>
                             {lessons.user.native_language == 1 ? "Recommended users" : "Amigos Recomendados"}
                             <IoIosInformationCircleOutline className='absolute right-2 top-1 text-xl' onMouseEnter={() => setRecommInfo(true)} onMouseLeave={() => setRecommInfo(false)} />
@@ -301,7 +301,7 @@ export const UserCourse = () => {
                                 </div>
                             }
                         </p>
-                        <div className='p-2 rounded-2xl w-100'>
+                        <div className='p-2 rounded-2xl'>
                             {friends.recommended_users && friends.recommended_users.length > 0 ?
                                 friends.recommended_users
                                     .map((friend, index) => {
@@ -329,7 +329,7 @@ export const UserCourse = () => {
                         </div>
                     </div>
                 </div>
-                <div className='grid sm:grid-cols-2 sm:gap-5'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 sm:gap-5'>
                     {lessons.data &&
                         lessons.data.map((lesson, index) => {
                             return (

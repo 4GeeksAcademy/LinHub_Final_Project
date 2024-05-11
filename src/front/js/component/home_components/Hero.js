@@ -10,7 +10,7 @@ const Hero = () => {
 
     return (
         <>
-            <div id='hero-body' className="flex justify-center items-center mt-36 mb-44">
+            <div id='hero-body' className="flex flex-col sm:flex-row justify-center items-center mt-36 mb-44">
                 <div>
                     <svg className='body' width="268" height="233" viewBox="0 0 268 233" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path id="wing" d="M259.17 61.6942C258.446 86.2292 209.058 103.408 184.455 108.931L176.201 69.729C175.513 66.4621 247.26 40.0931 247.26 40.0931C251.76 38.1596 259.893 37.1592 259.17 61.6942Z" fill="#B02DDE" stroke="#B02DDE" />

@@ -36,7 +36,7 @@ const BottomSection = () => {
     return (
         <div className='text-center mt-12 py-4 bg-gradient-to-b from-white to-purple-800'>
             <h1 className='text-6xl font-bold text-violet-500'>{store.currentIdiom == "Español" ? "Intercambio de idomas: " : "Lenguage exchange: "}</h1>
-            <div className='flex flex-row justify-center align-center py-32'>
+            <div className='flex  flex-col sm:flex-row justify-center align-center py-32'>
                 <UserCard
                     username={"Diana Roo"}
                     nativeIdiom={"English"}

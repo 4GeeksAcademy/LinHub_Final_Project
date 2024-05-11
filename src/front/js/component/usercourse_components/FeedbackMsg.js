@@ -4,7 +4,7 @@ const FeedbackMsg = ({ state, msg, opacity, transform, transition }) => {
 
     return (
         <>
-            <div className='absolute inset-x-0 top-8 left-1/2 text-white w-72 text-center p-2 rounded-xl'
+            <div className='absolute inset-x-0 top-8 left-1/2 text-white text-center p-2 rounded-xl'
                 style={{
                     background: state === "success" ? "#81bf4d" : "#ea6a6f",
                     opacity: opacity,
