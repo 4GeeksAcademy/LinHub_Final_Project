@@ -308,6 +308,7 @@
 }
 
 .lesson-background:nth-child(1) {
+    
     background: rgb(63, 94, 251);
     background: linear-gradient(38deg, rgba(63, 94, 251, 1) 0%, rgba(222, 71, 102, 1) 100%);
 }

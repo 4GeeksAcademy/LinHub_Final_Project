@@ -121,9 +121,9 @@ def get_lessons_by_lang():
     # Calcula las horas transcurridas
     horas_transcurridas = math.floor(diferencia.total_seconds() / 3600)
     
-    if horas_transcurridas > 0 and user.lives < 100:
-        if (user.lives + horas_transcurridas) > 100:
-            user.lives = 100
+    if horas_transcurridas > 0 and user.lives < 24:
+        if (user.lives + horas_transcurridas) > 24:
+            user.lives = 24
             db.session.commit()
         else: 
             user.lives = user.lives + horas_transcurridas

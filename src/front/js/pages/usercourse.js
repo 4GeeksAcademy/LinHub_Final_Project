@@ -199,7 +199,7 @@ export const UserCourse = () => {
     // console.log("SOY FRIENDS", friends)
 
     return (
-        <div>
+        <div className='grid'>
             <LoggedNavbar
                 userImage={lessons.user.image}
                 username={lessons.user.first_name + ' ' + lessons.user.last_name}
@@ -211,8 +211,8 @@ export const UserCourse = () => {
                 <FeedbackMsg msg={feedbackMsg.msg} state={feedbackMsg.state} opacity={0} transition={"all 0.3s"} />
             }
 
-            <div className='sm:flex justify-center sm:flex-row-reverse'>
-                <div className='relative usercourse-container-right'>
+            <div className='flex flex-col justify-self-center justify-center sm:flex-row-reverse w-5/6'>
+                <div className='relative usercourse-container-right p-8'>
                     <div className='flex justify-around mb-4'>
                         <LivesAndStreak
                             type="fire"
